@@ -129,7 +129,7 @@ function ensureDemoRestaurant() {
 ensureDemoRestaurant();
 
 // Démarrer le serveur
-const server = app.listen(PORT, () => {
+const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`================================================`);
   console.log(` Plateforme SaaS MenuDirect démarrée avec succès !`);
   console.log(` Port : ${PORT}`);
