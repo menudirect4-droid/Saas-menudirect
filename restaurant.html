@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MenuDirect — Menu & Commandes en Ligne</title>
+    <meta name="description" content="Découvrez le menu, commandez vos plats préférés et faites-vous livrer en quelques clics.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/auth.css">
+    <link rel="stylesheet" href="/restaurant.css">
+</head>
+<body class="menu-dark-theme">
+
+    <div class="app-layout">
+        <!-- =================================================================
+             1. SIDEBAR GAUCHE (Desktop & Tablette)
+             ================================================================= -->
+        <aside class="app-sidebar-left" id="sidebarLeft">
+            <div class="sidebar-top">
+                <!-- Logo MenuDirect avec cloche -->
+                <a href="/" class="brand-logo-wrap" title="MenuDirect">
+                    <div class="brand-cloche-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                    </div>
+                    <div class="brand-text-block">
+                        <div class="brand-title">Menu<span class="text-accent">Direct</span></div>
+                        <div class="brand-slogan">Le bon goût, plus proche de vous</div>
+                    </div>
+                </a>
+
+                <!-- Navigation Principale -->
+                <nav class="sidebar-nav">
+                    <button class="nav-item active" id="navHomeBtn">
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                        </span>
+                        <span class="nav-label">Accueil</span>
+                    </button>
+
+                    <button class="nav-item" id="navRestoBtn">
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 2v6a3 3 0 0 1-3 3 3 3 0 0 1-3-3V2"></path>
+                                <line x1="15" y1="2" x2="15" y2="8"></line>
+                                <line x1="12" y1="11" x2="12" y2="22"></line>
+                                <path d="M6 2v20"></path>
+                                <path d="M3 2v4a3 3 0 0 0 6 0V2"></path>
+                            </svg>
+                        </span>
+                        <span class="nav-label">Établissement</span>
+                    </button>
+
+                    <button class="nav-item" id="navCategoriesBtn">
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
+                        </span>
+                        <span class="nav-label">Catégories</span>
+                    </button>
+
+                    <button class="nav-item" id="navOrdersBtn">
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                                <path d="M3 6h18"></path>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>
+                        </span>
+                        <span class="nav-label">Mes commandes</span>
+                    </button>
+
+                    <button class="nav-item" id="navFavoritesBtn">
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+                            </svg>
+                        </span>
+                        <span class="nav-label">Favoris</span>
+                        <span class="nav-pill-badge" id="favCountBadge" style="display: none;">0</span>
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Vignette Basse "Livraison Rapide" -->
+            <div class="sidebar-vignette-delivery">
+                <div class="vignette-icon-row">
+                    <div class="vignette-badge-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                    </div>
+                    <span class="vignette-title">Livraison rapide</span>
+                </div>
+                <p class="vignette-subtitle">Vos plats préférés, où que vous soyez !</p>
+                <div class="vignette-scooter-art">
+                    <div class="scooter-glow"></div>
+                    <span class="scooter-emoji">🛵💨</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- =================================================================
+             2. CONTENU PRINCIPAL CENTRAL
+             ================================================================= -->
+        <main class="app-main-content">
+            <!-- Header Bar Supérieure -->
+            <header class="main-topbar">
+                <div class="topbar-left">
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                    <!-- Localisation dynamique -->
+                    <div class="location-pill" id="locationSelector">
+                        <span class="loc-pin">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                        </span>
+                        <span class="loc-text" id="restoLocation">Cotonou, Bénin</span>
+                        <span class="loc-arrow">▾</span>
+                    </div>
+                </div>
+
+                <!-- Barre de Recherche Centrale -->
+                <div class="topbar-search">
+                    <div class="search-input-wrapper">
+                        <span class="search-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                        </span>
+                        <input type="text" id="menuSearchInput" placeholder="Rechercher un plat, un ingrédient..." autocomplete="off">
+                        <button id="clearSearchBtn" class="search-clear-btn" style="display: none;" title="Effacer">✕</button>
+                    </div>
+                </div>
+
+                <!-- Outils Droite : Langue IA, Notifs & Profil -->
+                <div class="topbar-right">
+                    <!-- Sélecteur de Langue IA -->
+                    <div class="menu-lang-widget" id="menuLangWidget">
+                        <div class="menu-lang-pills" id="menuLangPills">
+                            <button class="lang-pill active" data-lang="fr" title="Français">🇫🇷 FR</button>
+                            <button class="lang-pill" data-lang="en" title="English">🇬🇧 EN</button>
+                            <button class="lang-pill" data-lang="pt" title="Português">🇵🇹 PT</button>
+                            <button class="lang-pill" data-lang="es" title="Español">🇪🇸 ES</button>
+                            <button class="lang-pill" data-lang="fon" title="Fɔngbe (Bénin)">🇧🇯 FON</button>
+                        </div>
+                    </div>
+
+                    <!-- Cloche de notification -->
+                    <div class="notif-wrapper" id="notifWrapper">
+                        <button class="notif-btn" id="notifBtn" aria-label="Notifications">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                            </svg>
+                            <span class="notif-badge">2</span>
+                        </button>
+                        <div class="notif-dropdown" id="notifDropdown">
+                            <div class="notif-header">Notifications</div>
+                            <div class="notif-item">
+                                <span class="notif-dot">●</span>
+                                <div>
+                                    <div class="notif-title">Cuisine ouverte</div>
+                                    <div class="notif-desc">Les commandes sont préparées en direct.</div>
+                                </div>
+                            </div>
+                            <div class="notif-item">
+                                <span class="notif-dot">●</span>
+                                <div>
+                                    <div class="notif-title">Livraison rapide active</div>
+                                    <div class="notif-desc">Livraison garantie dans tout Cotonou.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profil utilisateur / Client -->
+                    <div class="user-profile-pill" id="userProfilePill">
+                        <div class="user-avatar" id="userAvatar">KM</div>
+                        <span class="user-name" id="userName">Koffi Mensah</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Bannière Hero Principale (Style Inspiré de la Référence) -->
+            <section class="hero-showcase-card">
+                <div class="hero-content-col">
+                    <div class="hero-brand-pill">
+                        <span class="pill-dot">●</span>
+                        <span class="pill-name">MenuDirect</span>
+                    </div>
+
+                    <h1 class="hero-headline">
+                        Des plats délicieux<br>
+                        <span class="text-accent-gradient">en quelques clics !</span>
+                    </h1>
+
+                    <p class="hero-description" id="restoDescription">
+                        Découvrez les meilleures spécialités et commandez vos mets préférés préparés à la minute en toute simplicité.
+                    </p>
+
+                    <div class="hero-cta-row">
+                        <button class="btn-hero-cta" id="heroOrderBtn">
+                            <span>Commander maintenant</span>
+                            <span class="btn-arrow">→</span>
+                        </button>
+
+                        <div class="hero-carousel-dots">
+                            <span class="dot active"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-visual-col">
+                    <div class="hero-dish-glow"></div>
+                    <div class="hero-dish-frame">
+                        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=700&q=80" alt="Plat gourmand du restaurant" class="hero-dish-img" id="heroMainDishImg">
+                        <div class="hero-taste-note">
+                            <span>Le goût à portée de main</span>
+                            <svg class="handwritten-arrow" viewBox="0 0 60 40" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10 5 C 30 10, 45 25, 45 35 M 35 30 L 45 35 L 48 24"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section Catégories Populaires Horizontales -->
+            <section class="section-block" id="categoriesSection">
+                <div class="section-header-row">
+                    <h2 class="section-title">Catégories populaires</h2>
+                    <button class="section-view-all" id="viewAllCatsBtn">Voir tout <span class="arrow">→</span></button>
+                </div>
+
+                <div class="categories-cards-track" id="categoriesNavInner">
+                    <!-- Généré dynamiquement : Bouton 'Tous' + cartes de chaque catégorie avec image/icône -->
+                    <button class="cat-card-item active" data-cat-id="all">
+                        <div class="cat-icon-bubble">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                            </svg>
+                        </div>
+                        <span class="cat-title">Tous</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Section Restaurant Recommandé / Établissement -->
+            <section class="section-block" id="restaurantInfoSection">
+                <div class="section-header-row">
+                    <h2 class="section-title">Établissement & Horaires</h2>
+                    <span class="section-badge-live">● Service ouvert</span>
+                </div>
+
+                <div class="restaurant-feature-card">
+                    <div class="resto-card-banner">
+                        <div class="resto-banner-img-wrap" id="restoLogo">
+                            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80" alt="Restaurant" class="resto-banner-img">
+                        </div>
+                        <div class="resto-rating-pill">
+                            <span class="star-icon">⭐</span>
+                            <span class="rating-val">4.8</span>
+                        </div>
+                        <button class="resto-fav-btn" id="restoFavBtn" aria-label="Favori">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="resto-card-body">
+                        <div class="resto-title-row">
+                            <h3 class="resto-title" id="restoName">Le Jardin des Saveurs</h3>
+                            <span class="resto-badge-verified">✓ Certifié MenuDirect</span>
+                        </div>
+                        <p class="resto-tags-line" id="restoTags">Spécialités Africaines · Grillades · Terroir Béninois</p>
+                        
+                        <div class="resto-specs-row">
+                            <div class="spec-pill">
+                                <span>🕒</span>
+                                <span id="restoHours">11h30 - 23h30</span>
+                            </div>
+                            <div class="spec-pill">
+                                <span>🛵</span>
+                                <span>25 - 35 min</span>
+                            </div>
+                            <div class="spec-pill">
+                                <span>📍</span>
+                                <span id="restoAddressLine">Haie Vive, Cotonou</span>
+                            </div>
+                            <a href="#" class="spec-pill spec-phone" id="restoPhoneLink">
+                                <span>📞</span>
+                                <span id="restoPhoneText">Appeler</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section Plats Populaires & Catalogue -->
+            <section class="section-block" id="dishesCatalogSection">
+                <div class="section-header-row">
+                    <h2 class="section-title" id="catalogTitle">Plats populaires</h2>
+                    <div class="catalog-filters-info" id="catalogCounterInfo">Affichage du menu</div>
+                </div>
+
+                <!-- Grille principale des plats (générée dynamiquement) -->
+                <div class="dishes-catalog-container" id="menuMainContent">
+                    <div id="loadingMenuMsg" class="loading-state-box">
+                        <div class="spinner-circle"></div>
+                        <p>Chargement des plats en cours...</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- =================================================================
+             3. SIDEBAR DROITE : MON PANIER (Desktop)
+             ================================================================= -->
+        <aside class="app-cart-sidebar" id="cartDesktopSidebar">
+            <div class="cart-panel-header">
+                <div class="cart-panel-title-wrap">
+                    <div class="cart-bag-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                            <path d="M3 6h18"></path>
+                            <path d="M16 10a4 4 0 0 1-8 0"></path>
+                        </svg>
+                    </div>
+                    <h3 class="cart-panel-title">Mon panier</h3>
+                </div>
+                <div class="cart-count-badge" id="cartCountBadge">0</div>
+            </div>
+
+            <!-- Liste des articles du panier -->
+            <div class="cart-items-scroll-area" id="cartItemsContainer">
+                <div class="cart-empty-state">
+                    <div class="empty-cart-emoji">🛒</div>
+                    <div class="empty-cart-title">Votre panier est vide</div>
+                    <p class="empty-cart-desc">Choisissez vos plats favoris dans le menu pour commencer votre commande.</p>
+                </div>
+            </div>
+
+            <!-- Détail & Totaux financiers -->
+            <div class="cart-panel-summary">
+                <div class="summary-line">
+                    <span class="summary-label">Sous-total</span>
+                    <span class="summary-val" id="cartSubtotalAmount">0 FCFA</span>
+                </div>
+                <div class="summary-line">
+                    <span class="summary-label">Livraison</span>
+                    <span class="summary-val delivery-badge" id="cartDeliveryFee">1 000 FCFA</span>
+                </div>
+                <div class="summary-line total-line">
+                    <span class="summary-label-total">Total</span>
+                    <span class="summary-val-total" id="cartDrawerTotal">0 FCFA</span>
+                </div>
+
+                <!-- Grand Bouton Rouge Principal -->
+                <button class="btn-checkout-primary" id="checkoutBtn" disabled>
+                    <span>Passer la commande</span>
+                    <span class="btn-arrow">→</span>
+                </button>
+
+                <!-- Reassurance sécurité -->
+                <div class="cart-security-note">
+                    <span class="lock-icon">🔒</span>
+                    <div class="security-text">
+                        <span class="sec-title">Paiement sécurisé</span>
+                        <span class="sec-sub">Vos informations sont protégées</span>
+                    </div>
+                </div>
+
+                <!-- Vignette Fidélité MenuDirect -->
+                <div class="cart-loyalty-card">
+                    <div class="loyalty-icon-badge">★</div>
+                    <div class="loyalty-info">
+                        <div class="loyalty-title">Fidélité MenuDirect</div>
+                        <p class="loyalty-desc">Cumulez des points et profitez d'avantages exclusifs !</p>
+                        <button class="loyalty-link-btn" type="button">En savoir plus →</button>
+                    </div>
+                    <div class="loyalty-gift-art">🎁</div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- =================================================================
+         4. BARRE FLOTTANTE PANIER (Mobile & Petits Écrans)
+         ================================================================= -->
+    <div id="cartFloatingBar" class="cart-floating-bar">
+        <div class="cart-bar-left">
+            <div class="cart-qty-badge" id="cartBarQty">0</div>
+            <span class="cart-bar-text">Voir mon panier</span>
+        </div>
+        <div class="cart-bar-total" id="cartBarTotal">0 FCFA</div>
+    </div>
+
+    <!-- Tiroir Mobile du Panier -->
+    <div id="cartDrawerOverlay" class="cart-drawer-overlay">
+        <div class="cart-drawer">
+            <div class="drawer-header">
+                <div class="cart-panel-title-wrap">
+                    <span class="cart-bag-icon">🛒</span>
+                    <h3 class="drawer-title">Mon Panier</h3>
+                </div>
+                <button id="closeCartDrawerBtn" class="drawer-close" aria-label="Fermer">✕</button>
+            </div>
+            <div class="drawer-body" id="cartDrawerMobileItems">
+                <!-- Copié / synchronisé automatiquement avec le panier -->
+            </div>
+            <div class="drawer-footer">
+                <div class="summary-line">
+                    <span class="summary-label">Sous-total</span>
+                    <span class="summary-val" id="cartMobileSubtotal">0 FCFA</span>
+                </div>
+                <div class="summary-line">
+                    <span class="summary-label">Livraison</span>
+                    <span class="summary-val">1 000 FCFA</span>
+                </div>
+                <div class="summary-line total-line">
+                    <span class="summary-label-total">Total</span>
+                    <span class="summary-val-total" id="cartMobileTotal">0 FCFA</span>
+                </div>
+                <button id="checkoutMobileBtn" class="btn-checkout-primary">
+                    <span>Passer la commande</span>
+                    <span>→</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =================================================================
+         5. MODAL TUNNEL DE COMMANDE & COORDONNÉES
+         ================================================================= -->
+    <div id="checkoutModalOverlay" class="checkout-modal-overlay">
+        <div class="checkout-modal-box">
+            <button id="closeCheckoutModalBtn" class="dash-modal-close" aria-label="Fermer">✕</button>
+            
+            <div id="checkoutFormContainer">
+                <div class="modal-header-icon-wrap">
+                    <div class="modal-red-icon">🛍️</div>
+                    <div>
+                        <h3 class="modal-heading">Finaliser ma commande</h3>
+                        <p class="modal-subheading">Renseignez vos coordonnées pour la préparation et la livraison.</p>
+                    </div>
+                </div>
+
+                <div id="checkoutAlert" class="auth-alert"></div>
+
+                <form id="orderForm">
+                    <div class="form-group">
+                        <label class="form-label">Votre nom complet <span class="req">*</span></label>
+                        <input type="text" id="custName" class="form-input" placeholder="Ex: Jean Houndété" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Numéro de téléphone WhatsApp <span class="req">*</span></label>
+                        <input type="tel" id="custPhone" class="form-input" placeholder="Ex: +229 97 00 11 22" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Adresse de livraison ou précision</label>
+                        <input type="text" id="custAddress" class="form-input" placeholder="Ex: Haie Vive, en face de la pharmacie, ou À emporter">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Mode de règlement</label>
+                        <select id="custPaymentMethod" class="form-select">
+                            <option value="especes" selected>Paiement en espèces à la livraison / au comptoir</option>
+                            <option value="mobile_money">Paiement Mobile Money (MTN / Moov)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Instructions particulières ou allergies</label>
+                        <textarea id="custNotes" class="form-input" rows="2" placeholder="Sans piment, sauce à part, bien cuit..."></textarea>
+                    </div>
+
+                    <div class="order-recap-box">
+                        <div class="recap-row">
+                            <span>Montant à régler :</span>
+                            <span id="checkoutTotalAmount" class="recap-price">0 FCFA</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="submitOrderBtn" class="btn-checkout-primary full-width">
+                        <span>Confirmer et envoyer la commande</span>
+                        <span>✓</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Écran de confirmation de commande -->
+            <div id="checkoutSuccessContainer" style="display: none;" class="order-success-screen">
+                <div class="success-badge-icon">✓</div>
+                <h3 class="success-title">Commande confirmée !</h3>
+                <p class="success-subtitle">Le restaurant a bien reçu votre commande et commence sa préparation immédiate.</p>
+
+                <div class="order-ref-box">
+                    <span class="ref-label">Numéro de commande</span>
+                    <div class="order-ref-num" id="confirmedOrderNumber">CMD-2026-0000</div>
+                </div>
+
+                <p id="confirmedOrderTotalText" class="success-total-text">Total : <strong>0 FCFA</strong></p>
+
+                <a href="#" id="confirmedWhatsappBtn" target="_blank" class="btn-whatsapp-track">
+                    <span>💬 Suivre sur WhatsApp avec le restaurant</span>
+                </a>
+
+                <button id="closeAllAndResetBtn" class="btn-back-menu" type="button">
+                    Retourner au menu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/restaurant.js"></script>
+</body>
+</html>

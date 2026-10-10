@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MenuDirect — Gestion de commandes pour restaurants au Bénin</title>
+    <meta name="description" content="MenuDirect simplifie la gestion des commandes pour restaurants, snacks, fast-foods et petits commerces au Bénin. Commencez gratuitement.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=DM+Serif+Display:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=video-hero">
+
+    <!-- SVG Noise Filter -->
+    <svg style="position:absolute;width:0;height:0;pointer-events:none">
+        <filter id="noise">
+            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+            <feColorMatrix type="saturate" values="0"/>
+        </filter>
+    </svg>
+</head>
+<body>
+
+    <!-- Noise Overlay -->
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <!-- ========== NAVBAR ========== -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <div class="navbar-left">
+                <a href="#" class="navbar-logo">
+                    <img src="logo.png" alt="MenuDirect Logo" height="40" class="logo-img">
+                    Menu<span class="logo-accent">Direct</span>
+                </a>
+            </div>
+            <ul class="navbar-links" id="navLinks">
+                <li><a href="#a-propos">À propos</a></li>
+                <li><a href="#comment-ca-marche">Comment ça marche</a></li>
+                <li><a href="#tarifs">Tarifs</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#temoignages">Témoignages</a></li>
+                <li><a href="#" id="navContactLink">Contact</a></li>
+                <li><a href="/login" class="nav-link-login">Se connecter</a></li>
+            </ul>
+            <a href="/register" class="btn btn-accent btn-nav" id="navCtaBtn">Commencer</a>
+            <button class="navbar-toggle" id="navToggle" aria-label="Menu de navigation">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul class="mobile-menu-links">
+            <li><a href="#a-propos" class="mobile-link">À propos</a></li>
+            <li><a href="#comment-ca-marche" class="mobile-link">Comment ça marche</a></li>
+            <li><a href="#tarifs" class="mobile-link">Tarifs</a></li>
+            <li><a href="#faq" class="mobile-link">FAQ</a></li>
+            <li><a href="#temoignages" class="mobile-link">Témoignages</a></li>
+            <li><a href="#" class="mobile-link" id="mobileContactLink">Contact</a></li>
+            <li><a href="/login" class="mobile-link" style="color: var(--white); font-weight: 700;">Se connecter</a></li>
+            <li><a href="/register" class="btn btn-accent btn-mobile-cta" id="mobileCtaBtn">Commencer maintenant</a></li>
+        </ul>
+    </div>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero" id="hero">
+        <div class="hero-bg">
+            <video 
+                class="hero-video" 
+                id="heroVideo"
+                autoplay 
+                loop 
+                muted 
+                playsinline 
+                webkit-playsinline
+                preload="auto"
+                poster="hero-showcase-2.jpg"
+                aria-hidden="true"
+                tabindex="-1"
+            >
+                <source src="hero-video.mp4" type="video/mp4">
+                <source src="gemini_generated_video_9bddabf0.mp4" type="video/mp4">
+            </video>
+            <div class="hero-video-overlay" aria-hidden="true"></div>
+            <div class="hero-gradient" aria-hidden="true"></div>
+            <div class="hero-radial-glow" aria-hidden="true"></div>
+            <div class="hero-pattern" aria-hidden="true"></div>
+        </div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title" id="heroTitle">
+                    <span class="hero-title-line hero-title-line-1">Gérez vos commandes</span>
+                    <span class="hero-title-line hero-title-line-2">sans <em>effort.</em></span>
+                </h1>
+                <p class="hero-subtitle" id="heroSubtitle">
+                    La plateforme de gestion de commandes conçue pour les restaurants, snacks, 
+                    fast-foods et petits commerces au Bénin. Simple. Rapide. Fiable.
+                </p>
+                <div class="hero-cta-group" id="heroCta">
+                    <a href="/register" class="btn btn-accent btn-large">
+                        <span class="btn-bg"></span>
+                        <span class="btn-text">Essayer gratuitement</span>
+                        <span class="btn-arrow">→</span>
+                    </a>
+                    <a href="/restaurant/le-jardin-des-saveurs" target="_blank" class="btn btn-outline btn-large">
+                        <span class="btn-text">Voir la démo en direct</span>
+                    </a>
+                </div>
+                <div class="hero-stats" id="heroStats">
+                    <div class="hero-stat">
+                        <div class="stat-value">
+                            <span class="stat-number" data-count="500">0</span><span class="stat-plus">+</span>
+                        </div>
+                        <span class="stat-label">Commerces actifs</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <div class="stat-value">
+                            <span class="stat-number" data-count="15000">0</span><span class="stat-plus">+</span>
+                        </div>
+                        <span class="stat-label">Commandes / mois</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <div class="stat-value">
+                            <span class="stat-number" data-count="98">0</span><span class="stat-suffix">%</span>
+                        </div>
+                        <span class="stat-label">Satisfaction client</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-scroll-indicator" aria-hidden="true">
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- ========== A PROPOS / CONFIANCE AGRANDIE ========== -->
+    <section class="section section-about" id="a-propos">
+        <div class="container about-container">
+            <!-- En-tête de section agrandi -->
+            <div class="about-header-block">
+                <div class="about-tag-pill">
+                    <span class="about-tag-dot"></span>
+                    <span class="about-tag-text">À PROPOS DE MENUDIRECT</span>
+                </div>
+                <h2 class="about-title">
+                    L'infrastructure digitale pensée pour propulser les <span class="about-title-highlight">restaurants d'aujourd'hui</span>
+                </h2>
+                <p class="about-intro">
+                    Chez MenuDirect, nous allons bien au-delà du simple menu numérique en PDF. Grâce à des retours continus de restaurateurs et gérants au Bénin, nous créons des outils qui résolvent les défis quotidiens du terrain — des <strong>menus QR multilingues haute définition</strong>, une <strong>prise de commande instantanée</strong> et une <strong>gestion de carte en direct</strong> sans aucune application à installer.
+                </p>
+            </div>
+
+            <!-- Bandeau de Chiffres Clés & Impact -->
+            <div class="about-metrics-strip">
+                <div class="about-metric-card">
+                    <div class="about-metric-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                            <polyline points="17 6 23 6 23 12"/>
+                        </svg>
+                    </div>
+                    <div class="about-metric-data">
+                        <span class="about-metric-num">+35%</span>
+                        <span class="about-metric-lbl">De volume de commandes constaté</span>
+                    </div>
+                </div>
+                <div class="about-metric-card">
+                    <div class="about-metric-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <div class="about-metric-data">
+                        <span class="about-metric-num">&lt; 2s</span>
+                        <span class="about-metric-lbl">Temps de chargement sur smartphone</span>
+                    </div>
+                </div>
+                <div class="about-metric-card">
+                    <div class="about-metric-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="5" width="20" height="14" rx="2"/>
+                            <line x1="2" y1="10" x2="22" y2="10"/>
+                        </svg>
+                    </div>
+                    <div class="about-metric-data">
+                        <span class="about-metric-num">0 FCFA</span>
+                        <span class="about-metric-lbl">D'investissement matériel requis</span>
+                    </div>
+                </div>
+                <div class="about-metric-card">
+                    <div class="about-metric-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                    </div>
+                    <div class="about-metric-data">
+                        <span class="about-metric-num">99.9%</span>
+                        <span class="about-metric-lbl">Disponibilité garantie 24h/24 7j/7</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grille Principale 2 Colonnes -->
+            <div class="about-grid">
+                <!-- Colonne Gauche : Atouts Détaillés & Promesse -->
+                <div class="about-content">
+                    <div class="about-features-grid">
+                        <!-- Colonne 1 -->
+                        <div class="about-features-col">
+                            <!-- Atout 1 -->
+                            <div class="about-feature-item">
+                                <div class="about-feature-check">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <polyline points="8 12 11 15 16 9"/>
+                                    </svg>
+                                </div>
+                                <div class="about-feature-text">
+                                    <span class="about-feature-badge-tag">IA & Traduction</span>
+                                    <h3 class="about-feature-title">Traduction de Carte par IA Culinaire</h3>
+                                    <p class="about-feature-desc">Notre IA spécialisée comprend les subtilités gastronomiques et traduit automatiquement vos plats en plusieurs langues. Vos clients internationaux commandent en toute clarté et sans barrière linguistique.</p>
+                                </div>
+                            </div>
+
+                            <!-- Atout 2 -->
+                            <div class="about-feature-item">
+                                <div class="about-feature-check">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <polyline points="8 12 11 15 16 9"/>
+                                    </svg>
+                                </div>
+                                <div class="about-feature-text">
+                                    <span class="about-feature-badge-tag">Branding & Identité</span>
+                                    <h3 class="about-feature-title">Mini-Site & Domaine Professionnel</h3>
+                                    <p class="about-feature-desc">Mettez en avant votre marque avec une page de menu élégante accessible via une URL personnalisée et percutante. Idéal pour vos bio Instagram, statuts WhatsApp, QR codes de table et cartes de visite.</p>
+                                </div>
+                            </div>
+
+                            <!-- Atout 3 -->
+                            <div class="about-feature-item">
+                                <div class="about-feature-check">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <polyline points="8 12 11 15 16 9"/>
+                                    </svg>
+                                </div>
+                                <div class="about-feature-text">
+                                    <span class="about-feature-badge-tag">Personnalisation</span>
+                                    <h3 class="about-feature-title">Mise en Page Visuelle & Moderne</h3>
+                                    <p class="about-feature-desc">Adaptez vos visuels, typographies, photos et catégories aux couleurs de votre enseigne. Votre carte est toujours impeccablement présentée sur smartphone, tablette et écran d'accueil.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Colonne 2 -->
+                        <div class="about-features-col">
+                            <!-- Atout 4 -->
+                            <div class="about-feature-item">
+                                <div class="about-feature-check">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <polyline points="8 12 11 15 16 9"/>
+                                    </svg>
+                                </div>
+                                <div class="about-feature-text">
+                                    <span class="about-feature-badge-tag">Liberté Totale</span>
+                                    <h3 class="about-feature-title">Scans & Consultations 100% Illimités</h3>
+                                    <p class="about-feature-desc">Zéro mauvaise surprise, zéro quota dissimulé. Votre QR code peut être scanné des milliers de fois chaque jour par vos convives, sans surcoût ni ralentissement de service.</p>
+                                </div>
+                            </div>
+
+                            <!-- Atout 5 -->
+                            <div class="about-feature-item">
+                                <div class="about-feature-check">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <polyline points="8 12 11 15 16 9"/>
+                                    </svg>
+                                </div>
+                                <div class="about-feature-text">
+                                    <span class="about-feature-badge-tag">Performance Réseau</span>
+                                    <h3 class="about-feature-title">Vitesse Optimisée Même en 3G / 4G</h3>
+                                    <p class="about-feature-desc">Notre infrastructure réseau ultralégère assure un affichage quasi-instantané, même lors des pics d'affluence ou en condition de connexion mobile standard au Bénin.</p>
+                                </div>
+                            </div>
+
+                            <!-- Atout 6 -->
+                            <div class="about-feature-item">
+                                <div class="about-feature-check">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <polyline points="8 12 11 15 16 9"/>
+                                    </svg>
+                                </div>
+                                <div class="about-feature-text">
+                                    <span class="about-feature-badge-tag">Accompagnement</span>
+                                    <h3 class="about-feature-title">Évolution Continue & Support Dédié</h3>
+                                    <p class="about-feature-desc">Nous enrichissons la plateforme chaque semaine sur la base directe de vos retours d'expérience. Vous bénéficiez en continu du meilleur de la tech pour restaurateurs.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Carte Engagement & Promesse -->
+                    <div class="about-commitment-card">
+                        <div class="about-commitment-badge">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                        </div>
+                        <div class="about-commitment-body">
+                            <h4 class="about-commitment-title">Notre engagement envers les restaurateurs</h4>
+                            <p class="about-commitment-desc">
+                                Vous conservez l'entière propriété de votre clientèle et 100% de vos marges. Aucun intermédiaire qui s'interpose, aucune commission abusive : une solution directe, transparente et rentable.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Colonne Droite : Smartphone 3D Cinématographique Agrandie -->
+                <div class="about-visual">
+                    <div class="about-phone-wrapper">
+                        <!-- Badges Flottants Interactifs -->
+                        <div class="about-phone-badge top">
+                            <span class="badge-dot pulse"></span>
+                            <span>Scan QR direct en table</span>
+                        </div>
+
+                        <div class="about-phone-badge bottom">
+                            <span class="badge-icon-flame">⚡</span>
+                            <span>Zéro appli • Accès instantané</span>
+                        </div>
+
+                        <!-- Filigrane QR Code d'arrière-plan Agrandi -->
+                        <div class="about-qr-watermark" aria-hidden="true">
+                            <svg viewBox="0 0 220 220" fill="currentColor">
+                                <rect x="10" y="10" width="60" height="60" rx="10" fill="none" stroke="currentColor" stroke-width="12"/>
+                                <rect x="25" y="25" width="30" height="30" rx="5"/>
+                                <rect x="150" y="10" width="60" height="60" rx="10" fill="none" stroke="currentColor" stroke-width="12"/>
+                                <rect x="165" y="25" width="30" height="30" rx="5"/>
+                                <rect x="10" y="150" width="60" height="60" rx="10" fill="none" stroke="currentColor" stroke-width="12"/>
+                                <rect x="25" y="165" width="30" height="30" rx="5"/>
+                                <rect x="85" y="15" width="16" height="16" rx="4"/>
+                                <rect x="110" y="15" width="16" height="16" rx="4"/>
+                                <rect x="85" y="40" width="16" height="16" rx="4"/>
+                                <rect x="110" y="55" width="28" height="16" rx="4"/>
+                                <rect x="15" y="85" width="16" height="28" rx="4"/>
+                                <rect x="45" y="95" width="20" height="20" rx="4"/>
+                                <rect x="85" y="85" width="24" height="24" rx="5"/>
+                                <rect x="120" y="85" width="16" height="16" rx="4"/>
+                                <rect x="150" y="85" width="20" height="20" rx="4"/>
+                                <rect x="180" y="95" width="25" height="16" rx="4"/>
+                                <rect x="85" y="125" width="16" height="24" rx="4"/>
+                                <rect x="110" y="125" width="24" height="16" rx="4"/>
+                                <rect x="145" y="120" width="20" height="20" rx="4"/>
+                                <rect x="85" y="165" width="24" height="24" rx="5"/>
+                                <rect x="125" y="155" width="20" height="35" rx="5"/>
+                                <rect x="160" y="155" width="30" height="16" rx="4"/>
+                                <rect x="160" y="180" width="45" height="25" rx="5"/>
+                            </svg>
+                        </div>
+
+                        <!-- Mockup Smartphone Réaliste Tilted 3D Agrandi -->
+                        <div class="about-phone-card" id="aboutPhoneCard">
+                            <div class="phone-3d-chassis">
+                                <!-- Écran du smartphone -->
+                                <div class="phone-screen-display">
+                                    <!-- Dynamic Island & Status -->
+                                    <div class="phone-display-island">
+                                        <div class="island-pill"></div>
+                                        <div class="island-bell" title="Service">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
+                                                <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+
+                                    <!-- En-tête du Menu -->
+                                    <div class="phone-menu-header">
+                                        <h4 class="menu-category-title">Plats & Spécialités</h4>
+                                    </div>
+
+                                    <!-- Liste des Plats du Menu Agrandie -->
+                                    <div class="phone-menu-scrollable">
+                                        <!-- Plat 1 : Saumon Braisé -->
+                                        <div class="menu-dish-item">
+                                            <div class="dish-thumb-box">
+                                                <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=200&auto=format&fit=crop&q=80" alt="Saumon Braisé & Asperges Rôties" class="dish-img" loading="lazy">
+                                            </div>
+                                            <div class="dish-info-box">
+                                                <div class="dish-top-meta">
+                                                    <span class="dish-tag">Spécialité Chef</span>
+                                                </div>
+                                                <h5 class="dish-name">Saumon Braisé & Asperges</h5>
+                                                <p class="dish-recipe">Filet frais rôti aux herbes, mousseline de patate douce</p>
+                                                <span class="dish-price-tag">8 500 FCFA</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Plat 2 : Côtelettes d'Agneau -->
+                                        <div class="menu-dish-item">
+                                            <div class="dish-thumb-box">
+                                                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=200&auto=format&fit=crop&q=80" alt="Côtelettes d'Agneau Braisées" class="dish-img" loading="lazy">
+                                            </div>
+                                            <div class="dish-info-box">
+                                                <div class="dish-top-meta">
+                                                    <span class="dish-tag">Bestseller</span>
+                                                </div>
+                                                <h5 class="dish-name">Côtelettes d'Agneau au Feu de Bois</h5>
+                                                <p class="dish-recipe">Agneau tendre braisé, réduction de jus corsé aux épices</p>
+                                                <span class="dish-price-tag">11 000 FCFA</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Plat 3 : Steak Entrecôte -->
+                                        <div class="menu-dish-item">
+                                            <div class="dish-thumb-box">
+                                                <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=200&auto=format&fit=crop&q=80" alt="Entrecôte Grillée & Beurre Persillé" class="dish-img" loading="lazy">
+                                            </div>
+                                            <div class="dish-info-box">
+                                                <div class="dish-top-meta">
+                                                    <span class="dish-tag">Viande Maturée</span>
+                                                </div>
+                                                <h5 class="dish-name">Entrecôte Grillée & Purée Maison</h5>
+                                                <p class="dish-recipe">Pièce sélectionnée, beurre maître d'hôtel et frites dorées</p>
+                                                <span class="dish-price-tag">13 500 FCFA</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Plat 4 : Risotto aux Champignons Sauvages -->
+                                        <div class="menu-dish-item">
+                                            <div class="dish-thumb-box">
+                                                <img src="https://images.unsplash.com/photo-1633964913295-ceb43826e7c9?w=200&auto=format&fit=crop&q=80" alt="Risotto aux Champignons Sauvages" class="dish-img" loading="lazy">
+                                            </div>
+                                            <div class="dish-info-box">
+                                                <div class="dish-top-meta">
+                                                    <span class="dish-tag">Végétarien</span>
+                                                </div>
+                                                <h5 class="dish-name">Risotto Crémeux aux Morilles</h5>
+                                                <p class="dish-recipe">Riz Arborio cuit au bouillon de légumes, parmesan affiné</p>
+                                                <span class="dish-price-tag">7 500 FCFA</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Plat 5 : Tacos Gourmets aux Crevettes -->
+                                        <div class="menu-dish-item">
+                                            <div class="dish-thumb-box">
+                                                <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=200&auto=format&fit=crop&q=80" alt="Tacos Gourmets aux Crevettes" class="dish-img" loading="lazy">
+                                            </div>
+                                            <div class="dish-info-box">
+                                                <div class="dish-top-meta">
+                                                    <span class="dish-tag">Street Chic</span>
+                                                </div>
+                                                <h5 class="dish-name">Tacos Gourmets aux Crevettes</h5>
+                                                <p class="dish-recipe">Tortillas tièdes, avocat frais émincé et sauce aïoli épicée</p>
+                                                <span class="dish-price-tag">5 000 FCFA</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3 Piliers d'Excellence & Confiance -->
+            <div class="about-pillars-grid">
+                <div class="about-pillar-card">
+                    <span class="about-pillar-num">01</span>
+                    <h4 class="about-pillar-title">Expérience Client Immédiate</h4>
+                    <p class="about-pillar-desc">Vos clients s'assoient, scannent le QR code avec leur téléphone et accèdent directement à votre carte illustrée en haute définition sans aucune attente.</p>
+                </div>
+                <div class="about-pillar-card">
+                    <span class="about-pillar-num">02</span>
+                    <h4 class="about-pillar-title">Gestion & Mises à Jour en Direct</h4>
+                    <p class="about-pillar-desc">Un plat en rupture ou un nouveau tarif ? Depuis votre smartphone en cuisine ou à la caisse, modifiez votre carte en 2 secondes, sans réimprimer le moindre papier.</p>
+                </div>
+                <div class="about-pillar-card">
+                    <span class="about-pillar-num">03</span>
+                    <h4 class="about-pillar-title">Rentabilité & Zéro Commission</h4>
+                    <p class="about-pillar-desc">Conservez 100% de la valeur de vos ventes. MenuDirect ne prélève aucun pourcentage sur vos commandes et valorise le contact direct avec vos clients fidèles.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== LIENS & ACCESSIBILITÉ ========== -->
+    <section class="section section-links" id="liens">
+        <div class="links-bg-glow" aria-hidden="true"></div>
+        <div class="container links-container">
+            <!-- En-tête de section -->
+            <div class="links-header-block">
+                <div class="links-tag-pill">
+                    <span class="links-tag-dot"></span>
+                    <span class="links-tag-text">LIENS & ACCESSIBILITÉ</span>
+                </div>
+                <h2 class="links-main-title">
+                    Liens Directs & <span class="links-title-highlight">Partage Instantané</span>
+                </h2>
+                <p class="links-intro">
+                    Partagez facilement votre menu digital grâce à un lien unique et personnalisé. Un simple clic suffit pour accéder à votre carte, sans application à installer.
+                </p>
+            </div>
+
+            <!-- Grille Principale 2 Colonnes -->
+            <div class="links-grid">
+                <!-- Colonne Gauche : 4 Cartes d'Atouts (Design fidèle à la capture) -->
+                <div class="links-features-grid">
+                    <!-- Atout 1 -->
+                    <div class="about-feature-item links-feature-card">
+                        <div class="about-feature-check">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="8 12 11 15 16 9"/>
+                            </svg>
+                        </div>
+                        <div class="about-feature-text">
+                            <span class="about-feature-badge-tag">Lien Dédié</span>
+                            <h3 class="about-feature-title">Lien Unique pour Chaque Restaurant</h3>
+                            <p class="about-feature-desc">Une adresse web exclusive et personnalisée pour votre établissement. Vos clients accèdent directement à votre carte officielle, sans intermédiaire.</p>
+                        </div>
+                    </div>
+
+                    <!-- Atout 2 -->
+                    <div class="about-feature-item links-feature-card">
+                        <div class="about-feature-check">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="8 12 11 15 16 9"/>
+                            </svg>
+                        </div>
+                        <div class="about-feature-text">
+                            <span class="about-feature-badge-tag">Réseaux Sociaux</span>
+                            <h3 class="about-feature-title">Partage Facile WhatsApp & Instagram</h3>
+                            <p class="about-feature-desc">Intégrez votre lien en un clic dans votre bio Instagram, vos statuts WhatsApp, vos publications Facebook ou vos messages directs.</p>
+                        </div>
+                    </div>
+
+                    <!-- Atout 3 -->
+                    <div class="about-feature-item links-feature-card">
+                        <div class="about-feature-check">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="8 12 11 15 16 9"/>
+                            </svg>
+                        </div>
+                        <div class="about-feature-text">
+                            <span class="about-feature-badge-tag">Accès Instantané</span>
+                            <h3 class="about-feature-title">Zéro Appli & Navigation Fluide</h3>
+                            <p class="about-feature-desc">Rien à télécharger. Le menu s'affiche instantanément dans le navigateur du smartphone avec un temps de chargement ultra-rapide.</p>
+                        </div>
+                    </div>
+
+                    <!-- Atout 4 -->
+                    <div class="about-feature-item links-feature-card">
+                        <div class="about-feature-check">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="8 12 11 15 16 9"/>
+                            </svg>
+                        </div>
+                        <div class="about-feature-text">
+                            <span class="about-feature-badge-tag">Compatibilité Totale</span>
+                            <h3 class="about-feature-title">100% Compatible avec les QR Codes</h3>
+                            <p class="about-feature-desc">Le lien et votre QR code dirigent vers le même menu en temps réel. Modifiez un plat ou un prix, tout se synchronise immédiatement.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Colonne Droite : Showcase Interactif du Lien -->
+                <div class="links-showcase-wrapper">
+                    <!-- Badge Flottant Supérieur -->
+                    <div class="links-floating-badge top">
+                        <span class="badge-dot pulse"></span>
+                        <span>Accès direct • Zéro installation</span>
+                    </div>
+
+                    <!-- Carte Principale Showcase -->
+                    <div class="links-card-showcase">
+                        <!-- En-tête de la carte -->
+                        <div class="links-card-header">
+                            <div class="links-card-badge-status">
+                                <span class="status-indicator"></span>
+                                <span>Menu Actif en Ligne</span>
+                            </div>
+                            <span class="links-card-tag">Lien Public</span>
+                        </div>
+
+                        <!-- Boîte d'affichage du lien & bouton Copier -->
+                        <div class="links-url-box">
+                            <div class="links-url-input-wrap">
+                                <div class="links-url-icon" aria-hidden="true">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                                    </svg>
+                                </div>
+                                <span class="links-url-domain" id="sampleLinkUrl">monrestaurant.com/menu</span>
+                            </div>
+                            <button class="btn-copy-link" id="copyLinkBtn" type="button" aria-label="Copier le lien du menu">
+                                <svg class="copy-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                                </svg>
+                                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display: none;">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                                <span class="copy-text">Copier le lien</span>
+                            </button>
+                        </div>
+
+                        <!-- Message de confirmation copie (toast discret) -->
+                        <div class="links-copied-toast" id="copiedToast" aria-live="polite">
+                            ✓ Lien copié dans le presse-papier !
+                        </div>
+
+                        <!-- Canaux de Partage en 1 clic -->
+                        <div class="links-channels-preview">
+                            <span class="channels-title">Prêt à être partagé sur :</span>
+                            <div class="channels-pills">
+                                <div class="channel-pill">
+                                    <span class="channel-icon-dot whatsapp"></span>
+                                    <span>WhatsApp Statuts & Chat</span>
+                                </div>
+                                <div class="channel-pill">
+                                    <span class="channel-icon-dot instagram"></span>
+                                    <span>Bio & Stories Instagram</span>
+                                </div>
+                                <div class="channel-pill">
+                                    <span class="channel-icon-dot qr"></span>
+                                    <span>QR Codes de Table</span>
+                                </div>
+                                <div class="channel-pill">
+                                    <span class="channel-icon-dot facebook"></span>
+                                    <span>Facebook & SMS</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Carte d'Aperçu du Partage (Preview Card style message WhatsApp/Réseau) -->
+                        <div class="links-preview-card">
+                            <div class="preview-img-box">
+                                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=160&auto=format&fit=crop&q=80" alt="Aperçu du restaurant" class="preview-img" loading="lazy">
+                            </div>
+                            <div class="preview-content-box">
+                                <div class="preview-badge">Menu Digital Officiel</div>
+                                <h4 class="preview-title">Le Jardin des Saveurs • Menu & Commandes</h4>
+                                <p class="preview-desc">Consultez nos spécialités et commandez directement en 1 clic.</p>
+                                <span class="preview-url-sub">monrestaurant.com/menu</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Badge Flottant Inférieur -->
+                    <div class="links-floating-badge bottom">
+                        <span class="badge-icon-lightning">⚡</span>
+                        <span>Partage instantané • Clients conquis</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== COMMENT ÇA MARCHE (ÉTAPES FACILES POUR REJOINDRE NOTRE PLATEFORME) ========== -->
+    <section class="section section-steps" id="comment-ca-marche">
+        <div class="container">
+            <div class="section-header steps-section-header">
+                <span class="steps-tag">ÉTAPES FACILES POUR</span>
+                <h2 class="steps-main-title">
+                    Rejoindre notre plateforme.
+                </h2>
+            </div>
+
+            <div class="steps-horizontal-flow">
+                <!-- Étape 01 — Inscription -->
+                <div class="step-card step-col" id="stepCard1">
+                    <div class="step-card-content">
+                        <div class="step-illustration-wrap">
+                            <img src="step-1-inscription.jpg" alt="Inscription et choix de formule sur MenuDirect" class="step-illustration-img" loading="lazy">
+                        </div>
+                        <h3 class="step-item-title">Inscription</h3>
+                        <p class="step-item-desc">
+                            Inscrivez-vous, choisissez un plan et ajoutez une méthode de paiement pour un abonnement mensuel.
+                        </p>
+                        <div class="step-number-badge">
+                            <span>01</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flèche élégante 01 -> 02 -->
+                <div class="step-flow-arrow" aria-hidden="true">
+                    <svg viewBox="0 0 110 42" fill="none" xmlns="http://www.w3.org/2000/svg" class="arrow-svg">
+                        <path d="M 6 24 C 32 6, 64 36, 98 16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M 86 13 L 100 16 L 93 26" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+
+                <!-- Étape 02 — Créer une Page d'Entreprise -->
+                <div class="step-card step-col" id="stepCard2">
+                    <div class="step-card-content">
+                        <div class="step-illustration-wrap">
+                            <img src="step-2-page-entreprise.jpg" alt="Configuration du menu et des catégories" class="step-illustration-img" loading="lazy">
+                        </div>
+                        <h3 class="step-item-title">Créer une Page d'Entreprise</h3>
+                        <p class="step-item-desc">
+                            Configurez votre page d'entreprise, sélectionnez un domaine court et construisez votre menu avec des catégories et des articles.
+                        </p>
+                        <div class="step-number-badge">
+                            <span>02</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flèche élégante 02 -> 03 -->
+                <div class="step-flow-arrow" aria-hidden="true">
+                    <svg viewBox="0 0 110 42" fill="none" xmlns="http://www.w3.org/2000/svg" class="arrow-svg">
+                        <path d="M 6 24 C 32 6, 64 36, 98 16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M 86 13 L 100 16 L 93 26" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+
+                <!-- Étape 03 — Générer & Imprimer le Code QR -->
+                <div class="step-card step-col" id="stepCard3">
+                    <div class="step-card-content">
+                        <div class="step-illustration-wrap">
+                            <img src="step-3-qr-code.jpg" alt="Génération du code QR et commande facile" class="step-illustration-img" loading="lazy">
+                        </div>
+                        <h3 class="step-item-title">Générer & Imprimer le Code QR</h3>
+                        <p class="step-item-desc">
+                            Générez un code QR et imprimez-le pour n'importe quelle table ou comptoir de votre établissement pour que vos clients puissent commander facilement.
+                        </p>
+                        <div class="step-number-badge">
+                            <span>03</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flèche élégante 03 -> 04 -->
+                <div class="step-flow-arrow" aria-hidden="true">
+                    <svg viewBox="0 0 110 42" fill="none" xmlns="http://www.w3.org/2000/svg" class="arrow-svg">
+                        <path d="M 6 24 C 32 6, 64 36, 98 16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M 86 13 L 100 16 L 93 26" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+
+                <!-- Étape 04 — Partager votre lien avec vos clients -->
+                <div class="step-card step-col" id="stepCard4">
+                    <div class="step-card-content">
+                        <div class="step-illustration-wrap">
+                            <img src="step-4-partager-lien.jpg" alt="Partager votre lien avec vos clients via WhatsApp, Facebook ou SMS" class="step-illustration-img" loading="lazy">
+                        </div>
+                        <h3 class="step-item-title">Partager votre lien avec vos clients</h3>
+                        <p class="step-item-desc">
+                            Copiez le lien de votre menu et envoyez-le directement à vos clients sur WhatsApp, Facebook ou par SMS. Vos clients peuvent consulter le menu et passer leur commande depuis chez eux ou depuis n’importe quelle adresse.
+                        </p>
+                        <div class="step-number-badge">
+                            <span>04</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== TARIFS ========== -->
+    <section class="section section-pricing" id="tarifs">
+        <div class="pricing-bg-watermark" aria-hidden="true"></div>
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Tarifs</span>
+                <h2 class="section-title">
+                    Un plan pour chaque <em>ambition.</em>
+                </h2>
+                <p class="section-subtitle">
+                    Commencez gratuitement. Évoluez quand votre business grandit.
+                </p>
+            </div>
+            <div class="pricing-grid">
+                <!-- Plan 1 -->
+                <div class="pricing-card" id="pricingCard1">
+                    <div class="pricing-card-inner">
+                        <div class="pricing-header">
+                            <span class="pricing-tag">Standard</span>
+                            <div class="pricing-price">
+                                <span class="pricing-currency">Gratuit</span>
+                            </div>
+                            <p class="pricing-period">Pour toujours — pas de piège</p>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>
+                                <span class="feature-check" aria-hidden="true">
+                                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                </span>
+                                <span>Jusqu'à 50 commandes / mois</span>
+                            </li>
+                            <li>
+                                <span class="feature-check" aria-hidden="true">
+                                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                </span>
+                                <span>Menu digital basique</span>
+                            </li>
+                            <li>
+                                <span class="feature-check" aria-hidden="true">
+                                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                </span>
+                                <span>Notifications WhatsApp</span>
+                            </li>
+                            <li>
+                                <span class="feature-check" aria-hidden="true">
+                                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                </span>
+                                <span>Support par email</span>
+                            </li>
+                            <li class="feature-disabled">
+                                <span class="feature-x" aria-hidden="true">
+                                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+                                </span>
+                                <span>Paiement Mobile Money</span>
+                            </li>
+                            <li class="feature-disabled">
+                                <span class="feature-x" aria-hidden="true">
+                                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+                                </span>
+                                <span>Statistiques avancées</span>
+                            </li>
+                        </ul>
+                        <a href="/register?plan=standard" class="btn btn-outline btn-pricing">
+                            <span class="btn-bg"></span>
+                            <span class="btn-text">Commencer gratuitement</span>
+                            <span class="btn-pricing-arrow" aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </div>
+                <!-- Plan 2 — Populaire -->
+                <div class="pricing-card pricing-card-featured" id="pricingCard2">
+                    <div class="pricing-badge">Le plus populaire</div>
+                    <div class="pricing-card-inner">
+                        <div class="pricing-header">
+                            <span class="pricing-tag">Pro</span>
+                            <div class="pricing-price">
+                                <span class="pricing-amount">5 000</span>
+                                <span class="pricing-currency-small">F CFA</span>
+                                <span class="pricing-per">/ mois</span>
+                            </div>
+                            <p class="pricing-period">Facturation mensuelle — sans engagement</p>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>
+                                <span class="feature-check" aria-hidden="true">
+                                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                </span>
+                                <span>Commandes illimitées</span>
+                            </li>
+                            <li>
+                                <span class="feature-check" aria-hidden="true">
+                                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                </span>
+                                <span>Menu digital personnalisé</span>
+                            </li>
+                            <li>
+                                <span class="feature-check" aria-hidden="true">
+                                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                </span>
+                                <span>Paiement Mobile Money intégré</span>
+                            </li>
+                            <li>
+                                <span class="feature-check" aria-hidden="true">
+                                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                </span>
+                                <span>Tableau de bord complet</span>
+                            </li>
+                            <li>
+                                <span class="feature-check" aria-hidden="true">
+                                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                </span>
+                                <span>Statistiques de vente</span>
+                            </li>
+                            <li>
+                                <span class="feature-check" aria-hidden="true">
+                                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                </span>
+                                <span>Support prioritaire WhatsApp</span>
+                            </li>
+                        </ul>
+                        <a href="/register?plan=pro" class="btn btn-accent btn-pricing btn-pricing-featured">
+                            <span class="btn-bg"></span>
+                            <span class="btn-text">Choisir Pro</span>
+                            <span class="btn-pricing-arrow" aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </div>
+                <!-- Plan 3 -->
+                <div class="pricing-card" id="pricingCard3">
+                    <div class="pricing-card-inner">
+                        <div class="pricing-header">
+                            <span class="pricing-tag">Master</span>
+                            <div class="pricing-price">
+                                <span class="pricing-amount">15 000</span>
+                                <span class="pricing-currency-small">F CFA</span>
+                                <span class="pricing-per">/ mois</span>
+                            </div>
+                            <p class="pricing-period">Multi-sites — gestion centralisée</p>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>
+                                <span class="feature-check" aria-hidden="true">
+                                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                </span>
+                                <span>Tout de Pro inclus</span>
+                            </li>
+                            <li>
+                                <span class="feature-check" aria-hidden="true">
+                                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                </span>
+                                <span>Multi-restaurants (jusqu'à 10)</span>
+                            </li>
+                            <li>
+                                <span class="feature-check" aria-hidden="true">
+                                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                </span>
+                                <span>Gestion d'équipe & rôles</span>
+                            </li>
+                            <li>
+                                <span class="feature-check" aria-hidden="true">
+                                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                </span>
+                                <span>API & intégrations</span>
+                            </li>
+                            <li>
+                                <span class="feature-check" aria-hidden="true">
+                                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                </span>
+                                <span>Rapports personnalisés</span>
+                            </li>
+                            <li>
+                                <span class="feature-check" aria-hidden="true">
+                                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                </span>
+                                <span>Manager de compte dédié</span>
+                            </li>
+                        </ul>
+                        <a href="/register?plan=master" class="btn btn-outline btn-pricing" id="enterpriseContactBtn">
+                            <span class="btn-bg"></span>
+                            <span class="btn-text">Choisir Master</span>
+                            <span class="btn-pricing-arrow" aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FAQ ========== -->
+    <section class="section section-faq" id="faq">
+        <div class="faq-bg-glow" aria-hidden="true"></div>
+        <div class="container">
+            <div class="faq-header">
+                <div class="faq-top-badge" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                </div>
+                <h2 class="faq-main-title">
+                    Questions <span class="faq-title-highlight">Fréquentes</span>
+                </h2>
+                <p class="faq-subtitle">
+                    Tout ce que vous devez savoir pour recevoir et gérer vos commandes facilement avec MenuDirect.
+                </p>
+            </div>
+
+            <div class="faq-container">
+                <div class="faq-accordion" id="faqAccordion">
+
+                    <!-- FAQ 1 -->
+                    <div class="faq-item" id="faqItem1">
+                        <button class="faq-question" id="faqBtn1" aria-expanded="false" aria-controls="faqAnswer1">
+                            <span class="faq-question-text">Comment fonctionne MenuDirect ?</span>
+                            <span class="faq-toggle-icon" aria-hidden="true">
+                                <span class="faq-icon-line faq-icon-h"></span>
+                                <span class="faq-icon-line faq-icon-v"></span>
+                            </span>
+                        </button>
+                        <div class="faq-answer" id="faqAnswer1" role="region" aria-labelledby="faqBtn1">
+                            <div class="faq-answer-inner">
+                                <p>MenuDirect permet aux restaurants de gérer facilement leurs commandes en ligne depuis une seule interface. Le restaurant configure son menu, partage son lien de commande ou son QR code avec ses clients, puis reçoit et gère les commandes directement depuis son tableau de bord.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 2 -->
+                    <div class="faq-item" id="faqItem2">
+                        <button class="faq-question" id="faqBtn2" aria-expanded="false" aria-controls="faqAnswer2">
+                            <span class="faq-question-text">Mes clients doivent-ils installer une application ?</span>
+                            <span class="faq-toggle-icon" aria-hidden="true">
+                                <span class="faq-icon-line faq-icon-h"></span>
+                                <span class="faq-icon-line faq-icon-v"></span>
+                            </span>
+                        </button>
+                        <div class="faq-answer" id="faqAnswer2" role="region" aria-labelledby="faqBtn2">
+                            <div class="faq-answer-inner">
+                                <p>Non. Vos clients n'ont pas besoin d'installer une application. Ils peuvent accéder directement à votre menu depuis leur navigateur grâce à votre lien de commande ou en scannant votre QR code.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 3 -->
+                    <div class="faq-item" id="faqItem3">
+                        <button class="faq-question" id="faqBtn3" aria-expanded="false" aria-controls="faqAnswer3">
+                            <span class="faq-question-text">Comment mes clients peuvent-ils passer une commande ?</span>
+                            <span class="faq-toggle-icon" aria-hidden="true">
+                                <span class="faq-icon-line faq-icon-h"></span>
+                                <span class="faq-icon-line faq-icon-v"></span>
+                            </span>
+                        </button>
+                        <div class="faq-answer" id="faqAnswer3" role="region" aria-labelledby="faqBtn3">
+                            <div class="faq-answer-inner">
+                                <p>Vos clients peuvent accéder à votre menu en ligne grâce à votre lien de commande ou votre QR code, choisir leurs produits, les ajouter à leur panier et envoyer leur commande directement à votre restaurant.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 4 -->
+                    <div class="faq-item" id="faqItem4">
+                        <button class="faq-question" id="faqBtn4" aria-expanded="false" aria-controls="faqAnswer4">
+                            <span class="faq-question-text">Quels moyens de paiement sont disponibles ?</span>
+                            <span class="faq-toggle-icon" aria-hidden="true">
+                                <span class="faq-icon-line faq-icon-h"></span>
+                                <span class="faq-icon-line faq-icon-v"></span>
+                            </span>
+                        </button>
+                        <div class="faq-answer" id="faqAnswer4" role="region" aria-labelledby="faqBtn4">
+                            <div class="faq-answer-inner">
+                                <p>MenuDirect peut permettre à vos clients de régler leurs commandes avec des moyens de paiement adaptés à votre marché, notamment le Mobile Money et, selon les solutions configurées, la carte bancaire.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 5 -->
+                    <div class="faq-item" id="faqItem5">
+                        <button class="faq-question" id="faqBtn5" aria-expanded="false" aria-controls="faqAnswer5">
+                            <span class="faq-question-text">Puis-je essayer MenuDirect avant de m’abonner ?</span>
+                            <span class="faq-toggle-icon" aria-hidden="true">
+                                <span class="faq-icon-line faq-icon-h"></span>
+                                <span class="faq-icon-line faq-icon-v"></span>
+                            </span>
+                        </button>
+                        <div class="faq-answer" id="faqAnswer5" role="region" aria-labelledby="faqBtn5">
+                            <div class="faq-answer-inner">
+                                <p>Oui. MenuDirect propose une formule Standard 100 % gratuite (jusqu'à 50 commandes par mois) permettant d'essayer et d'utiliser la plateforme sans aucun engagement ni carte bancaire. Vous pouvez ensuite passer à une formule supérieure (Pro ou Master) selon l'évolution de votre activité.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Assistance Card -->
+                <div class="faq-help-box">
+                    <div class="faq-help-content">
+                        <h3 class="faq-help-title">Une autre question sur MenuDirect ?</h3>
+                        <p class="faq-help-desc">Notre équipe locale est à votre disposition pour vous accompagner dans la mise en place de votre menu en ligne.</p>
+                    </div>
+                    <div class="faq-help-actions">
+                        <a href="/register" class="btn btn-accent">
+                            <span class="btn-bg"></span>
+                            <span class="btn-text">Commencer gratuitement</span>
+                            <span class="btn-arrow" aria-hidden="true">→</span>
+                        </a>
+                        <button class="btn btn-outline" id="faqContactBtn">
+                            <span class="btn-bg"></span>
+                            <span class="btn-text">Nous contacter</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== TEMOIGNAGES ========== -->
+    <section class="section section-testimonials" id="temoignages">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Témoignages</span>
+                <h2 class="section-title">
+                    Ils nous font <em>confiance.</em>
+                </h2>
+                <p class="section-subtitle">
+                    Des restaurateurs béninois qui ont transformé leur gestion avec MenuDirect.
+                </p>
+            </div>
+            <div class="testimonials-grid">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card" id="testimonialCard1">
+                    <div class="testimonial-card-inner">
+                        <div class="testimonial-stars">
+                            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                        </div>
+                        <blockquote class="testimonial-quote">
+                            "Depuis que j'utilise MenuDirect, je ne perds plus aucune commande. 
+                            Mes clients commandent directement depuis WhatsApp et je gère tout 
+                            depuis mon téléphone. C'est révolutionnaire pour mon business."
+                        </blockquote>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                <span>AK</span>
+                            </div>
+                            <div class="testimonial-info">
+                                <span class="testimonial-name">Adjovi Kossou</span>
+                                <span class="testimonial-role">Gérante — Chez Adjovi, Cotonou</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card" id="testimonialCard2">
+                    <div class="testimonial-card-inner">
+                        <div class="testimonial-stars">
+                            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                        </div>
+                        <blockquote class="testimonial-quote">
+                            "Le paiement Mobile Money intégré a changé la donne. Avant, je courais 
+                            après les paiements. Maintenant tout est automatique. Mon chiffre d'affaires 
+                            a augmenté de 40% en 3 mois."
+                        </blockquote>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                <span>YD</span>
+                            </div>
+                            <div class="testimonial-info">
+                                <span class="testimonial-name">Yves Dossou</span>
+                                <span class="testimonial-role">Propriétaire — Fast Délice, Porto-Novo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card" id="testimonialCard3">
+                    <div class="testimonial-card-inner">
+                        <div class="testimonial-stars">
+                            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                        </div>
+                        <blockquote class="testimonial-quote">
+                            "Je gère 3 points de vente depuis une seule interface. Les statistiques 
+                            me permettent de savoir exactement ce qui marche. L'équipe support 
+                            est incroyablement réactive — même le dimanche."
+                        </blockquote>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                <span>FH</span>
+                            </div>
+                            <div class="testimonial-info">
+                                <span class="testimonial-name">Félicien Houénou</span>
+                                <span class="testimonial-role">Directeur — Saveurs du Bénin, Parakou</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CTA BAND ========== -->
+    <section class="section section-cta-band" id="cta-band">
+        <div class="container">
+            <div class="cta-band-content">
+                <h2 class="cta-band-title">
+                    Prêt à simplifier votre <em>gestion ?</em>
+                </h2>
+                <p class="cta-band-text">
+                    Rejoignez les 500+ commerces béninois qui utilisent MenuDirect au quotidien.
+                </p>
+                <a href="#tarifs" class="btn btn-white btn-large">
+                    <span class="btn-bg"></span>
+                    <span class="btn-text">Commencer maintenant — c'est gratuit</span>
+                    <span class="btn-arrow">→</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="footer-logo">
+                        <img src="logo.png" alt="MenuDirect Logo" height="48" class="logo-img">
+                        Menu<span class="logo-accent">Direct</span>
+                    </a>
+                    <p class="footer-desc">
+                        La plateforme de gestion de commandes pensée pour les restaurateurs 
+                        et petits commerces du Bénin.
+                    </p>
+                    <div class="footer-status">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Système opérationnel</span>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-heading">Produit</h4>
+                    <ul class="footer-links">
+                        <li><a href="#comment-ca-marche">Comment ça marche</a></li>
+                        <li><a href="#tarifs">Tarifs</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#temoignages">Témoignages</a></li>
+                        <li><a href="#">Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-heading">Contact</h4>
+                    <ul class="footer-links">
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            <a href="tel:+2290157070530">+229 01 57 07 05 30</a>
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            <a href="mailto:menudirect4@gmail.com">menudirect4@gmail.com</a>
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <span>Cotonou, Bénin</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">
+                    © 2026 MenuDirect. Tous droits réservés. Fait avec ❤️ au Bénin.
+                </p>
+                <div class="footer-legal">
+                    <a href="#">Mentions légales</a>
+                    <a href="/politique-de-confidentialite">Politique de confidentialité</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== CONTACT MODAL ========== -->
+    <div class="modal-overlay" id="contactModal">
+        <div class="modal-container">
+            <div class="modal-card">
+                <button class="modal-close" id="modalClose" aria-label="Fermer">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+                <div class="modal-header">
+                    <span class="modal-tag">Contact</span>
+                    <h2 class="modal-title">Parlons de votre <em>projet.</em></h2>
+                    <p class="modal-subtitle">Remplissez le formulaire et notre équipe vous répondra sous 24h.</p>
+                </div>
+                <form class="modal-form" id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="contactName">Nom complet</label>
+                            <input type="text" class="form-input" id="contactName" name="name" placeholder="Ex : Adjovi Kossou" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="contactPhone">Téléphone</label>
+                            <input type="tel" class="form-input" id="contactPhone" name="phone" placeholder="+229 60 00 00 00" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="contactEmail">Email</label>
+                        <input type="email" class="form-input" id="contactEmail" name="email" placeholder="vous@exemple.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="contactBusiness">Type de commerce</label>
+                        <select class="form-input form-select" id="contactBusiness" name="business">
+                            <option value="" disabled selected>Sélectionnez votre activité</option>
+                            <option value="restaurant">Restaurant</option>
+                            <option value="fast-food">Fast-food</option>
+                            <option value="snack">Snack / Buvette</option>
+                            <option value="commerce">Petit commerce</option>
+                            <option value="multi">Multi-sites</option>
+                            <option value="autre">Autre</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="contactMessage">Votre message</label>
+                        <textarea class="form-input form-textarea" id="contactMessage" name="message" rows="4" placeholder="Décrivez votre besoin ou posez-nous vos questions..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-accent btn-large btn-submit">
+                        <span class="btn-bg"></span>
+                        <span class="btn-text">Envoyer le message</span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </form>
+                <div class="modal-success" id="modalSuccess">
+                    <div class="success-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="22" stroke="#22C55E" stroke-width="3"/>
+                            <path d="M14 24l7 7 13-13" stroke="#22C55E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="success-title">Message envoyé !</h3>
+                    <p class="success-text">Merci pour votre intérêt. Notre équipe vous contactera sous 24 heures.</p>
+                    <button type="button" class="btn btn-outline btn-large" id="modalSuccessClose">
+                        <span class="btn-text">Fermer</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Détection de session active pour le restaurateur
+        fetch('/api/auth/me')
+            .then(res => res.json())
+            .then(data => {
+                if (data.authenticated && data.restaurant) {
+                    const navCta = document.getElementById('navCtaBtn');
+                    if (navCta) {
+                        navCta.textContent = 'Mon Dashboard';
+                        navCta.href = '/dashboard';
+                    }
+                    const mobileCta = document.getElementById('mobileCtaBtn');
+                    if (mobileCta) {
+                        mobileCta.textContent = 'Mon Dashboard';
+                        mobileCta.href = '/dashboard';
+                    }
+                }
+            })
+            .catch(() => {});
+    </script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer mon compte restaurant — MenuDirect</title>
+    <meta name="description" content="Inscrivez votre restaurant sur MenuDirect et commencez à digitaliser vos commandes dès aujourd'hui.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+    <div class="auth-bg">
+        <div class="auth-blob-1"></div>
+        <div class="auth-blob-2"></div>
+        <div class="auth-grid-overlay"></div>
+    </div>
+
+    <header class="auth-header">
+        <a href="/" class="auth-logo">
+            <img src="logo.png" alt="MenuDirect">
+            Menu<span>Direct</span>
+        </a>
+        <a href="/login" class="auth-nav-link">
+            Déjà un compte ? <strong>Se connecter</strong> →
+        </a>
+    </header>
+
+    <main class="auth-container">
+        <div class="auth-card auth-card-wide">
+            <div class="auth-title-group">
+                <span class="auth-badge">Plateforme Restaurant</span>
+                <h1 class="auth-title">Créer mon compte <em>restaurant</em></h1>
+                <p class="auth-subtitle">Configurez votre espace et recevez vos premières commandes en quelques minutes.</p>
+            </div>
+
+            <div id="alertBox" class="auth-alert"></div>
+
+            <form id="registerForm" novalidate>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Nom du restaurant <span class="req">*</span></label>
+                        <input type="text" id="name" name="name" class="form-input" placeholder="Ex: Le Jardin des Saveurs" required autofocus>
+                    </div>
+                    <div class="form-group">
+                        <label for="owner_name" class="form-label">Nom du responsable <span class="req">*</span></label>
+                        <input type="text" id="owner_name" name="owner_name" class="form-input" placeholder="Ex: Adjovi Kodjo" required>
+                    </div>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label for="phone" class="form-label">Numéro de téléphone <span class="req">*</span></label>
+                        <input type="tel" id="phone" name="phone" class="form-input" placeholder="Ex: +229 97 00 00 00" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Adresse e-mail <span class="req">*</span></label>
+                        <input type="email" id="email" name="email" class="form-input" placeholder="contact@monresto.bj" required>
+                    </div>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label for="city" class="form-label">Ville</label>
+                        <input type="text" id="city" name="city" class="form-input" value="Cotonou" placeholder="Cotonou, Porto-Novo, Parakou...">
+                    </div>
+                    <div class="form-group">
+                        <label for="country" class="form-label">Pays</label>
+                        <select id="country" name="country" class="form-select">
+                            <option value="Bénin" selected>Bénin</option>
+                            <option value="Togo">Togo</option>
+                            <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+                            <option value="Sénégal">Sénégal</option>
+                            <option value="Autre">Autre</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label for="password" class="form-label">Mot de passe <span class="req">*</span></label>
+                        <div class="form-input-wrapper">
+                            <input type="password" id="password" name="password" class="form-input" placeholder="Au moins 6 caractères" required minlength="6">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm_password" class="form-label">Confirmer le mot de passe <span class="req">*</span></label>
+                        <div class="form-input-wrapper">
+                            <input type="password" id="confirm_password" name="confirm_password" class="form-input" placeholder="Retapez le mot de passe" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plan d'abonnement -->
+                <div class="plan-selector-group">
+                    <label class="form-label">Formule choisie</label>
+                    <div class="plan-cards">
+                        <label class="plan-choice">
+                            <input type="radio" name="plan" value="standard" checked>
+                            <div class="plan-card-inner">
+                                <div class="plan-name">Standard</div>
+                                <div class="plan-price">Gratuit</div>
+                            </div>
+                        </label>
+                        <label class="plan-choice">
+                            <input type="radio" name="plan" value="pro">
+                            <div class="plan-card-inner">
+                                <div class="plan-name">Pro</div>
+                                <div class="plan-price">5 000 FCFA/m</div>
+                            </div>
+                        </label>
+                        <label class="plan-choice">
+                            <input type="radio" name="plan" value="master">
+                            <div class="plan-card-inner">
+                                <div class="plan-name">Master</div>
+                                <div class="plan-price">15 000 FCFA/m</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" id="submitBtn" class="btn-submit">
+                    <span>Créer mon compte restaurant</span>
+                    <span aria-hidden="true">→</span>
+                </button>
+            </form>
+
+            <div class="auth-footer-text">
+                En créant un compte, vous acceptez notre <a href="/politique-de-confidentialite">politique de confidentialité</a>.<br>
+                Vous avez déjà un compte ? <a href="/login">Connectez-vous ici</a>.
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Pré-sélection du plan depuis l'URL (?plan=pro ou ?plan=master)
+        const urlParams = new URLSearchParams(window.location.search);
+        const planParam = urlParams.get('plan');
+        if (planParam && ['standard', 'pro', 'master'].includes(planParam.toLowerCase())) {
+            const radio = document.querySelector(`input[name="plan"][value="${planParam.toLowerCase()}"]`);
+            if (radio) radio.checked = true;
+        }
+
+        // Vérifier si déjà connecté
+        fetch('/api/auth/me')
+            .then(res => res.json())
+            .then(data => {
+                if (data.authenticated) {
+                    window.location.href = '/dashboard';
+                }
+            })
+            .catch(() => {});
+
+        const form = document.getElementById('registerForm');
+        const alertBox = document.getElementById('alertBox');
+        const submitBtn = document.getElementById('submitBtn');
+
+        function showAlert(msg, isError = true) {
+            alertBox.textContent = msg;
+            alertBox.className = `auth-alert show ${isError ? 'auth-alert-error' : 'auth-alert-success'}`;
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            alertBox.className = 'auth-alert';
+
+            const name = document.getElementById('name').value.trim();
+            const owner_name = document.getElementById('owner_name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const city = document.getElementById('city').value.trim();
+            const country = document.getElementById('country').value;
+            const password = document.getElementById('password').value;
+            const confirm_password = document.getElementById('confirm_password').value;
+            const plan = document.querySelector('input[name="plan"]:checked')?.value || 'standard';
+
+            if (!name || !owner_name || !phone || !email || !password) {
+                showAlert('Veuillez remplir tous les champs obligatoires (*).');
+                return;
+            }
+
+            if (password.length < 6) {
+                showAlert('Le mot de passe doit comporter au moins 6 caractères.');
+                return;
+            }
+
+            if (password !== confirm_password) {
+                showAlert('Les mots de passe ne correspondent pas.');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span>Création en cours...</span>';
+
+            try {
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name,
+                        owner_name,
+                        phone,
+                        email,
+                        city,
+                        country,
+                        password,
+                        confirm_password,
+                        plan
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    showAlert(data.error || 'Erreur lors de la création du compte.');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>Créer mon compte restaurant</span> →';
+                    return;
+                }
+
+                showAlert('Compte créé avec succès ! Redirection vers votre tableau de bord...', false);
+                setTimeout(() => {
+                    window.location.href = data.redirect || '/dashboard';
+                }, 800);
+            } catch (err) {
+                showAlert('Impossible de contacter le serveur. Vérifiez votre connexion.');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span>Créer mon compte restaurant</span> →';
+            }
+        });
+    </script>
+</body>
+</html>

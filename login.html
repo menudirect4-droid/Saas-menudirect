@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Restaurateur — MenuDirect</title>
+    <meta name="description" content="Connectez-vous à votre espace restaurant MenuDirect pour gérer vos commandes et votre menu.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+    <div class="auth-bg">
+        <div class="auth-blob-1"></div>
+        <div class="auth-blob-2"></div>
+        <div class="auth-grid-overlay"></div>
+    </div>
+
+    <header class="auth-header">
+        <a href="/" class="auth-logo">
+            <img src="logo.png" alt="MenuDirect">
+            Menu<span>Direct</span>
+        </a>
+        <a href="/register" class="auth-nav-link">
+            Pas encore de compte ? <strong>S'inscrire</strong> →
+        </a>
+    </header>
+
+    <main class="auth-container">
+        <div class="auth-card">
+            <div class="auth-title-group">
+                <span class="auth-badge">Espace Partenaire</span>
+                <h1 class="auth-title">Bon retour <em>parmi nous</em></h1>
+                <p class="auth-subtitle">Accédez à votre tableau de bord et gérez vos commandes en direct.</p>
+            </div>
+
+            <div id="alertBox" class="auth-alert"></div>
+
+            <form id="loginForm" novalidate>
+                <div class="form-group">
+                    <label for="identifier" class="form-label">Adresse e-mail ou Téléphone</label>
+                    <input type="text" id="identifier" name="identifier" class="form-input" placeholder="contact@monresto.bj ou +229..." required autofocus>
+                </div>
+
+                <div class="form-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                        <label for="password" class="form-label" style="margin-bottom: 0;">Mot de passe</label>
+                        <a href="#" id="forgotBtn" class="forgot-password-link">Mot de passe oublié ?</a>
+                    </div>
+                    <div class="form-input-wrapper">
+                        <input type="password" id="password" name="password" class="form-input" placeholder="Votre mot de passe" required>
+                    </div>
+                </div>
+
+                <button type="submit" id="submitBtn" class="btn-submit">
+                    <span>Se connecter</span>
+                    <span aria-hidden="true">→</span>
+                </button>
+            </form>
+
+            <div class="auth-footer-text">
+                Nouveau sur MenuDirect ? <a href="/register">Créer un compte restaurant gratuit</a>.
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Mot de passe oublié -->
+    <div id="forgotModal" class="modal-overlay">
+        <div class="modal-box">
+            <button id="closeModal" class="modal-close" aria-label="Fermer">✕</button>
+            <h3 style="font-size: 1.3rem; margin-bottom: 0.8rem; font-weight: 700;">Récupération de compte</h3>
+            <p style="color: var(--color-text-secondary); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.5rem;">
+                Pour réinitialiser votre mot de passe en toute sécurité, veuillez contacter notre équipe d'assistance par WhatsApp ou par e-mail avec votre numéro de téléphone de restaurant.
+            </p>
+            <a href="https://wa.me/22997000000?text=Bonjour%2C%20je%20souhaite%20r%C3%A9initialiser%20le%20mot%20de%20passe%20de%20mon%20restaurant%20sur%20MenuDirect." target="_blank" class="btn-submit" style="text-decoration: none; margin-top: 0;">
+                <span>Contacter l'assistance WhatsApp</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Vérifier si déjà connecté
+        fetch('/api/auth/me')
+            .then(res => res.json())
+            .then(data => {
+                if (data.authenticated) {
+                    window.location.href = '/dashboard';
+                }
+            })
+            .catch(() => {});
+
+        const form = document.getElementById('loginForm');
+        const alertBox = document.getElementById('alertBox');
+        const submitBtn = document.getElementById('submitBtn');
+        const forgotBtn = document.getElementById('forgotBtn');
+        const forgotModal = document.getElementById('forgotModal');
+        const closeModal = document.getElementById('closeModal');
+
+        function showAlert(msg, isError = true) {
+            alertBox.textContent = msg;
+            alertBox.className = `auth-alert show ${isError ? 'auth-alert-error' : 'auth-alert-success'}`;
+        }
+
+        forgotBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            forgotModal.classList.add('open');
+        });
+
+        closeModal.addEventListener('click', () => {
+            forgotModal.classList.remove('open');
+        });
+
+        forgotModal.addEventListener('click', (e) => {
+            if (e.target === forgotModal) forgotModal.classList.remove('open');
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            alertBox.className = 'auth-alert';
+
+            const identifier = document.getElementById('identifier').value.trim();
+            const password = document.getElementById('password').value;
+
+            if (!identifier || !password) {
+                showAlert('Veuillez renseigner votre e-mail (ou téléphone) et votre mot de passe.');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span>Connexion en cours...</span>';
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ identifier, password })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    showAlert(data.error || 'Identifiants incorrects.');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>Se connecter</span> →';
+                    return;
+                }
+
+                showAlert('Connexion réussie ! Redirection...', false);
+                setTimeout(() => {
+                    window.location.href = data.redirect || '/dashboard';
+                }, 600);
+            } catch (err) {
+                showAlert('Impossible de contacter le serveur.');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span>Se connecter</span> →';
+            }
+        });
+    </script>
+</body>
+</html>

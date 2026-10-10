@@ -1,0 +1,1559 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de bord Restaurant — MenuDirect</title>
+    <meta name="description" content="Gérez vos commandes, votre menu et vos clients en temps réel.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="auth.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <!-- Sidebar matching reference design -->
+    <aside class="dash-sidebar" id="dashSidebar">
+
+
+        <nav class="dash-nav">
+            <button class="nav-item active" data-view="dashboard">
+                <span class="nav-item-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                </span>
+                <span>Tableau de bord</span>
+            </button>
+
+            <button class="nav-item" data-view="orders">
+                <span class="nav-item-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                </span>
+                <span>Commandes</span>
+                <span class="nav-badge" id="navOrdersBadge">5</span>
+            </button>
+
+            <button class="nav-item" data-view="menu">
+                <span class="nav-item-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2v6a3 3 0 0 1-3 3 3 3 0 0 1-3-3V2"/><path d="M15 2v19"/><path d="M9 2v4a2 2 0 0 1-2 2 2 2 0 0 1-2-2V2"/><path d="M7 2v19"/></svg>
+                </span>
+                <span>Menu</span>
+            </button>
+
+            <button class="nav-item" data-view="translations">
+                <span class="nav-item-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+                </span>
+                <span>Traduction IA</span>
+            </button>
+
+            <button class="nav-item" data-view="minisite">
+                <span class="nav-item-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                </span>
+                <span>Mini-Site & Domaine</span>
+            </button>
+
+            <button class="nav-item" data-view="dashboard" onclick="document.getElementById('cardYourQrCode')?.scrollIntoView({behavior: 'smooth'})">
+                <span class="nav-item-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/></svg>
+                </span>
+                <span>QR Code</span>
+            </button>
+
+            <button class="nav-item" data-view="dashboard" onclick="document.getElementById('cardOrderLink')?.scrollIntoView({behavior: 'smooth'})">
+                <span class="nav-item-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                </span>
+                <span>Lien de commande</span>
+            </button>
+
+            <button class="nav-item" data-view="customers">
+                <span class="nav-item-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </span>
+                <span>Clients</span>
+            </button>
+
+            <button class="nav-item" data-view="payments">
+                <span class="nav-item-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+                </span>
+                <span>Paiements</span>
+            </button>
+
+            <button class="nav-item" data-view="stats">
+                <span class="nav-item-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                </span>
+                <span>Rapports</span>
+            </button>
+
+            <button class="nav-item" data-view="settings">
+                <span class="nav-item-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                </span>
+                <span>Paramètres</span>
+            </button>
+
+            <!-- Bouton masqué pour compatibilité de switchView('categories') -->
+            <button data-view="categories" hidden style="display: none !important;"></button>
+        </nav>
+
+        <!-- Sidebar Bottom Vignette matching reference image -->
+        <div class="sidebar-vignette-curved">
+            <div class="vignette-glow-curve"></div>
+            <div class="vignette-badge-content">
+                <div class="vignette-cloche-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                        <circle cx="12" cy="3" r="1" fill="#DC2626"/>
+                    </svg>
+                </div>
+                <div class="vignette-brand">Menu<span>Direct</span></div>
+                <p class="vignette-slogan">Plus de commandes, plus de clients, plus de revenus !</p>
+            </div>
+            <div class="vignette-dish-container">
+                <img src="dish-2.jpg" alt="Plats gourmands grillés" class="vignette-dish-photo">
+            </div>
+        </div>
+
+        <!-- Cibles techniques invisibles pour préserver la compatibilité logique JS (sans affichage visuel) -->
+        <div style="display: none;" aria-hidden="true">
+            <span id="sidebarAvatar"></span>
+            <span id="sidebarRestoName"></span>
+            <span id="sidebarPlanBadge"></span>
+            <a href="#" id="viewPublicMenuBtn"></a>
+            <button id="logoutBtn"></button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="dash-main">
+        <!-- Topbar matching reference image -->
+        <header class="dash-topbar">
+            <div class="topbar-welcome-section">
+                <button class="btn-toggle-sidebar" id="toggleSidebarBtn" aria-label="Menu" style="display: none;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                </button>
+                <div class="topbar-greeting-wrap">
+                    <h1 class="welcome-title">Bonjour, <span id="welcomeUserName">Mon Restaurant</span> 👋</h1>
+                    <p class="welcome-subtitle">Voici un aperçu de l'activité de votre restaurant aujourd'hui.</p>
+                </div>
+            </div>
+
+            <div class="topbar-actions-right">
+                <div class="topbar-date-pill" id="liveDateWidget">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" x2="16" y2="6"/><line x1="8" x2="8" y1="2" x2="8" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                    <span id="liveDateTimeText">Aujourd'hui</span>
+                </div>
+
+                <button id="notificationsBtn" class="topbar-notification-btn" aria-label="Notifications">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                    <span class="notification-red-dot" id="notificationCount">0</span>
+                    <span id="notificationDot" class="notification-dot" hidden></span>
+                </button>
+
+                <div class="topbar-user-profile" id="profileMenuBtn">
+                    <div class="profile-avatar-circle">
+                        <img id="topbarAvatarImg" src="hero-showcase-1.jpg" alt="Restaurant avatar" class="avatar-photo" onerror="this.style.display='none'; document.getElementById('topbarAvatarText').style.display='flex'">
+                        <span id="topbarAvatarText" class="topbar-avatar" style="display: none;">R</span>
+                    </div>
+                    <div class="profile-user-info">
+                        <strong id="topbarAdminName">Mon Restaurant</strong>
+                        <small id="topbarAdminRole">Propriétaire</small>
+                    </div>
+                </div>
+
+                <!-- Hidden elements for JS compatibility -->
+                <input type="text" id="dashGlobalSearch" style="display: none;">
+                <button id="copyPublicLinkBtn" style="display: none;"></button>
+                <a href="#" id="topbarPublicMenuBtn" target="_blank" style="display: none;"></a>
+                <span id="topbarTitle" style="display: none;">Tableau de bord</span>
+
+                <div id="profileDropdown" class="profile-dropdown" hidden>
+                    <strong id="profileRestaurantName">Mon restaurant</strong>
+                    <span id="profilePlan">STANDARD</span>
+                    <button onclick="window.switchView('settings')">Paramètres</button>
+                    <button id="dropdownLogoutBtn">Déconnexion</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dynamic Content Area -->
+        <main class="dash-content">
+
+            <!-- 1. SECTION DASHBOARD (ACCUEIL) -->
+            <section id="view-dashboard" class="view-section active">
+
+                <!-- GRILLE PRINCIPALE (CENTRE + DROITE) -->
+                <div class="dashboard-royal-grid">
+
+                    <!-- COLONNE PRINCIPALE (GAUCHE / CENTRE) -->
+                    <div class="dash-center-col">
+
+                        <!-- 4 CARTES STATISTIQUES HORIZONTALES -->
+                        <div class="stats-row-4">
+                            <!-- Carte 1 : Commandes aujourd'hui -->
+                            <div class="royal-stat-card">
+                                <div class="royal-stat-header">
+                                    <div class="royal-stat-icon-red">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                                    </div>
+                                    <span class="royal-stat-label">Commandes aujourd'hui</span>
+                                </div>
+                                <div class="royal-stat-value" id="statOrdersToday">28</div>
+                                <div class="royal-stat-trend">
+                                    <span class="trend-green">↑ +12%</span>
+                                    <span class="trend-sub">par rapport à hier</span>
+                                </div>
+                            </div>
+
+                            <!-- Carte 2 : Chiffre d'affaires aujourd'hui -->
+                            <div class="royal-stat-card">
+                                <div class="royal-stat-header">
+                                    <div class="royal-stat-icon-red">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+                                    </div>
+                                    <span class="royal-stat-label">Chiffre d'affaires aujourd'hui</span>
+                                </div>
+                                <div class="royal-stat-value royal-stat-price" id="statRevenueToday">182 500 FCFA</div>
+                                <div class="royal-stat-trend">
+                                    <span class="trend-green">↑ +18%</span>
+                                    <span class="trend-sub">par rapport à hier</span>
+                                </div>
+                            </div>
+
+                            <!-- Carte 3 : Clients aujourd'hui -->
+                            <div class="royal-stat-card">
+                                <div class="royal-stat-header">
+                                    <div class="royal-stat-icon-red">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                                    </div>
+                                    <span class="royal-stat-label">Clients aujourd'hui</span>
+                                </div>
+                                <div class="royal-stat-value" id="statPendingOrders">26</div>
+                                <div class="royal-stat-trend">
+                                    <span class="trend-green">↑ +16%</span>
+                                    <span class="trend-sub">par rapport à hier</span>
+                                </div>
+                            </div>
+
+                            <!-- Carte 4 : Temps moyen de préparation -->
+                            <div class="royal-stat-card">
+                                <div class="royal-stat-header">
+                                    <div class="royal-stat-icon-red">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                    </div>
+                                    <span class="royal-stat-label">Temps moyen de préparation</span>
+                                </div>
+                                <div class="royal-stat-value" id="statPrepTime">12 min</div>
+                                <div class="royal-stat-trend">
+                                    <span class="trend-green">↑ -25%</span>
+                                    <span class="trend-sub">par rapport à hier</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Éléments cachés pour compatibilité dashboard.js -->
+                        <span id="statPreparingOrders" style="display:none;">0</span>
+                        <span id="statCompletedOrders" style="display:none;">0</span>
+
+                        <!-- LIGNE 2 : DEUX GRAPHIQUES (Évolution des commandes + Répartition des commandes) -->
+                        <div class="charts-row-2">
+                            <!-- 1. Évolution des commandes -->
+                            <div class="royal-card sales-chart-card">
+                                <div class="royal-card-header">
+                                    <div class="header-with-red-icon">
+                                        <div class="icon-red-mini-box">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                                        </div>
+                                        <h3 class="royal-card-title">Évolution des commandes</h3>
+                                    </div>
+                                    <div class="chart-period-tabs">
+                                        <button class="chart-tab-pill active" data-period="7">7 jours</button>
+                                        <button class="chart-tab-pill" data-period="30">30 jours</button>
+                                        <button class="chart-tab-pill" data-period="90">90 jours</button>
+                                    </div>
+                                </div>
+
+                                <div class="royal-chart-viewport">
+                                    <div class="chart-y-axis">
+                                        <span>40</span>
+                                        <span>30</span>
+                                        <span>20</span>
+                                        <span>10</span>
+                                        <span>0</span>
+                                    </div>
+                                    <div class="chart-drawing-area">
+                                        <svg class="curved-sales-svg" viewBox="0 0 540 160" preserveAspectRatio="none">
+                                            <defs>
+                                                <linearGradient id="redCurveGrad" x1="0" y1="0" x2="0" y2="1">
+                                                    <stop offset="0%" stop-color="#DC2626" stop-opacity="0.38"/>
+                                                    <stop offset="100%" stop-color="#DC2626" stop-opacity="0.0"/>
+                                                </linearGradient>
+                                                <filter id="glowFilter" x="-20%" y="-20%" width="140%" height="140%">
+                                                    <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#DC2626" flood-opacity="0.5"/>
+                                                </filter>
+                                            </defs>
+                                            <!-- Aire sous la courbe -->
+                                            <path d="M 15 130 C 55 105, 95 110, 135 115 C 175 120, 215 100, 255 95 C 295 90, 335 65, 375 70 C 415 75, 455 100, 495 90 C 515 85, 525 65, 535 55 L 535 160 L 15 160 Z" fill="url(#redCurveGrad)" />
+                                            <!-- Ligne rouge fluide -->
+                                            <path d="M 15 130 C 55 105, 95 110, 135 115 C 175 120, 215 100, 255 95 C 295 90, 335 65, 375 70 C 415 75, 455 100, 495 90 C 515 85, 525 65, 535 55" fill="none" stroke="#DC2626" stroke-width="2.8" filter="url(#glowFilter)" />
+                                            <!-- Points de données -->
+                                            <circle cx="15" cy="130" r="3.5" fill="#FFFFFF" stroke="#DC2626" stroke-width="2" />
+                                            <circle cx="100" cy="110" r="3.5" fill="#FFFFFF" stroke="#DC2626" stroke-width="2" />
+                                            <circle cx="185" cy="115" r="3.5" fill="#FFFFFF" stroke="#DC2626" stroke-width="2" />
+                                            <circle cx="270" cy="95" r="3.5" fill="#FFFFFF" stroke="#DC2626" stroke-width="2" />
+                                            <circle cx="355" cy="70" r="3.5" fill="#FFFFFF" stroke="#DC2626" stroke-width="2" />
+                                            <circle cx="440" cy="95" r="3.5" fill="#FFFFFF" stroke="#DC2626" stroke-width="2" />
+                                            <circle cx="525" cy="60" r="4.5" fill="#FFFFFF" stroke="#DC2626" stroke-width="2.5" />
+                                        </svg>
+                                        <!-- Container ID pour compatibilité JS -->
+                                        <div id="salesChart" class="bar-chart-hidden" style="display:none;"></div>
+                                        <span id="chartRevenue" style="display:none;">0 FCFA</span>
+                                        <div class="chart-x-axis">
+                                            <span>26 Sep</span>
+                                            <span>27 Sep</span>
+                                            <span>28 Sep</span>
+                                            <span>29 Sep</span>
+                                            <span>30 Sep</span>
+                                            <span>01 Oct</span>
+                                            <span>02 Oct</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2. Répartition des commandes (Donut Chart) -->
+                            <div class="royal-card donut-chart-card">
+                                <div class="royal-card-header">
+                                    <div class="header-with-red-icon">
+                                        <h3 class="royal-card-title">Répartition des commandes</h3>
+                                    </div>
+                                </div>
+
+                                <div class="donut-chart-layout">
+                                    <div class="donut-wheel-container">
+                                        <svg class="donut-svg" viewBox="0 0 140 140">
+                                            <circle class="donut-circle-bg" cx="70" cy="70" r="50" fill="none" stroke="#181822" stroke-width="22" />
+                                            <!-- Segment 1 : À emporter (46%) -->
+                                            <circle class="donut-segment seg-medium" cx="70" cy="70" r="50" fill="none" stroke="#EF4444" stroke-width="22" stroke-dasharray="144 314" stroke-dashoffset="0" />
+                                            <!-- Segment 2 : Sur place (32%) -->
+                                            <circle class="donut-segment seg-bright" cx="70" cy="70" r="50" fill="none" stroke="#DC2626" stroke-width="22" stroke-dasharray="100 314" stroke-dashoffset="-144" />
+                                            <!-- Segment 3 : Livraison (22%) -->
+                                            <circle class="donut-segment seg-dark" cx="70" cy="70" r="50" fill="none" stroke="#991B1B" stroke-width="22" stroke-dasharray="70 314" stroke-dashoffset="-244" />
+                                        </svg>
+                                        <div class="donut-center-text">
+                                            <strong>28</strong>
+                                            <span>commandes</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="donut-legend-list">
+                                        <div class="donut-legend-item">
+                                            <span class="legend-dot-red dot-bright"></span>
+                                            <span class="legend-label">Sur place</span>
+                                            <span class="legend-val">32%</span>
+                                        </div>
+                                        <div class="donut-legend-item">
+                                            <span class="legend-dot-red dot-medium"></span>
+                                            <span class="legend-label">À emporter</span>
+                                            <span class="legend-val">46%</span>
+                                        </div>
+                                        <div class="donut-legend-item">
+                                            <span class="legend-dot-red dot-dark"></span>
+                                            <span class="legend-label">Livraison</span>
+                                            <span class="legend-val">22%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- LIGNE 3 : DERNIÈRES COMMANDES (TABLEAU HAUTE FIDÉLITÉ) -->
+                        <div class="royal-card table-orders-card">
+                            <div class="royal-card-header">
+                                <div class="header-with-red-icon">
+                                    <div class="icon-red-mini-box">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                                    </div>
+                                    <h3 class="royal-card-title">Dernières commandes</h3>
+                                </div>
+                                <button class="royal-link-red" onclick="window.switchView('orders')">Voir toutes →</button>
+                            </div>
+
+                            <div class="table-responsive-royal">
+                                <table class="royal-orders-table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Client</th>
+                                            <th>Plat</th>
+                                            <th>Montant</th>
+                                            <th>Statut</th>
+                                            <th>Heure</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recentOrdersTableBody">
+                                        <tr>
+                                            <td class="order-id-cell">#1028</td>
+                                            <td class="customer-cell">Client invité</td>
+                                            <td class="dish-cell">Poulet grillé + Alloco</td>
+                                            <td class="amount-cell">8 500 FCFA</td>
+                                            <td><span class="status-pill status-pill-prep">En préparation</span></td>
+                                            <td class="time-cell">12:42</td>
+                                            <td class="actions-cell"><button class="btn-dots-more" onclick="window.switchView('orders')">•••</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="order-id-cell">#1027</td>
+                                            <td class="customer-cell">Marie D.</td>
+                                            <td class="dish-cell">Thiebou diène</td>
+                                            <td class="amount-cell">12 000 FCFA</td>
+                                            <td><span class="status-pill status-pill-delivery">En livraison</span></td>
+                                            <td class="time-cell">12:31</td>
+                                            <td class="actions-cell"><button class="btn-dots-more" onclick="window.switchView('orders')">•••</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="order-id-cell">#1026</td>
+                                            <td class="customer-cell">Client invité</td>
+                                            <td class="dish-cell">Burger + Frites</td>
+                                            <td class="amount-cell">7 500 FCFA</td>
+                                            <td><span class="status-pill status-pill-delivered">Livré</span></td>
+                                            <td class="time-cell">12:18</td>
+                                            <td class="actions-cell"><button class="btn-dots-more" onclick="window.switchView('orders')">•••</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="order-id-cell">#1025</td>
+                                            <td class="customer-cell">Koffi A.</td>
+                                            <td class="dish-cell">Attiéké poisson</td>
+                                            <td class="amount-cell">10 000 FCFA</td>
+                                            <td><span class="status-pill status-pill-prep">En préparation</span></td>
+                                            <td class="time-cell">11:56</td>
+                                            <td class="actions-cell"><button class="btn-dots-more" onclick="window.switchView('orders')">•••</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="order-id-cell">#1024</td>
+                                            <td class="customer-cell">Fatou S.</td>
+                                            <td class="dish-cell">Poulet braisé + Riz</td>
+                                            <td class="amount-cell">9 000 FCFA</td>
+                                            <td><span class="status-pill status-pill-delivered">Livré</span></td>
+                                            <td class="time-cell">11:42</td>
+                                            <td class="actions-cell"><button class="btn-dots-more" onclick="window.switchView('orders')">•••</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- SECTION NOUVELLES FONCTIONNALITÉS SAAS (IA & TRADUCTION / BRANDING & IDENTITÉ) -->
+                        <div class="dash-features-growth-block" style="margin-top: 1.5rem;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.9rem;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <div class="icon-red-mini-box">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                                    </div>
+                                    <h3 class="royal-card-title" style="margin-bottom: 0;">Modules de Croissance & Expérience Client</h3>
+                                </div>
+                                <span style="font-size: 0.75rem; color: var(--dash-text-muted);">Cliquez sur un module pour ouvrir son interface</span>
+                            </div>
+
+                            <div class="dash-features-cards-grid">
+                                <!-- CARTE 1 : IA & TRADUCTION (Capture d'écran 1:1) -->
+                                <div class="about-feature-item clickable-saas-feature-card" onclick="window.switchView('translations')" role="button" tabindex="0" title="Accéder à la Traduction de Carte par IA Culinaire">
+                                    <div class="about-feature-check">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="10"/>
+                                            <polyline points="8 12 11 15 16 9"/>
+                                        </svg>
+                                    </div>
+                                    <div class="about-feature-text">
+                                        <span class="about-feature-badge-tag">IA & TRADUCTION</span>
+                                        <h3 class="about-feature-title">Traduction de Carte par IA Culinaire</h3>
+                                        <p class="about-feature-desc">Notre IA spécialisée comprend les subtilités gastronomiques et traduit automatiquement vos plats en plusieurs langues. Vos clients internationaux commandent en toute clarté et sans barrière linguistique.</p>
+                                    </div>
+                                </div>
+
+                                <!-- CARTE 2 : BRANDING & IDENTITÉ (Capture d'écran 1:1) -->
+                                <div class="about-feature-item clickable-saas-feature-card" onclick="window.switchView('minisite')" role="button" tabindex="0" title="Accéder au Mini-Site & Domaine Professionnel">
+                                    <div class="about-feature-check">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="10"/>
+                                            <polyline points="8 12 11 15 16 9"/>
+                                        </svg>
+                                    </div>
+                                    <div class="about-feature-text">
+                                        <span class="about-feature-badge-tag">BRANDING & IDENTITÉ</span>
+                                        <h3 class="about-feature-title">Mini-Site & Domaine Professionnel</h3>
+                                        <p class="about-feature-desc">Mettez en avant votre marque avec une page de menu élégante accessible via une URL personnalisée et percutante. Idéal pour vos bio Instagram, statuts WhatsApp, QR codes de table et cartes de visite.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cibles cachées pour préserver la compatibilité JS -->
+                        <ol id="topProductsList" style="display: none;"></ol>
+                        <span id="statCustomerRating" style="display: none;">4.8/5</span>
+                        <div id="quickToolsLegacy" style="display: none;">
+                            <span id="quickNewCount">0</span>
+                            <span id="quickPrepCount">0</span>
+                            <span id="quickReadyCount">0</span>
+                            <code id="publicMenuUrl">Chargement…</code>
+                            <button id="copyPublicMenuLinkBtn"></button>
+                            <a id="openPublicMenuBtn"></a>
+                            <button id="sharePublicMenuBtn"></button>
+                            <a id="downloadQrCodeBtn" download="menudirect-qr.png"></a>
+                            <button id="printQrCodeBtn"></button>
+                            <button id="showQrCodeBtn"></button>
+                            <div id="qrPreview"><img id="qrCodeImage" alt="QR"></div>
+                        </div>
+
+                    </div>
+
+                    <!-- COLONNE LATÉRALE DROITE (4 CARTES EMPILÉES DU NOUVEAU DESIGN) -->
+                    <aside class="dash-right-col">
+                        <!-- 1. FICHE DU RESTAURANT -->
+                        <div class="royal-card card-resto-profile">
+                            <div class="resto-cover-frame">
+                                <img src="hero-showcase-1.jpg" alt="Salle du restaurant" class="resto-cover-img" onerror="this.src='dish-1.jpg'">
+                                <button class="btn-edit-resto" onclick="window.switchView('settings')" title="Modifier les informations">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                </button>
+                            </div>
+                            <div class="resto-profile-body">
+                                <div class="resto-title-status-row">
+                                    <h3 class="resto-name-title" id="restoCardName">Mon Restaurant</h3>
+                                    <span class="status-pill-open">Ouvert</span>
+                                </div>
+                                <div class="resto-meta-items">
+                                    <div class="resto-meta-item">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                                        <span id="restoCardAddress">Cotonou, Bénin</span>
+                                    </div>
+                                    <div class="resto-meta-item">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                        <span id="restoCardPhone">+229 00 00 00 00</span>
+                                    </div>
+                                    <div class="resto-meta-item">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                                        <span id="restoCardEmail">contact@mon-restaurant.bj</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. VOTRE QR CODE -->
+                        <div class="royal-card card-action-qr" id="cardYourQrCode">
+                            <div class="action-card-top-row">
+                                <div class="icon-square-dark">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/></svg>
+                                </div>
+                                <div class="action-card-info">
+                                    <h4 class="action-card-title">Votre QR Code</h4>
+                                    <p class="action-card-sub">Permettez à vos clients de commander plus facilement en scannant votre QR code.</p>
+                                </div>
+                            </div>
+                            <button class="btn-royal-full-red" id="downloadQrCodeBtnRight" onclick="document.getElementById('downloadQrCodeBtn')?.click()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                <span>Télécharger le QR Code</span>
+                            </button>
+                        </div>
+
+                        <!-- 3. LIEN DE COMMANDE -->
+                        <div class="royal-card card-action-link" id="cardOrderLink">
+                            <div class="action-card-top-row">
+                                <div class="icon-square-red">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                                </div>
+                                <div class="action-card-info">
+                                    <h4 class="action-card-title">Lien de commande</h4>
+                                    <p class="action-card-sub">Partagez votre lien pour que vos clients commandent depuis n'importe où.</p>
+                                </div>
+                            </div>
+                            <div class="action-input-box">
+                                <input type="text" id="publicMenuUrlInput" readonly value="https://menudirect.bj/restaurant" class="input-readonly-link">
+                            </div>
+                            <button class="btn-royal-full-red" id="copyPublicLinkBtnRight" onclick="navigator.clipboard?.writeText(document.getElementById('publicMenuUrlInput').value); alert('Lien copié dans le presse-papier !')">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect width="13" height="13" x="9" y="9" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                                <span>Copier le lien</span>
+                            </button>
+                        </div>
+
+                        <!-- 4. BOUTON ACTION RAPIDE : AJOUTER UN PLAT -->
+                        <button class="royal-card card-add-dish-cta" onclick="window.openAddDish()" title="Ajouter un nouveau plat au menu">
+                            <div class="action-icon-circle-white">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="5" x2="12" y2="19"/>
+                                    <line x1="5" y1="12" x2="19" y2="12"/>
+                                </svg>
+                            </div>
+                            <div class="add-dish-text">
+                                <strong class="add-dish-title">Ajouter un plat</strong>
+                                <span class="add-dish-subtitle">Mettre un nouveau plat au menu</span>
+                            </div>
+                        </button>
+
+                        <!-- 5. BESOIN D'AIDE ? -->
+                        <div class="royal-card card-need-help">
+                            <div class="need-help-top-row">
+                                <div class="icon-circle-headset">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></svg>
+                                </div>
+                                <div class="action-card-info">
+                                    <h4 class="action-card-title">Besoin d'aide ?</h4>
+                                    <p class="action-card-sub">Notre équipe est là pour vous accompagner.</p>
+                                </div>
+                            </div>
+                            <a href="https://wa.me/2290157070530?text=Bonjour,%20j'ai%20besoin%20d'aide%20sur%20mon%20dashboard%20MenuDirect" target="_blank" class="btn-royal-outline-support" id="contactSupportBtn">
+                                <span>Contacter le support</span>
+                            </a>
+                        </div>
+                    </aside>
+                </div>
+            </section>
+
+            <!-- 2. SECTION COMMANDES -->
+            <section id="view-orders" class="view-section">
+                <div class="panel panel-3d">
+                    <div class="panel-header">
+                        <h3 class="panel-title">Gestion des commandes en direct</h3>
+                        <div class="filter-tabs">
+                            <button class="filter-tab active" data-order-filter="all">Toutes (<span id="countFilterAll">0</span>)</button>
+                            <button class="filter-tab" data-order-filter="nouvelle">Nouvelles (<span id="countFilterNew">0</span>)</button>
+                            <button class="filter-tab" data-order-filter="en_preparation">En préparation (<span id="countFilterPrep">0</span>)</button>
+                            <button class="filter-tab" data-order-filter="prete">Prêtes (<span id="countFilterReady">0</span>)</button>
+                            <button class="filter-tab" data-order-filter="terminee">Terminées</button>
+                            <button class="filter-tab" data-order-filter="annulee">Annulées</button>
+                        </div>
+                    </div>
+
+                    <div id="ordersCardsContainer" class="orders-grid">
+                        <!-- Rendu dynamique des commandes -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. SECTION MENU -->
+            <section id="view-menu" class="view-section">
+                <div class="panel panel-3d">
+                    <div class="panel-header">
+                        <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                            <h3 class="panel-title">Catalogue des plats</h3>
+                            <select id="menuCatFilter" class="form-select" style="max-width: 220px; padding: 0.5rem 0.8rem;">
+                                <option value="all">Toutes les catégories</option>
+                            </select>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <button id="openAiTranslateMenuBtn" class="btn-action btn-action-ai btn-3d" title="Traduction automatique par intelligence artificielle Google Gemini">
+                                <span>✨</span> Traduire avec Gemini
+                            </button>
+                            <button id="addDishBtn" class="btn-action btn-action-primary btn-3d">
+                                <span>+</span> Ajouter un plat
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="dishesGridContainer" class="dishes-grid">
+                        <!-- Rendu dynamique des plats -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. SECTION CATÉGORIES -->
+            <section id="view-categories" class="view-section">
+                <div class="panel panel-3d">
+                    <div class="panel-header">
+                        <h3 class="panel-title">Catégories du menu</h3>
+                        <button id="addCategoryBtn" class="btn-action btn-action-primary btn-3d">
+                            <span>+</span> Nouvelle catégorie
+                        </button>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="dash-table dash-table-3d">
+                            <thead>
+                                <tr>
+                                    <th>Nom de la catégorie</th>
+                                    <th>Ordre</th>
+                                    <th>Nombre de plats</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="categoriesTableBody">
+                                <!-- Rendu dynamique -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. SECTION CLIENTS -->
+            <section id="view-customers" class="view-section">
+                <div class="panel panel-3d">
+                    <div class="panel-header">
+                        <h3 class="panel-title">Répertoire des clients</h3>
+                        <span style="color: var(--dash-text-muted); font-size: 0.85rem;" id="customersCountLabel">0 client(s)</span>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="dash-table dash-table-3d">
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Téléphone</th>
+                                    <th>Adresse</th>
+                                    <th>Commandes passées</th>
+                                    <th>Total dépensé</th>
+                                    <th>Dernière commande</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customersTableBody">
+                                <!-- Rendu dynamique -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. SECTION PAIEMENTS -->
+            <section id="view-payments" class="view-section">
+                <div class="panel panel-3d">
+                    <div class="panel-header">
+                        <h3 class="panel-title">Journal des encaissements</h3>
+                        <div style="display: flex; gap: 1rem;">
+                            <span style="font-size: 0.85rem; color: #34D399;">Encaissé : <strong id="paidAmountLabel">0 FCFA</strong></span>
+                            <span style="font-size: 0.85rem; color: #FBBF24;">En attente : <strong id="pendingAmountLabel">0 FCFA</strong></span>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="dash-table dash-table-3d">
+                            <thead>
+                                <tr>
+                                    <th>Réf Commande</th>
+                                    <th>Client</th>
+                                    <th>Montant</th>
+                                    <th>Mode</th>
+                                    <th>Statut</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="paymentsTableBody">
+                                <!-- Rendu dynamique -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. SECTION STATISTIQUES -->
+            <section id="view-stats" class="view-section">
+                <div class="stats-grid">
+                    <div class="stat-card stat-card-3d">
+                        <div class="stat-header">
+                            <span class="stat-label">Chiffre d'affaires total</span>
+                            <div class="stat-icon-wrapper stat-icon-purple">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            </div>
+                        </div>
+                        <div class="stat-value stat-revenue-val" id="statsTotalRevenue">0 F</div>
+                        <div class="stat-footer-meta">
+                            <span class="stat-trend stat-trend-purple">Cumul total</span>
+                            <span class="stat-subtext">Depuis le début (FCFA)</span>
+                        </div>
+                        <div class="stat-glow glow-purple"></div>
+                    </div>
+                    <div class="stat-card stat-card-3d">
+                        <div class="stat-header">
+                            <span class="stat-label">Commandes globales</span>
+                            <div class="stat-icon-wrapper stat-icon-blue">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="statsTotalOrders">0</div>
+                        <div class="stat-footer-meta">
+                            <span class="stat-trend stat-trend-blue">Volume traité</span>
+                            <span class="stat-subtext">Toutes commandes</span>
+                        </div>
+                        <div class="stat-glow glow-blue"></div>
+                    </div>
+                    <div class="stat-card stat-card-3d">
+                        <div class="stat-header">
+                            <span class="stat-label">Panier moyen</span>
+                            <div class="stat-icon-wrapper stat-icon-green">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="statsAverageBasket">0 F</div>
+                        <div class="stat-footer-meta">
+                            <span class="stat-trend stat-trend-green">Par commande</span>
+                            <span class="stat-subtext">Moyenne globale</span>
+                        </div>
+                        <div class="stat-glow glow-green"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 8. SECTION PARAMÈTRES & ABONNEMENTS -->
+            <section id="view-settings" class="view-section">
+                <div class="panel panel-3d">
+                    <div class="panel-header">
+                        <h3 class="panel-title">Profil de l'établissement</h3>
+                    </div>
+
+                    <form id="settingsProfileForm" style="max-width: 700px;">
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label class="form-label">Nom du restaurant</label>
+                                <input type="text" id="setRestoName" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Nom du responsable</label>
+                                <input type="text" id="setOwnerName" class="form-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label class="form-label">Téléphone</label>
+                                <input type="tel" id="setPhone" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Adresse e-mail (fixe)</label>
+                                <input type="email" id="setEmail" class="form-input" disabled style="opacity: 0.6;">
+                            </div>
+                        </div>
+
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label class="form-label">Ville</label>
+                                <input type="text" id="setCity" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Pays</label>
+                                <input type="text" id="setCountry" class="form-input">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Adresse physique complète</label>
+                            <input type="text" id="setAddress" class="form-input" placeholder="Ex: Haie Vive, Rue 340, Cotonou">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Horaires d'ouverture</label>
+                            <input type="text" id="setOpeningHours" class="form-input" placeholder="Ex: Lun - Dim : 10h00 - 23h00">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Description du restaurant</label>
+                            <textarea id="setDescription" class="form-input" rows="3" placeholder="Présentation courte de votre établissement et vos spécialités..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Logo du restaurant (URL ou fichier)</label>
+                            <input type="text" id="setLogoUrl" class="form-input" placeholder="https://... ou téléchargez ci-dessous">
+                            <input type="file" id="setLogoFile" accept="image/*" class="form-input" style="margin-top: 0.5rem; padding: 0.5rem;">
+                        </div>
+
+                        <button type="submit" class="btn-action btn-action-primary btn-3d" style="padding: 0.8rem 1.6rem; font-size: 0.95rem;">
+                            Enregistrer les modifications
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Formules d'abonnement -->
+                <div class="panel panel-3d">
+                    <div class="panel-header">
+                        <h3 class="panel-title">Formule d'abonnement</h3>
+                        <span id="currentPlanIndicator" class="badge-status status-prete">Actif</span>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem;">
+                        <div class="sub-plan-card" id="planCard-standard">
+                            <div>
+                                <h4 style="font-size: 1.2rem; margin-bottom: 0.4rem;">Standard</h4>
+                                <div style="font-size: 1.5rem; font-weight: 800; color: #F87171; margin-bottom: 1rem; font-family: var(--font-mono);">Gratuit</div>
+                                <ul style="list-style: none; font-size: 0.85rem; color: var(--dash-text-muted); display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem;">
+                                    <li>✓ Jusqu'à 50 commandes / mois</li>
+                                    <li>✓ Menu digital complet</li>
+                                    <li>✓ Dashboard basique</li>
+                                </ul>
+                            </div>
+                            <button class="btn-action btn-3d" onclick="window.changeSubscription('standard')">Choisir Standard</button>
+                        </div>
+
+                        <div class="sub-plan-card" id="planCard-pro">
+                            <div>
+                                <h4 style="font-size: 1.2rem; margin-bottom: 0.4rem;">Pro</h4>
+                                <div style="font-size: 1.5rem; font-weight: 800; color: #F87171; margin-bottom: 1rem; font-family: var(--font-mono);">5 000 FCFA <span style="font-size: 0.8rem; font-weight: normal;">/ mois</span></div>
+                                <ul style="list-style: none; font-size: 0.85rem; color: var(--dash-text-muted); display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem;">
+                                    <li>✓ Commandes illimitées</li>
+                                    <li>✓ Alertes sonores & direct</li>
+                                    <li>✓ Statistiques avancées</li>
+                                    <li>✓ Support prioritaire WhatsApp</li>
+                                </ul>
+                            </div>
+                            <button class="btn-action btn-action-primary btn-3d" onclick="window.changeSubscription('pro')">Passer à Pro</button>
+                        </div>
+
+                        <div class="sub-plan-card" id="planCard-master">
+                            <div>
+                                <h4 style="font-size: 1.2rem; margin-bottom: 0.4rem;">Master</h4>
+                                <div style="font-size: 1.5rem; font-weight: 800; color: #F87171; margin-bottom: 1rem; font-family: var(--font-mono);">15 000 FCFA <span style="font-size: 0.8rem; font-weight: normal;">/ mois</span></div>
+                                <ul style="list-style: none; font-size: 0.85rem; color: var(--dash-text-muted); display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem;">
+                                    <li>✓ Tout de Pro inclus</li>
+                                    <li>✓ Multi-restaurants (jusqu'à 10)</li>
+                                    <li>✓ Gestion des rôles & équipe</li>
+                                    <li>✓ Accompagnement dédié</li>
+                                </ul>
+                            </div>
+                            <button class="btn-action btn-3d" onclick="window.changeSubscription('master')">Passer à Master</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 9. SECTION IA & TRADUCTION : TRADUCTION DE CARTE PAR IA CULINAIRE -->
+            <section id="view-translations" class="view-section">
+                <!-- En-tête de la fonctionnalité -->
+                <div class="panel panel-3d">
+                    <div class="panel-header" style="flex-wrap: wrap; gap: 1rem;">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.4rem;">
+                                <span class="about-feature-badge-tag" style="margin-bottom: 0;">IA & TRADUCTION</span>
+                                <span class="badge-status status-prete" style="font-size: 0.72rem;">✨ Intelligence Gastronomique Activée</span>
+                            </div>
+                            <h3 class="panel-title" style="font-size: 1.35rem; font-weight: 800;">Traduction de Carte par IA Culinaire</h3>
+                            <p style="font-size: 0.88rem; color: var(--dash-text-muted); margin-top: 0.35rem; max-width: 760px; line-height: 1.55;">
+                                Notre IA spécialisée comprend les subtilités gastronomiques et traduit automatiquement vos plats en plusieurs langues. Vos clients internationaux commandent en toute clarté et sans barrière linguistique.
+                            </p>
+                        </div>
+                        <div style="display: flex; gap: 0.6rem; align-items: center;">
+                            <a href="#" id="viewPublicMenuFromTransTopBtn" target="_blank" class="btn-action btn-3d" style="text-decoration: none; display: inline-flex; align-items: center; gap: 0.45rem;">
+                                <span>👁️</span> Voir le menu public
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Statistiques de couverture par langue -->
+                    <div style="margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.08);">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+                            <span style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--dash-text-muted);">
+                                Couverture linguistique de votre carte
+                            </span>
+                            <span id="transTotalDishesCount" style="font-size: 0.8rem; color: #FFF; font-weight: 700;">5 plats au menu</span>
+                        </div>
+                        <div class="translation-coverage-grid" id="translationCoverageGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.85rem;">
+                            <!-- Généré dynamiquement en JS (barres de progression par langue) -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Studio de Traduction IA (Formulaire de lancement multi-langues) -->
+                <div class="panel panel-3d" style="margin-top: 1.5rem;">
+                    <div class="panel-header">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div class="icon-red-mini-box">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                            </div>
+                            <h3 class="panel-title">Studio de Traduction IA Culinaire</h3>
+                        </div>
+                        <span style="font-size: 0.78rem; color: var(--dash-text-muted);">Préserve le contexte culturel & les ingrédients</span>
+                    </div>
+
+                    <div class="trans-studio-form" style="display: flex; flex-direction: column; gap: 1.25rem;">
+                        <!-- 1. Sélection de la langue source et périmètre -->
+                        <div class="form-grid-3">
+                            <div class="form-group">
+                                <label class="form-label">Langue d'origine de votre carte</label>
+                                <select id="transStudioSourceLang" class="form-select">
+                                    <option value="fr" selected>🇫🇷 Français (Langue d'origine)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Périmètre de traduction</label>
+                                <select id="transStudioScope" class="form-select">
+                                    <option value="all" selected>Tout le menu actif (Recommandé)</option>
+                                    <option value="category">Filtrer par catégorie</option>
+                                    <option value="untranslated">Plats non encore traduits uniquement</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group" id="transStudioCategoryWrap" style="display: none;">
+                                <label class="form-label">Choisir la catégorie</label>
+                                <select id="transStudioCategorySelect" class="form-select">
+                                    <!-- Rempli en JS -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- 2. Sélection multi-langues avec pills à cocher -->
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label" style="display: flex; align-items: center; justify-content: space-between;">
+                                <span>Sélectionnez une ou plusieurs langues cibles <span class="req">*</span></span>
+                                <span style="font-size: 0.75rem; color: var(--dash-text-muted);">Sélectionnez toutes celles que vous souhaitez traduire</span>
+                            </label>
+                            
+                            <div class="trans-lang-checkboxes-grid" id="transLangCheckboxesGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0.75rem; margin-top: 0.5rem;">
+                                <!-- Checkbox stylée Anglais -->
+                                <label class="trans-lang-pill-choice">
+                                    <input type="checkbox" name="transTargetLang" value="en" checked>
+                                    <span class="pill-check-indicator"></span>
+                                    <span class="pill-lang-flag">🇬🇧</span>
+                                    <span class="pill-lang-label">English (Anglais)</span>
+                                </label>
+                                <!-- Checkbox stylée Portugais -->
+                                <label class="trans-lang-pill-choice">
+                                    <input type="checkbox" name="transTargetLang" value="pt">
+                                    <span class="pill-check-indicator"></span>
+                                    <span class="pill-lang-flag">🇵🇹</span>
+                                    <span class="pill-lang-label">Português (Portugais)</span>
+                                </label>
+                                <!-- Checkbox stylée Espagnol -->
+                                <label class="trans-lang-pill-choice">
+                                    <input type="checkbox" name="transTargetLang" value="es">
+                                    <span class="pill-check-indicator"></span>
+                                    <span class="pill-lang-flag">🇪🇸</span>
+                                    <span class="pill-lang-label">Español (Espagnol)</span>
+                                </label>
+                                <!-- Checkbox stylée Fɔngbe -->
+                                <label class="trans-lang-pill-choice">
+                                    <input type="checkbox" name="transTargetLang" value="fon">
+                                    <span class="pill-check-indicator"></span>
+                                    <span class="pill-lang-flag">🇧🇯</span>
+                                    <span class="pill-lang-label">Fɔngbe (Fon - Bénin)</span>
+                                </label>
+                                <!-- Checkbox stylée Allemand -->
+                                <label class="trans-lang-pill-choice">
+                                    <input type="checkbox" name="transTargetLang" value="de">
+                                    <span class="pill-check-indicator"></span>
+                                    <span class="pill-lang-flag">🇩🇪</span>
+                                    <span class="pill-lang-label">Deutsch (Allemand)</span>
+                                </label>
+                                <!-- Checkbox stylée Italien -->
+                                <label class="trans-lang-pill-choice">
+                                    <input type="checkbox" name="transTargetLang" value="it">
+                                    <span class="pill-check-indicator"></span>
+                                    <span class="pill-lang-flag">🇮🇹</span>
+                                    <span class="pill-lang-label">Italiano (Italien)</span>
+                                </label>
+                                <!-- Checkbox stylée Arabe -->
+                                <label class="trans-lang-pill-choice">
+                                    <input type="checkbox" name="transTargetLang" value="ar">
+                                    <span class="pill-check-indicator"></span>
+                                    <span class="pill-lang-flag">🇸🇦</span>
+                                    <span class="pill-lang-label">العربية (Arabe)</span>
+                                </label>
+                                <!-- Checkbox stylée Chinois -->
+                                <label class="trans-lang-pill-choice">
+                                    <input type="checkbox" name="transTargetLang" value="zh">
+                                    <span class="pill-check-indicator"></span>
+                                    <span class="pill-lang-flag">🇨🇳</span>
+                                    <span class="pill-lang-label">中文 (Chinois)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Bouton de lancement de la traduction -->
+                        <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.08); flex-wrap: wrap; gap: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 0.6rem; color: var(--dash-text-muted); font-size: 0.82rem;">
+                                <span>🔒 Traduction avec prévisualisation avant enregistrement sur votre carte</span>
+                            </div>
+                            <button id="btnLaunchAiBatchTranslate" class="btn-action btn-action-ai-run btn-3d" style="padding: 0.8rem 1.8rem; font-size: 0.95rem;">
+                                <span>✨</span> Lancer la Traduction IA Gastronomique
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loader de traduction culinaire -->
+                <div id="transStudioLoadingState" class="panel panel-3d" style="display: none; text-align: center; padding: 3rem 1.5rem; margin-top: 1.5rem;">
+                    <div class="ai-pulse-spinner" style="margin: 0 auto 1.25rem auto;"></div>
+                    <h4 style="font-size: 1.2rem; font-weight: 800; color: #FFF;">Traduction Gastronomique en cours...</h4>
+                    <p style="font-size: 0.88rem; color: var(--dash-text-muted); max-width: 540px; margin: 0.5rem auto 0 auto; line-height: 1.55;">
+                        Notre IA culinaire analyse les ingrédients, préserve l'authenticité de vos spécialités et génère des descriptions appétissantes.
+                    </p>
+                </div>
+
+                <!-- Zone de Prévisualisation & Révision manuelle avant publication -->
+                <div id="transStudioPreviewBlock" class="panel panel-3d" style="display: none; margin-top: 1.5rem; border: 1px solid rgba(124, 58, 237, 0.35);">
+                    <div class="panel-header" style="flex-wrap: wrap; gap: 1rem;">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span class="ai-results-badge" id="transPreviewBatchCountBadge">0 résultat(s)</span>
+                                <h3 class="panel-title" style="font-size: 1.15rem;">Prévisualisation & Révision Manuelle des Plats</h3>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--dash-text-muted); margin-top: 2px;">
+                                Vous pouvez modifier manuellement n'importe quel intitulé ou description avant de publier sur votre menu.
+                            </p>
+                        </div>
+                        <div style="display: flex; gap: 0.6rem; align-items: center;">
+                            <button id="btnDiscardTransPreview" class="btn-action" style="padding: 0.6rem 1.1rem;">
+                                Abandonner
+                            </button>
+                            <button id="btnSaveTransPreviewAll" class="btn-action btn-action-primary btn-3d" style="padding: 0.6rem 1.5rem;">
+                                <span>✓</span> Valider et Publier sur le Menu Public
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Onglets de langues pour la prévisualisation -->
+                    <div class="preview-lang-tabs" id="previewLangTabs" style="display: flex; gap: 0.5rem; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 0.75rem; flex-wrap: wrap;">
+                        <!-- Onglets générés en JS -->
+                    </div>
+
+                    <!-- Liste des cartes de prévisualisation éditables -->
+                    <div id="transPreviewCardsContainer" style="display: flex; flex-direction: column; gap: 1rem;">
+                        <!-- Généré dynamiquement -->
+                    </div>
+                </div>
+
+                <!-- Tableau de Gestion des Traductions Déjà Publiées -->
+                <div class="panel panel-3d" style="margin-top: 1.5rem;">
+                    <div class="panel-header" style="flex-wrap: wrap; gap: 1rem;">
+                        <div>
+                            <h3 class="panel-title" style="font-size: 1.1rem;">Traductions Actuelles de Votre Carte</h3>
+                            <span style="font-size: 0.78rem; color: var(--dash-text-muted);">Consultez, modifiez ou supprimez vos plats traduits</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;" id="existingLangTabsWrap">
+                            <!-- Onglets des langues enregistrées -->
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="dash-table dash-table-3d" id="existingTransTable">
+                            <thead>
+                                <tr>
+                                    <th style="width: 24%;">Plat Original</th>
+                                    <th style="width: 26%;">Nom Traduit (Éditable)</th>
+                                    <th style="width: 36%;">Description Gastronomique (Éditable)</th>
+                                    <th style="width: 14%; text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="existingTransTableBody">
+                                <!-- Rendu dynamique -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="existingTransEmptyMsg" style="display: none; padding: 2.5rem; text-align: center;">
+                        <p style="color: var(--dash-text-muted); font-size: 0.9rem;">
+                            Aucune traduction enregistrée pour cette langue. Utilisez le studio ci-dessus pour la générer !
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 10. SECTION BRANDING & IDENTITÉ : MINI-SITE & DOMAINE PROFESSIONNEL -->
+            <section id="view-minisite" class="view-section">
+                <!-- En-tête de la fonctionnalité -->
+                <div class="panel panel-3d">
+                    <div class="panel-header" style="flex-wrap: wrap; gap: 1rem;">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.4rem;">
+                                <span class="about-feature-badge-tag" style="margin-bottom: 0;">BRANDING & IDENTITÉ</span>
+                                <span class="badge-status status-prete" style="font-size: 0.72rem;">● Mini-Site Public Prêt</span>
+                            </div>
+                            <h3 class="panel-title" style="font-size: 1.35rem; font-weight: 800;">Mini-Site & Domaine Professionnel</h3>
+                            <p style="font-size: 0.88rem; color: var(--dash-text-muted); margin-top: 0.35rem; max-width: 760px; line-height: 1.55;">
+                                Mettez en avant votre marque avec une page de menu élégante accessible via une URL personnalisée et percutante. Idéal pour vos bio Instagram, statuts WhatsApp, QR codes de table et cartes de visite.
+                            </p>
+                        </div>
+                        <div style="display: flex; gap: 0.6rem; align-items: center;">
+                            <a href="#" id="minisiteHeaderOpenBtn" target="_blank" class="btn-action btn-action-primary btn-3d" style="text-decoration: none; display: inline-flex; align-items: center; gap: 0.45rem;">
+                                <span>Ouvrir le mini-site</span>
+                                <span>↗</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grille Principale 2 Colonnes : Paramètres (Gauche) + Simulateur Interactif en Direct (Droite) -->
+                <div class="minisite-workspace-grid" style="display: grid; grid-template-columns: 1fr 1.05fr; gap: 1.5rem; margin-top: 1.5rem; align-items: start;">
+                    
+                    <!-- COLONNE GAUCHE : PARAMÈTRES DU MINI-SITE & DU DOMAINE -->
+                    <div class="minisite-config-col" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        
+                        <!-- BLOC 1 : URL UNIQUE, PERSONNALISÉE ET PARTAGE EN 1 CLIC -->
+                        <div class="panel panel-3d">
+                            <div class="panel-header">
+                                <h3 class="panel-title" style="font-size: 1.05rem;">🔗 Lien Public & URL Personnalisée</h3>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <!-- URL Box avec bouton Copier -->
+                                <div class="minisite-url-display-box" style="background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); padding: 0.85rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;">
+                                    <div style="display: flex; align-items: center; gap: 0.6rem; min-width: 0; flex: 1;">
+                                        <span style="color: #DC2626; font-size: 1.1rem;">⚡</span>
+                                        <span id="minisiteLiveUrlText" style="font-family: var(--font-mono); font-size: 0.88rem; color: #FFF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                            https://menudirect.bj/...
+                                        </span>
+                                    </div>
+                                    <button id="minisiteCopyUrlBtn" class="btn-action btn-action-primary" style="flex-shrink: 0; padding: 0.5rem 0.95rem; font-size: 0.82rem;">
+                                        <span>📋</span> Copier l'URL
+                                    </button>
+                                </div>
+
+                                <!-- Personnaliser l'adresse (Slug) -->
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label">Personnaliser votre adresse web courte</label>
+                                    <div style="display: flex; gap: 0.6rem;">
+                                        <div style="display: flex; align-items: center; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: var(--radius-md); padding: 0 0.8rem; flex: 1;">
+                                            <span style="font-size: 0.82rem; color: var(--dash-text-muted); font-family: var(--font-mono);">menudirect.bj/</span>
+                                            <input type="text" id="minisiteSlugInput" class="form-input" style="border: none; background: transparent; padding-left: 0.2rem;" placeholder="mon-restaurant">
+                                        </div>
+                                        <button id="minisiteSaveSlugBtn" class="btn-action btn-3d" style="padding: 0.6rem 1.1rem;">
+                                            Valider
+                                        </button>
+                                    </div>
+                                    <small id="minisiteSlugHint" style="display: block; margin-top: 0.35rem; font-size: 0.75rem; color: var(--dash-text-muted);">
+                                        URL simple et élégante pour vos réseaux et supports imprimés. Ex: <code>chez-maman</code>
+                                    </small>
+                                </div>
+
+                                <!-- Partage immédiat Instagram & WhatsApp & QR Code -->
+                                <div style="padding-top: 0.95rem; border-top: 1px solid rgba(255, 255, 255, 0.08);">
+                                    <span style="font-size: 0.78rem; text-transform: uppercase; font-weight: 700; color: var(--dash-text-muted); letter-spacing: 0.05em; display: block; margin-bottom: 0.65rem;">
+                                        Partage rapide sur vos canaux
+                                    </span>
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem;">
+                                        <button id="minisiteShareWhatsappBtn" class="btn-action" style="justify-content: center; gap: 0.45rem; background: rgba(37, 211, 102, 0.12); border-color: rgba(37, 211, 102, 0.35); color: #25D366;">
+                                            <span>💬</span> Statut WhatsApp
+                                        </button>
+                                        <button id="minisiteShareInstagramBtn" class="btn-action" style="justify-content: center; gap: 0.45rem; background: rgba(225, 48, 108, 0.12); border-color: rgba(225, 48, 108, 0.35); color: #E1306C;">
+                                            <span>📸</span> Bio Instagram
+                                        </button>
+                                    </div>
+                                    <button id="minisiteDownloadQrBtn" class="btn-action btn-3d" style="width: 100%; margin-top: 0.65rem; justify-content: center; gap: 0.45rem;">
+                                        <span>📲</span> Télécharger le QR Code Haute Définition
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BLOC 2 : IDENTITÉ VISUELLE & PERSONNALISATION -->
+                        <div class="panel panel-3d">
+                            <div class="panel-header">
+                                <h3 class="panel-title" style="font-size: 1.05rem;">🎨 Identité Visuelle & Thème du Mini-Site</h3>
+                            </div>
+                            <form id="minisiteBrandingForm" style="display: flex; flex-direction: column; gap: 1rem;">
+                                <!-- Couleur de marque -->
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label">Couleur d'accentuation de votre marque</label>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                                        <div class="color-preset-pills" style="display: flex; gap: 0.5rem;" id="brandColorPresets">
+                                            <button type="button" class="color-pill-btn active" data-color="#DC2626" style="background: #DC2626; width: 32px; height: 32px; border-radius: 50%; border: 2px solid #FFF; cursor: pointer;" title="Rouge Royal"></button>
+                                            <button type="button" class="color-pill-btn" data-color="#D97706" style="background: #D97706; width: 32px; height: 32px; border-radius: 50%; border: 2px solid transparent; cursor: pointer;" title="Or Prestige"></button>
+                                            <button type="button" class="color-pill-btn" data-color="#059669" style="background: #059669; width: 32px; height: 32px; border-radius: 50%; border: 2px solid transparent; cursor: pointer;" title="Émeraude"></button>
+                                            <button type="button" class="color-pill-btn" data-color="#2563EB" style="background: #2563EB; width: 32px; height: 32px; border-radius: 50%; border: 2px solid transparent; cursor: pointer;" title="Bleu Saphir"></button>
+                                            <button type="button" class="color-pill-btn" data-color="#111116" style="background: #111116; width: 32px; height: 32px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.4); cursor: pointer;" title="Obsidienne Sombre"></button>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 0.4rem;">
+                                            <input type="color" id="minisiteColorPicker" value="#DC2626" style="width: 36px; height: 36px; border: none; border-radius: 8px; cursor: pointer; background: transparent;">
+                                            <input type="text" id="minisiteColorHexInput" value="#DC2626" class="form-input" style="width: 95px; padding: 0.4rem 0.6rem; font-family: var(--font-mono); font-size: 0.82rem;">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Slogan percutant -->
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label">Slogan percutant / Phrase d'accroche</label>
+                                    <input type="text" id="minisiteTaglineInput" class="form-input" placeholder="Ex: Restaurant gastronomique africain et européen. Grillades & produits frais.">
+                                </div>
+
+                                <!-- Bannière / Couverture -->
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label">Photo de couverture / Bannière</label>
+                                    <input type="text" id="minisiteCoverUrlInput" class="form-input" placeholder="Collez l'URL de votre photo ou choisissez un modèle">
+                                    <div class="cover-presets-row" style="display: flex; gap: 0.5rem; margin-top: 0.5rem; overflow-x: auto; padding-bottom: 0.3rem;">
+                                        <button type="button" class="btn-cover-preset" data-cover="hero-showcase-1.jpg" style="border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; overflow: hidden; width: 72px; height: 44px; padding: 0; cursor: pointer; background: none;">
+                                            <img src="hero-showcase-1.jpg" alt="Ambiance" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </button>
+                                        <button type="button" class="btn-cover-preset" data-cover="hero-showcase-2.jpg" style="border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; overflow: hidden; width: 72px; height: 44px; padding: 0; cursor: pointer; background: none;">
+                                            <img src="hero-showcase-2.jpg" alt="Grillades" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </button>
+                                        <button type="button" class="btn-cover-preset" data-cover="dish-2.jpg" style="border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; overflow: hidden; width: 72px; height: 44px; padding: 0; cursor: pointer; background: none;">
+                                            <img src="dish-2.jpg" alt="Plat" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Coordonnées de contact social -->
+                                <div class="form-grid-2">
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <label class="form-label">Numéro WhatsApp</label>
+                                        <input type="tel" id="minisiteWhatsappInput" class="form-input" placeholder="+229 97 00 11 22">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <label class="form-label">Compte Instagram</label>
+                                        <input type="text" id="minisiteInstagramInput" class="form-input" placeholder="@monrestaurant">
+                                    </div>
+                                </div>
+
+                                <button type="submit" id="saveMinisiteBrandingBtn" class="btn-action btn-action-primary btn-3d" style="width: 100%; padding: 0.75rem 1.5rem; font-size: 0.92rem; justify-content: center; margin-top: 0.5rem;">
+                                    <span>✓</span> Enregistrer l'identité visuelle
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- BLOC 3 : DOMAINE PROFESSIONNEL PERSONNALISÉ -->
+                        <div class="panel panel-3d">
+                            <div class="panel-header">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <h3 class="panel-title" style="font-size: 1.05rem;">🌐 Domaine Personnalisé</h3>
+                                    <span class="badge-status status-nouvelle" style="font-size: 0.7rem;">Haute Disponibilité</span>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--dash-text-muted); margin-bottom: 0.85rem; line-height: 1.5;">
+                                Utilisez votre propre nom de domaine pour une image de marque irréprochable (ex: <code>menu.monrestaurant.com</code>).
+                            </p>
+                            
+                            <div style="display: flex; gap: 0.6rem;">
+                                <input type="text" id="minisiteCustomDomainInput" class="form-input" placeholder="menu.monrestaurant.com" style="flex: 1;">
+                                <button id="minisiteSaveDomainBtn" class="btn-action btn-3d" style="padding: 0.6rem 1.1rem;">
+                                    Connecter
+                                </button>
+                            </div>
+
+                            <div id="minisiteDomainStatusCard" style="display: none; margin-top: 1rem; padding: 0.85rem; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-md);">
+                                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span style="font-size: 0.82rem; font-weight: 700; color: #FFF;" id="minisiteDomainCurrentLabel">menu.monrestaurant.com</span>
+                                    <span class="badge-status status-prep" id="minisiteDomainBadge">En attente DNS</span>
+                                </div>
+                                <div style="font-size: 0.75rem; color: var(--dash-text-muted); line-height: 1.45;">
+                                    DNS : Créez un enregistrement <strong>CNAME</strong> pointant vers <code>saas.menudirect.bj</code>.
+                                </div>
+                                <button id="minisiteDisconnectDomainBtn" class="btn-action btn-action-danger" style="margin-top: 0.6rem; padding: 0.35rem 0.75rem; font-size: 0.75rem;">
+                                    Déconnecter le domaine
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- COLONNE DROITE : SIMULATEUR INTERACTIF EN DIRECT DU MINI-SITE -->
+                    <div class="minisite-preview-col" style="position: sticky; top: 80px;">
+                        <div class="panel panel-3d" style="padding: 1.25rem;">
+                            <div class="panel-header" style="margin-bottom: 1rem;">
+                                <div>
+                                    <h3 class="panel-title" style="font-size: 1.05rem;">Aperçu Avant Publication</h3>
+                                    <span style="font-size: 0.78rem; color: var(--dash-text-muted);">Rendu en temps réel sur smartphone, tablette & desktop</span>
+                                </div>
+                                <!-- Switcher Responsive -->
+                                <div class="preview-device-switcher" style="display: flex; gap: 0.35rem; background: rgba(0, 0, 0, 0.4); padding: 0.25rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.08);">
+                                    <button type="button" class="btn-device-toggle active" data-device="mobile" style="background: rgba(220, 38, 38, 0.25); border: none; color: #FFF; padding: 0.3rem 0.6rem; border-radius: 6px; font-size: 0.78rem; cursor: pointer; font-weight: 600;" title="Aperçu Mobile">
+                                        📱 Mobile
+                                    </button>
+                                    <button type="button" class="btn-device-toggle" data-device="tablet" style="background: transparent; border: none; color: var(--dash-text-muted); padding: 0.3rem 0.6rem; border-radius: 6px; font-size: 0.78rem; cursor: pointer;" title="Aperçu Tablette">
+                                        📱 Tablette
+                                    </button>
+                                    <button type="button" class="btn-device-toggle" data-device="desktop" style="background: transparent; border: none; color: var(--dash-text-muted); padding: 0.3rem 0.6rem; border-radius: 6px; font-size: 0.78rem; cursor: pointer;" title="Aperçu Ordinateur">
+                                        💻 Desktop
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Chassis Simulateur -->
+                            <div class="minisite-device-chassis chassis-mobile" id="minisiteDeviceChassis" style="margin: 0 auto; transition: max-width 0.3s ease; max-width: 375px; background: #0A0A0E; border: 8px solid #22222E; border-radius: 36px; overflow: hidden; box-shadow: 0 16px 40px rgba(0,0,0,0.6); height: 600px; position: relative;">
+                                <iframe id="minisitePreviewIframe" src="/restaurant/le-jardin-des-saveurs" style="width: 100%; height: 100%; border: none; background: #0F0F14;"></iframe>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                                <button id="minisiteRefreshPreviewBtn" class="btn-action" style="font-size: 0.8rem; padding: 0.45rem 0.85rem;">
+                                    🔄 Actualiser l'aperçu
+                                </button>
+                                <a href="/restaurant/le-jardin-des-saveurs" id="minisiteDirectLinkBtn" target="_blank" class="btn-action btn-action-primary" style="font-size: 0.8rem; padding: 0.45rem 0.95rem; text-decoration: none;">
+                                    Ouvrir plein écran ↗
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- MODAL AJOUT / MODIF PLAT -->
+    <div id="dishModal" class="dash-modal-overlay">
+        <div class="dash-modal-box">
+            <button id="closeDishModalBtn" class="dash-modal-close">✕</button>
+            <h3 id="dishModalTitle" style="font-size: 1.3rem; margin-bottom: 1.5rem; font-weight: 800;">Ajouter un plat</h3>
+            
+            <form id="dishForm">
+                <input type="hidden" id="dishEditId">
+                <div class="form-group">
+                    <label class="form-label">Nom du plat <span class="req">*</span></label>
+                    <input type="text" id="dishName" class="form-input" placeholder="Ex: Poulet braisé spécial" required>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label">Prix en FCFA <span class="req">*</span></label>
+                        <input type="number" id="dishPrice" class="form-input" placeholder="5000" required min="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Catégorie</label>
+                        <select id="dishCategorySelect" class="form-select">
+                            <option value="">Sans catégorie</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea id="dishDescription" class="form-input" rows="2" placeholder="Description appétissante, garniture..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Photo du plat (Fichier ou URL)</label>
+                    <input type="file" id="dishImageFile" accept="image/*" class="form-input" style="padding: 0.5rem;">
+                    <input type="text" id="dishImageUrl" class="form-input" placeholder="Ou collez une URL d'image (https://...)" style="margin-top: 0.5rem;">
+                </div>
+
+                <div class="form-group" style="display: flex; align-items: center; gap: 0.6rem;">
+                    <input type="checkbox" id="dishIsActive" checked style="width: 18px; height: 18px; cursor: pointer;">
+                    <label for="dishIsActive" class="form-label" style="margin-bottom: 0; cursor: pointer;">Plat immédiatement disponible à la commande</label>
+                </div>
+
+                <button type="submit" id="saveDishBtn" class="btn-submit" style="margin-top: 1rem;">
+                    Enregistrer le plat
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL AJOUT / MODIF CATÉGORIE -->
+    <div id="categoryModal" class="dash-modal-overlay">
+        <div class="dash-modal-box">
+            <button id="closeCatModalBtn" class="dash-modal-close">✕</button>
+            <h3 id="catModalTitle" style="font-size: 1.3rem; margin-bottom: 1.5rem; font-weight: 800;">Nouvelle catégorie</h3>
+
+            <form id="categoryForm">
+                <input type="hidden" id="catEditId">
+                <div class="form-group">
+                    <label class="form-label">Nom de la catégorie <span class="req">*</span></label>
+                    <input type="text" id="catName" class="form-input" placeholder="Ex: Grillades, Boissons..." required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Ordre d'affichage</label>
+                    <input type="number" id="catOrder" class="form-input" value="1" min="1">
+                </div>
+                <button type="submit" class="btn-submit">Enregistrer la catégorie</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL TRADUCTION IA DU MENU -->
+    <div id="aiTranslateModal" class="dash-modal-overlay">
+        <div class="dash-modal-box dash-modal-box-large">
+            <button id="closeAiTranslateModalBtn" class="dash-modal-close">✕</button>
+            <div class="ai-modal-header">
+                <div class="ai-modal-badge">
+                    <span class="ai-badge-sparkle">✨</span>
+                    <span>Propulsé par Google Gemini</span>
+                </div>
+                <h3 style="font-size: 1.45rem; font-weight: 800; margin-top: 0.45rem; color: var(--dash-text-primary);">Traduire le Menu avec Google Gemini</h3>
+                <p style="font-size: 0.88rem; color: var(--dash-text-muted); margin-top: 0.25rem;">
+                    Traduisez vos plats et descriptions avec précision gastronomique grâce au modèle Google Gemini.
+                </p>
+            </div>
+
+            <div class="ai-translate-controls">
+                <div class="form-grid-3">
+                    <div class="form-group">
+                        <label class="form-label">Langue d'origine</label>
+                        <select id="aiSourceLang" class="form-select">
+                            <option value="fr" selected>🇫🇷 Français (Original)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Langue de destination <span class="req">*</span></label>
+                        <select id="aiTargetLang" class="form-select">
+                            <option value="en" selected>🇬🇧 Anglais (English)</option>
+                            <option value="pt">🇵🇹 Portugais (Português)</option>
+                            <option value="es">🇪🇸 Espagnol (Español)</option>
+                            <option value="fon">🇧🇯 Fɔngbe (Fon - Bénin)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Périmètre</label>
+                        <select id="aiScope" class="form-select">
+                            <option value="all">Tout le menu actif</option>
+                            <option value="category">Par catégorie</option>
+                            <option value="selected">Plat sélectionné uniquement</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="aiCategoryScopeWrap" class="form-group" style="display: none;">
+                    <label class="form-label">Sélectionner la catégorie à traduire</label>
+                    <select id="aiCategorySelect" class="form-select"></select>
+                </div>
+
+                <div id="aiDishScopeWrap" class="form-group" style="display: none;">
+                    <label class="form-label">Plat à traduire</label>
+                    <div id="aiDishSelectedName" style="padding: 0.65rem 0.9rem; background: var(--dash-bg-subtle); border-radius: var(--radius-sm); font-weight: 700;"></div>
+                </div>
+
+                <div class="ai-translate-action-bar">
+                    <button id="startAiTranslateBtn" class="btn-action btn-action-ai-run">
+                        <span>✨</span>
+                        <span id="startAiTranslateBtnText">Générer la traduction avec Gemini</span>
+                    </button>
+                    <span id="aiTranslateCountHint" class="ai-count-hint">Prêt à traduire avec Gemini</span>
+                </div>
+            </div>
+
+            <!-- Loader de traduction en cours -->
+            <div id="aiTranslateLoading" class="ai-translate-loading" style="display: none;">
+                <div class="ai-pulse-spinner"></div>
+                <div class="ai-loading-text">
+                    <h4>Traduction gastronomique en cours...</h4>
+                    <p>L'IA analyse vos plats, respecte les ingrédients locaux et ajuste la sémantique culinaire.</p>
+                </div>
+            </div>
+
+            <!-- Zone de résultats avec champs modifiables -->
+            <div id="aiTranslateResultsWrap" class="ai-translate-results" style="display: none;">
+                <div class="ai-results-header">
+                    <div>
+                        <h4 style="font-size: 1.05rem; font-weight: 700;">Prévisualisation & Révision manuelle</h4>
+                        <p style="font-size: 0.82rem; color: var(--dash-text-muted); margin-top: 2px;">
+                            Vous pouvez modifier ou affiner chaque champ ci-dessous avant validation.
+                        </p>
+                    </div>
+                    <span class="ai-results-badge" id="aiResultsCount">0 plat(s)</span>
+                </div>
+
+                <div id="aiTranslateItemsList" class="ai-translate-items-list">
+                    <!-- Généré dynamiquement -->
+                </div>
+
+                <div class="ai-results-footer">
+                    <button id="cancelAiTranslateBtn" class="btn-action" style="padding: 0.75rem 1.25rem;">Annuler</button>
+                    <button id="saveAiTranslationsBtn" class="btn-submit" style="width: auto; padding: 0.75rem 1.85rem; margin-top: 0;">
+                        <span>✓</span>
+                        <span>Valider et Enregistrer sur mon menu</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION COMMANDE EN DIRECT -->
+    <div id="orderToast" class="order-toast">
+        <div class="toast-icon">🔔</div>
+        <div class="toast-content">
+            <h4 id="toastTitle">Nouvelle commande reçue !</h4>
+            <p id="toastMessage">Chargement...</p>
+        </div>
+        <button class="btn-action btn-action-primary" onclick="window.switchView('orders')">Voir</button>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

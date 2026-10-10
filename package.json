@@ -1,0 +1,20 @@
+{
+  "name": "menudirect-saas",
+  "version": "1.0.0",
+  "description": "Plateforme SaaS de gestion de commandes pour restaurants",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "@google/genai": "^2.22.0",
+    "@google/generative-ai": "^0.24.1",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^17.4.2",
+    "express": "^4.21.2",
+    "multer": "^1.4.5-lts.1",
+    "qrcode": "^1.5.4"
+  }
+}

@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Politique de confidentialité — MenuDirect</title>
+    <meta name="description" content="Découvrez la politique de confidentialité de MenuDirect, la plateforme de gestion de commandes pour restaurants et commerces. Transparence, sécurité et respect de vos données.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=DM+Serif+Display:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=privacy-2026">
+
+    <!-- SVG Noise Filter -->
+    <svg style="position:absolute;width:0;height:0;pointer-events:none">
+        <filter id="noise">
+            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+            <feColorMatrix type="saturate" values="0"/>
+        </filter>
+    </svg>
+</head>
+<body class="legal-page">
+
+    <!-- Noise Overlay -->
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <!-- ========== NAVBAR ========== -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="navbar-inner">
+            <div class="navbar-left">
+                <a href="/" class="navbar-logo">
+                    <img src="logo.png" alt="MenuDirect Logo" height="40" class="logo-img">
+                    Menu<span class="logo-accent">Direct</span>
+                </a>
+                <div class="navbar-badge" style="display: inline-flex;">
+                    <span class="badge-label" style="font-family: var(--font-mono); font-size: 0.72rem;">Page Officielle</span>
+                </div>
+            </div>
+            <ul class="navbar-links" id="navLinks">
+                <li><a href="/">← Retour à l'accueil</a></li>
+                <li><a href="/login" class="nav-link-login">Se connecter</a></li>
+            </ul>
+            <a href="/register" class="btn btn-accent btn-nav" id="navCtaBtn">Commencer</a>
+            <button class="navbar-toggle" id="navToggle" aria-label="Menu de navigation">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul class="mobile-menu-links">
+            <li><a href="/" class="mobile-link">← Retour à l'accueil</a></li>
+            <li><a href="/login" class="mobile-link" style="color: var(--white); font-weight: 700;">Se connecter</a></li>
+            <li><a href="/register" class="btn btn-accent btn-mobile-cta">Créer mon compte</a></li>
+        </ul>
+    </div>
+
+    <!-- ========== HEADER HERO ========== -->
+    <header class="legal-header">
+        <div class="legal-header-pattern"></div>
+        <div class="container">
+            <div class="legal-breadcrumbs">
+                <a href="/">Accueil</a>
+                <span class="separator">/</span>
+                <span>Légal</span>
+                <span class="separator">/</span>
+                <span style="color: var(--white);">Politique de confidentialité</span>
+            </div>
+
+            <div class="legal-tag-badge">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Confidentialité & Protection des données
+            </div>
+
+            <h1 class="legal-title">
+                Politique de <em>confidentialité</em>
+            </h1>
+
+            <div class="legal-date-meta">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <span>Dernière mise à jour : 2 octobre 2026</span>
+            </div>
+
+            <div class="legal-summary-grid">
+                <div class="legal-summary-card">
+                    <span class="legal-summary-icon">🛡️</span>
+                    <h3 class="legal-summary-title">Aucune revente de données</h3>
+                    <p class="legal-summary-desc">Vos données personnelles et celles de vos clients ne sont jamais vendues, cédées ou louées à des régies publicitaires tierces.</p>
+                </div>
+                <div class="legal-summary-card">
+                    <span class="legal-summary-icon">💳</span>
+                    <h3 class="legal-summary-title">Zéro stockage bancaire</h3>
+                    <p class="legal-summary-desc">Les paiements s'effectuent en direct (espèces ou Mobile Money). MenuDirect ne collecte ni ne stocke de données de carte bancaire sensible.</p>
+                </div>
+                <div class="legal-summary-card">
+                    <span class="legal-summary-icon">🔒</span>
+                    <h3 class="legal-summary-title">Sécurité & Transparence</h3>
+                    <p class="legal-summary-desc">Mots de passe hachés avec bcrypt, sessions cryptographiques et cookies strictement réservés au fonctionnement technique du compte.</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== CORPS PRINCIPAL ========== -->
+    <main class="legal-main">
+        <div class="container">
+            <div class="legal-layout">
+
+                <!-- SIDEBAR SOMMAIRE STICKY -->
+                <aside class="legal-sidebar" aria-label="Sommaire de la page">
+                    <div class="legal-sidebar-header">
+                        <span class="legal-sidebar-title">Sommaire</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                    </div>
+                    <ul class="legal-toc-list">
+                        <li><a href="#section-1" class="legal-toc-link"><span class="num">01.</span> Introduction</a></li>
+                        <li><a href="#section-2" class="legal-toc-link"><span class="num">02.</span> Données collectées</a></li>
+                        <li><a href="#section-3" class="legal-toc-link"><span class="num">03.</span> Utilisation des données</a></li>
+                        <li><a href="#section-4" class="legal-toc-link"><span class="num">04.</span> Paiements</a></li>
+                        <li><a href="#section-5" class="legal-toc-link"><span class="num">05.</span> Protection des données</a></li>
+                        <li><a href="#section-6" class="legal-toc-link"><span class="num">06.</span> Partage des données</a></li>
+                        <li><a href="#section-7" class="legal-toc-link"><span class="num">07.</span> Conservation</a></li>
+                        <li><a href="#section-8" class="legal-toc-link"><span class="num">08.</span> Droits des utilisateurs</a></li>
+                        <li><a href="#section-9" class="legal-toc-link"><span class="num">09.</span> Cookies & stockage</a></li>
+                        <li><a href="#section-10" class="legal-toc-link"><span class="num">10.</span> Principes de sécurité</a></li>
+                        <li><a href="#section-11" class="legal-toc-link"><span class="num">11.</span> Modifications</a></li>
+                        <li><a href="#section-12" class="legal-toc-link"><span class="num">12.</span> Contact</a></li>
+                    </ul>
+                    <div class="legal-sidebar-back">
+                        <a href="/" class="btn-sidebar-back">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                            Retourner à l'accueil
+                        </a>
+                    </div>
+                </aside>
+
+                <!-- CONTENU DES SECTIONS -->
+                <div class="legal-content">
+
+                    <!-- 1. INTRODUCTION -->
+                    <section id="section-1" class="legal-card-section">
+                        <div class="legal-section-header">
+                            <span class="legal-section-num">01</span>
+                            <h2 class="legal-section-title">Introduction</h2>
+                        </div>
+                        <p class="legal-text">
+                            Bienvenue sur <strong>MenuDirect</strong>. MenuDirect est une plateforme logicielle SaaS conçue pour simplifier et optimiser la gestion de commandes en ligne pour les restaurants, snacks, fast-foods et petits commerces, notamment au Bénin et en Afrique de l'Ouest.
+                        </p>
+                        <p class="legal-text">
+                            La présente Politique de confidentialité a pour objet d'informer en toute transparence nos utilisateurs — qu'il s'agisse des restaurateurs et commerçants créant un compte sur la plateforme (ci-après les <em>« Restaurateurs Partenaires »</em>) ou des consommateurs commandant via les menus numériques partagés (ci-après les <em>« Clients »</em>) — sur la façon dont leurs informations personnelles sont collectées, traitées et protégées.
+                        </p>
+                        <div class="legal-callout">
+                            <h3 class="legal-callout-title">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                                Notre philosophie de confidentialité
+                            </h3>
+                            <p class="legal-callout-text">
+                                Nous appliquons le principe de minimisation : nous ne collectons que les données strictement indispensables à l'acheminement, à la préparation et au suivi opérationnel des commandes de restauration.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- 2. DONNÉES COLLECTÉES -->
+                    <section id="section-2" class="legal-card-section">
+                        <div class="legal-section-header">
+                            <span class="legal-section-num">02</span>
+                            <h2 class="legal-section-title">Données collectées</h2>
+                        </div>
+                        <p class="legal-text">
+                            Dans le cadre de l'utilisation de la plateforme, MenuDirect peut être amené à recueillir différentes catégories de données personnelles, strictement nécessaires à la fourniture de ses services :
+                        </p>
+                        
+                        <div class="legal-grid-features">
+                            <div class="legal-feature-box">
+                                <h4>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    Identité & Coordonnées
+                                </h4>
+                                <p>Nom et prénom de l'utilisateur, nom du gérant ou responsable d'établissement, nom du client passant commande.</p>
+                            </div>
+
+                            <div class="legal-feature-box">
+                                <h4>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                                    Communications
+                                </h4>
+                                <p>Adresse e-mail valide pour la gestion du compte et l'assistance ; numéro de téléphone (utilisé pour les contacts opérationnels et l'envoi de commandes).</p>
+                            </div>
+
+                            <div class="legal-feature-box">
+                                <h4>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                                    Informations de l'établissement
+                                </h4>
+                                <p>Nom de l'établissement, adresse géographique, ville, pays, description commerciale, horaires de service, photographies de plats et menus.</p>
+                            </div>
+
+                            <div class="legal-feature-box">
+                                <h4>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                                    Gestion des commandes
+                                </h4>
+                                <p>Détail des plats sélectionnés, suppléments, quantité, adresse ou instructions de livraison, mode de retrait et mode de règlement choisi.</p>
+                            </div>
+
+                            <div class="legal-feature-box">
+                                <h4>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                                    Données techniques d'accès
+                                </h4>
+                                <p>Adresse IP de connexion, logs techniques d'erreur et jeton de session cryptographique (<code>md_session</code>) nécessaire au maintien de la session sécurisée.</p>
+                            </div>
+                        </div>
+
+                        <p class="legal-text" style="font-size: 0.92rem; color: var(--gray-600); margin-top: 1rem;">
+                            <em>Important :</em> MenuDirect ne collecte aucune donnée inutile, aucune donnée sensible au sens strict (santé, biométrie, opinions politiques), ni aucun historique de localisation continue.
+                        </p>
+                    </section>
+
+                    <!-- 3. UTILISATION DES DONNÉES -->
+                    <section id="section-3" class="legal-card-section">
+                        <div class="legal-section-header">
+                            <span class="legal-section-num">03</span>
+                            <h2 class="legal-section-title">Utilisation des données</h2>
+                        </div>
+                        <p class="legal-text">
+                            Les informations recueillies sont utilisées exclusivement dans les buts légitimes suivants :
+                        </p>
+                        <ul class="legal-list">
+                            <li class="legal-list-item">
+                                <span class="legal-list-dot"></span>
+                                <div><strong>Création et gestion de compte :</strong> permettre aux commerçants de s'enregistrer, d'accéder à leur tableau de bord personnalisé et de sécuriser leur espace restaurateur.</div>
+                            </li>
+                            <li class="legal-list-item">
+                                <span class="legal-list-dot"></span>
+                                <div><strong>Gestion des menus et catalogues :</strong> permettre aux restaurateurs de publier, éditer, organiser leurs catégories de plats et définir leurs tarifs en toute autonomie.</div>
+                            </li>
+                            <li class="legal-list-item">
+                                <span class="legal-list-dot"></span>
+                                <div><strong>Prise et traitement des commandes :</strong> transmettre instantanément au restaurant les commandes passées par ses clients avec les coordonnées utiles à la livraison ou au retrait.</div>
+                            </li>
+                            <li class="legal-list-item">
+                                <span class="legal-list-dot"></span>
+                                <div><strong>Fonctionnement et sécurité du service :</strong> assurer la stabilité des serveurs, prévenir les abus, fraudes ou tentatives d'intrusion.</div>
+                            </li>
+                            <li class="legal-list-item">
+                                <span class="legal-list-dot"></span>
+                                <div><strong>Communications opérationnelles :</strong> envoyer les informations de service, réinitialisation d'accès, mises à jour critiques et répondre aux demandes formulées auprès du support.</div>
+                            </li>
+                            <li class="legal-list-item">
+                                <span class="legal-list-dot"></span>
+                                <div><strong>Amélioration continue :</strong> optimiser l'ergonomie, la rapidité d'affichage et l'adéquation de la plateforme avec les usages concrets des commerces locaux.</div>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <!-- 4. PAIEMENTS -->
+                    <section id="section-4" class="legal-card-section">
+                        <div class="legal-section-header">
+                            <span class="legal-section-num">04</span>
+                            <h2 class="legal-section-title">Paiements</h2>
+                        </div>
+                        <p class="legal-text">
+                            L'architecture de MenuDirect a été pensée pour être adaptée aux habitudes de commerce de proximité :
+                        </p>
+                        <div class="legal-callout" style="border-left-color: #10B981; background: #F0FDF4;">
+                            <h3 class="legal-callout-title" style="color: #065F46;">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                Règlements directs & Zéro stockage de carte bancaire
+                            </h3>
+                            <p class="legal-callout-text" style="color: #047857;">
+                                MenuDirect <strong>ne collecte pas, ne traite pas et ne conserve aucune information bancaire sensible</strong> (numéros complets de carte bancaire, dates d'expiration, CVV ou codes de sécurité).
+                            </p>
+                        </div>
+                        <p class="legal-text">
+                            Les commandes passées sur MenuDirect s'effectuent selon les modalités configurées par chaque restaurant :
+                        </p>
+                        <ul class="legal-list">
+                            <li class="legal-list-item">
+                                <span class="legal-list-dot"></span>
+                                <div><strong>Paiement en espèces :</strong> effectué directement entre le client et le livreur ou au comptoir de l'établissement lors de la remise de la commande.</div>
+                            </li>
+                            <li class="legal-list-item">
+                                <span class="legal-list-dot"></span>
+                                <div><strong>Paiement Mobile Money direct :</strong> effectué directement par transfert Mobile Money entre l'acheteur et le compte marchand ou numéro de téléphone du restaurant.</div>
+                            </li>
+                        </ul>
+                        <p class="legal-text">
+                            MenuDirect agit en tant que facilitateur technologique de commande et n'intermédie pas les fonds financiers des clients. Si un prestataire de paiement externe venait à être intégré ultérieurement pour des abonnements ou options, les transactions seraient opérées directement sur ses serveurs sécurisés et conformes aux normes bancaires.
+                        </p>
+                    </section>
+
+                    <!-- 5. PROTECTION DES DONNÉES -->
+                    <section id="section-5" class="legal-card-section">
+                        <div class="legal-section-header">
+                            <span class="legal-section-num">05</span>
+                            <h2 class="legal-section-title">Protection des données</h2>
+                        </div>
+                        <p class="legal-text">
+                            Nous appliquons des mesures techniques et organisationnelles raisonnables et proportionnées pour préserver la confidentialité, l'intégrité et la disponibilité des informations traitées contre tout accès illégitime ou modification non autorisée :
+                        </p>
+                        <ul class="legal-list">
+                            <li class="legal-list-item">
+                                <span class="legal-list-dot"></span>
+                                <div><strong>Hachage fort des mots de passe :</strong> tous les mots de passe des restaurateurs sont systématiquement hachés au moyen de l'algorithme <em>bcrypt</em> avec sel cryptographique avant tout enregistrement en base. Aucun mot de passe n'est stocké en texte clair.</div>
+                            </li>
+                            <li class="legal-list-item">
+                                <span class="legal-list-dot"></span>
+                                <div><strong>Isolation logique des comptes :</strong> chaque restaurant dispose d'un identifiant unique. L'accès aux commandes, aux statistiques et aux données de menu d'un restaurant est strictement restreint à son administrateur légitime.</div>
+                            </li>
+                            <li class="legal-list-item">
+                                <span class="legal-list-dot"></span>
+                                <div><strong>Protection contre les injections :</strong> les échanges avec la base de données s'effectuent par requêtes préparées avec typage strict des paramètres pour neutraliser les risques d'injection SQL.</div>
+                            </li>
+                            <li class="legal-list-item">
+                                <span class="legal-list-dot"></span>
+                                <div><strong>Sessions sécurisées :</strong> les sessions d'authentification reposent sur des jetons aléatoires protégés et des cookies paramétrés avec les drapeaux <code>httpOnly</code> et <code>SameSite: Lax</code>.</div>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <!-- 6. PARTAGE DES DONNÉES -->
+                    <section id="section-6" class="legal-card-section">
+                        <div class="legal-section-header">
+                            <span class="legal-section-num">06</span>
+                            <h2 class="legal-section-title">Partage des données</h2>
+                        </div>
+                        <p class="legal-text">
+                            MenuDirect ne divulgue vos données personnelles qu'aux seuls tiers strictement indispensables à la fourniture du service :
+                        </p>
+                        <ul class="legal-list">
+                            <li class="legal-list-item">
+                                <span class="legal-list-dot"></span>
+                                <div><strong>Au restaurant concerné par la commande :</strong> lorsqu'un client valide son panier, les détails de la commande (nom, téléphone, adresse éventuelle, liste des plats) sont partagés avec le restaurant sélectionné pour que celui-ci puisse honorer la commande.</div>
+                            </li>
+                            <li class="legal-list-item">
+                                <span class="legal-list-dot"></span>
+                                <div><strong>Aux prestataires d'infrastructure technique :</strong> nos serveurs d'hébergement et prestataires de réseau assurant la maintenance et la diffusion de l'application web.</div>
+                            </li>
+                            <li class="legal-list-item">
+                                <span class="legal-list-dot"></span>
+                                <div><strong>Aux autorités administratives ou judiciaires compétentes :</strong> uniquement lorsque la loi ou une décision de justice exécutoire l'impose formellement.</div>
+                            </li>
+                        </ul>
+                        <div class="legal-callout">
+                            <h3 class="legal-callout-title">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                                Engagement formel
+                            </h3>
+                            <p class="legal-callout-text">
+                                Nous ne commercialisons, ne louons, ne vendons et n'échangeons aucune base de données utilisateurs à des fins publicitaires ou de prospection commerciale externe.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- 7. CONSERVATION DES DONNÉES -->
+                    <section id="section-7" class="legal-card-section">
+                        <div class="legal-section-header">
+                            <span class="legal-section-num">07</span>
+                            <h2 class="legal-section-title">Conservation des données</h2>
+                        </div>
+                        <p class="legal-text">
+                            Les informations personnelles sont conservées uniquement pendant le temps requis pour l'exécution des finalités pour lesquelles elles ont été collectées, ou conformément aux obligations légales :
+                        </p>
+                        <ul class="legal-list">
+                            <li class="legal-list-item">
+                                <span class="legal-list-dot"></span>
+                                <div><strong>Données de compte restaurant :</strong> conservées pendant toute la durée de vie active du compte. En cas de clôture ou d'inactivité prolongée, les données sont supprimées ou archivées selon les prescriptions applicables.</div>
+                            </li>
+                            <li class="legal-list-item">
+                                <span class="legal-list-dot"></span>
+                                <div><strong>Données de commande :</strong> conservées le temps nécessaire à la livraison, au règlement des litiges éventuels et au suivi statistique interne du restaurant.</div>
+                            </li>
+                            <li class="legal-list-item">
+                                <span class="legal-list-dot"></span>
+                                <div><strong>Logs techniques de connexion :</strong> conservés pour une durée limitée à des fins de diagnostic réseau et de cybersécurité.</div>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <!-- 8. DROITS DES UTILISATEURS -->
+                    <section id="section-8" class="legal-card-section">
+                        <div class="legal-section-header">
+                            <span class="legal-section-num">08</span>
+                            <h2 class="legal-section-title">Droits des utilisateurs</h2>
+                        </div>
+                        <p class="legal-text">
+                            Conformément aux réglementations relatives à la protection de la vie privée et des données numériques, chaque utilisateur dispose de prérogatives essentielles sur ses données :
+                        </p>
+                        <div class="legal-grid-features">
+                            <div class="legal-feature-box">
+                                <h4>Droit d'accès</h4>
+                                <p>Obtenir confirmation que des données vous concernant sont traitées et en recevoir une copie lisible.</p>
+                            </div>
+                            <div class="legal-feature-box">
+                                <h4>Droit de rectification</h4>
+                                <p>Exiger la correction immédiate d'informations erronées, incomplètes ou obsolètes sur votre compte.</p>
+                            </div>
+                            <div class="legal-feature-box">
+                                <h4>Droit d'effacement</h4>
+                                <p>Demander la suppression de vos données personnelles sous réserve des obligations légales de conservation.</p>
+                            </div>
+                            <div class="legal-feature-box">
+                                <h4>Droit à l'information</h4>
+                                <p>Être informé de façon transparente et compréhensible sur la finalité des traitements effectués.</p>
+                            </div>
+                        </div>
+                        <p class="legal-text">
+                            Pour exercer l'un de ces droits, adressez simplement votre requête par e-mail à <a href="mailto:contact@menudirect.bj" style="color: var(--red); font-weight: 700; text-decoration: underline;">contact@menudirect.bj</a> avec un justificatif permettant d'attester de votre identité légitime. Nous nous engageons à vous répondre dans les meilleurs délais.
+                        </p>
+                    </section>
+
+                    <!-- 9. COOKIES ET STOCKAGE -->
+                    <section id="section-9" class="legal-card-section">
+                        <div class="legal-section-header">
+                            <span class="legal-section-num">09</span>
+                            <h2 class="legal-section-title">Cookies & technologies de stockage</h2>
+                        </div>
+                        <p class="legal-text">
+                            MenuDirect adopte une approche sobre et respectueuse des technologies de traçage :
+                        </p>
+                        <ul class="legal-list">
+                            <li class="legal-list-item">
+                                <span class="legal-list-dot"></span>
+                                <div>
+                                    <strong>Cookie technique <code>md_session</code> :</strong> cookie strictement nécessaire au fonctionnement de l'espace restaurateur. Il permet de vous identifier de manière sécurisée lors de votre navigation sur le tableau de bord sans devoir vous reconnecter à chaque page. Il ne sert à aucun profilage publicitaire.
+                                </div>
+                            </li>
+                            <li class="legal-list-item">
+                                <span class="legal-list-dot"></span>
+                                <div>
+                                    <strong>Stockage local du navigateur (<code>localStorage</code>) :</strong> utilisé sur les pages de commande pour mémoriser temporairement le panier d'achats du client ou des préférences d'interface (ex. thème visuel ou langue choisie). Ces données restent stockées localement sur votre appareil.
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="legal-callout">
+                            <h3 class="legal-callout-title">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 14.14 14.14"/></svg>
+                                Aucun cookie publicitaire tiers
+                            </h3>
+                            <p class="legal-callout-text">
+                                MenuDirect n'utilise aucun traceur publicitaire intrusif, aucun pixel Facebook/Meta, aucun cookie Google Ads de reciblage commercial sur son application.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- 10. SÉCURITÉ -->
+                    <section id="section-10" class="legal-card-section">
+                        <div class="legal-section-header">
+                            <span class="legal-section-num">10</span>
+                            <h2 class="legal-section-title">Principes de sécurité</h2>
+                        </div>
+                        <p class="legal-text">
+                            La sécurité de la plateforme est guidée par de bonnes pratiques d'ingénierie logicielle :
+                        </p>
+                        <ul class="legal-list">
+                            <li class="legal-list-item">
+                                <span class="legal-list-dot"></span>
+                                <div>Mise à jour régulière des dépendances et bibliothèques logicielles pour prévenir les vulnérabilités connues.</div>
+                            </li>
+                            <li class="legal-list-item">
+                                <span class="legal-list-dot"></span>
+                                <div>Contrôle systématique de validité des entrées utilisateur sur le serveur (validation des formulaires de commande et d'inscription).</div>
+                            </li>
+                            <li class="legal-list-item">
+                                <span class="legal-list-dot"></span>
+                                <div>Séparation stricte des accès administratifs et non-divulgation des clés secrètes d'environnement.</div>
+                            </li>
+                        </ul>
+                        <p class="legal-text">
+                            Bien qu'aucun système connecté à Internet ne puisse garantir une invulnérabilité absolue, nous mettons en œuvre les diligences requises pour protéger au mieux les données que vous nous confiez.
+                        </p>
+                    </section>
+
+                    <!-- 11. MODIFICATIONS -->
+                    <section id="section-11" class="legal-card-section">
+                        <div class="legal-section-header">
+                            <span class="legal-section-num">11</span>
+                            <h2 class="legal-section-title">Modifications de la politique</h2>
+                        </div>
+                        <p class="legal-text">
+                            La présente politique de confidentialité peut être modifiée pour refléter les évolutions fonctionnelles de MenuDirect, les déploiements de nouvelles fonctionnalités ou les ajustements légaux et réglementaires.
+                        </p>
+                        <p class="legal-text">
+                            Toute modification substantielle sera portée à la connaissance des utilisateurs via notre site web, avec mise à jour de la date de <em>« Dernière mise à jour »</em> en tête de page. Nous vous encourageons à consulter régulièrement cette page pour demeurer pleinement informé.
+                        </p>
+                    </section>
+
+                    <!-- 12. CONTACT -->
+                    <section id="section-12" class="legal-card-section">
+                        <div class="legal-section-header">
+                            <span class="legal-section-num">12</span>
+                            <h2 class="legal-section-title">Contact</h2>
+                        </div>
+                        <p class="legal-text">
+                            Pour toute question, remarque ou demande relative à la présente politique de confidentialité ou à l'exercice de vos droits informatiques, vous pouvez contacter notre équipe via les canaux officiels ci-dessous :
+                        </p>
+
+                        <div class="legal-contact-box">
+                            <h3 class="legal-contact-title">MenuDirect — Service Confidentialité</h3>
+                            <p class="legal-contact-subtitle">
+                                Notre équipe est à votre écoute pour toute demande relative à la gestion et à la protection de vos données.
+                            </p>
+                            <div class="legal-contact-items">
+                                <div class="legal-contact-card">
+                                    <div class="legal-contact-card-label">Courrier électronique</div>
+                                    <div class="legal-contact-card-val">
+                                        <a href="mailto:contact@menudirect.bj">contact@menudirect.bj</a>
+                                    </div>
+                                </div>
+                                <div class="legal-contact-card">
+                                    <div class="legal-contact-card-label">Assistance téléphonique / WhatsApp</div>
+                                    <div class="legal-contact-card-val">
+                                        <a href="tel:+22960000000">+229 60 00 00 00</a>
+                                    </div>
+                                </div>
+                                <div class="legal-contact-card">
+                                    <div class="legal-contact-card-label">Siège d'exploitation</div>
+                                    <div class="legal-contact-card-val">
+                                        Cotonou, Bénin
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BOUTONS ACTION RETOUR -->
+                        <div class="legal-bottom-cta">
+                            <h3>Prêt à digitaliser votre restaurant ?</h3>
+                            <p>Rejoignez les restaurants, snacks et fast-foods qui gèrent leurs commandes sans commissions excessives avec MenuDirect.</p>
+                            <div class="legal-cta-actions">
+                                <a href="/register" class="btn btn-accent btn-large">
+                                    <span class="btn-bg"></span>
+                                    <span class="btn-text">Créer mon restaurant</span>
+                                    <span class="btn-arrow">→</span>
+                                </a>
+                                <a href="/" class="btn btn-outline btn-large">
+                                    <span class="btn-bg"></span>
+                                    <span class="btn-text">Retourner à l'accueil</span>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="/" class="footer-logo">
+                        <img src="logo.png" alt="MenuDirect Logo" height="36" class="logo-img">
+                        Menu<span class="logo-accent">Direct</span>
+                    </a>
+                    <p class="footer-desc">
+                        La plateforme de gestion de commandes pensée pour les restaurateurs et petits commerces du Bénin.
+                    </p>
+                    <div class="footer-status">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Système opérationnel</span>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-heading">Produit</h4>
+                    <ul class="footer-links">
+                        <li><a href="/#comment-ca-marche">Comment ça marche</a></li>
+                        <li><a href="/#tarifs">Tarifs</a></li>
+                        <li><a href="/#temoignages">Témoignages</a></li>
+                        <li><a href="/">Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-heading">Contact</h4>
+                    <ul class="footer-links">
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            <a href="tel:+2290157070530">+229 01 57 07 05 30</a>
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            <a href="mailto:menudirect4@gmail.com">menudirect4@gmail.com</a>
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <span>Cotonou, Bénin</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">
+                    © 2026 MenuDirect. Tous droits réservés. Fait avec ❤️ au Bénin.
+                </p>
+                <div class="footer-legal">
+                    <a href="#">Mentions légales</a>
+                    <a href="/politique-de-confidentialite">Politique de confidentialité</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script pour le menu mobile et l'interaction du sommaire -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navToggle = document.getElementById('navToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileLinks = document.querySelectorAll('.mobile-link, .btn-mobile-cta');
+
+            if (navToggle && mobileMenu) {
+                navToggle.addEventListener('click', () => {
+                    navToggle.classList.toggle('active');
+                    mobileMenu.classList.toggle('active');
+                    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+                });
+
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        navToggle.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                        document.body.style.overflow = '';
+                    });
+                });
+            }
+
+            // Mise en surbrillance du sommaire au scroll
+            const sections = document.querySelectorAll('.legal-card-section');
+            const tocLinks = document.querySelectorAll('.legal-toc-link');
+
+            function highlightTOC() {
+                const scrollY = window.scrollY;
+                sections.forEach(section => {
+                    const top = section.offsetTop - 140;
+                    const height = section.offsetHeight;
+                    const id = section.getAttribute('id');
+                    if (scrollY >= top && scrollY < top + height) {
+                        tocLinks.forEach(link => {
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.style.background = 'var(--red-light)';
+                                link.style.color = 'var(--red-dark)';
+                                const num = link.querySelector('.num');
+                                if (num) num.style.color = 'var(--red)';
+                            } else {
+                                link.style.background = '';
+                                link.style.color = '';
+                                const num = link.querySelector('.num');
+                                if (num) num.style.color = '';
+                            }
+                        });
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', highlightTOC, { passive: true });
+            highlightTOC();
+        });
+    </script>
+</body>
+</html>
