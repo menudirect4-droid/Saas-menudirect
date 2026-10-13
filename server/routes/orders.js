@@ -12,44 +12,21 @@ router.get('/stats', (req, res) => {
   try {
     const restaurantId = req.restaurant.id;
 
-    // Date du jour (format YYYY-MM-DD)
-    const today = new Date().toISOString().split('T')[0];
-
-    // Commandes aujourd'hui
-    const todayOrders = db.get(
-      `SELECT COUNT(*) as count, COALESCE(SUM(total_amount), 0) as revenue
+    // Récupération consolidée de toutes les métriques en 1 seule requête SQL indexée
+    const statsRow = db.get(
+      `SELECT 
+        COUNT(CASE WHEN status != 'annulee' AND date(created_at, 'localtime') = date('now', 'localtime') THEN 1 END) as orders_today,
+        COALESCE(SUM(CASE WHEN status != 'annulee' AND date(created_at, 'localtime') = date('now', 'localtime') THEN total_amount ELSE 0 END), 0) as revenue_today,
+        COUNT(CASE WHEN status = 'nouvelle' THEN 1 END) as pending_orders,
+        COUNT(CASE WHEN status IN ('acceptee', 'en_preparation') THEN 1 END) as preparing_orders,
+        COUNT(CASE WHEN status = 'prete' THEN 1 END) as ready_orders,
+        COUNT(CASE WHEN status = 'terminee' AND date(created_at, 'localtime') = date('now', 'localtime') THEN 1 END) as completed_orders,
+        COUNT(CASE WHEN status != 'annulee' THEN 1 END) as total_orders,
+        COALESCE(SUM(CASE WHEN status != 'annulee' THEN total_amount ELSE 0 END), 0) as total_revenue
        FROM orders
-       WHERE restaurant_id = ? AND date(created_at) = date('now', 'localtime') AND status != 'annulee'`,
+       WHERE restaurant_id = ?`,
       [restaurantId]
-    );
-
-    // Commandes par statut en cours
-    const pendingCount = db.get(
-      `SELECT COUNT(*) as count FROM orders WHERE restaurant_id = ? AND status = 'nouvelle'`,
-      [restaurantId]
-    );
-
-    const preparingCount = db.get(
-      `SELECT COUNT(*) as count FROM orders WHERE restaurant_id = ? AND status IN ('acceptee', 'en_preparation')`,
-      [restaurantId]
-    );
-
-    const readyCount = db.get(
-      `SELECT COUNT(*) as count FROM orders WHERE restaurant_id = ? AND status = 'prete'`,
-      [restaurantId]
-    );
-
-    const completedToday = db.get(
-      `SELECT COUNT(*) as count FROM orders WHERE restaurant_id = ? AND status = 'terminee' AND date(created_at) = date('now', 'localtime')`,
-      [restaurantId]
-    );
-
-    // Chiffre d'affaires total
-    const totalStats = db.get(
-      `SELECT COUNT(*) as total_orders, COALESCE(SUM(total_amount), 0) as total_revenue
-       FROM orders WHERE restaurant_id = ? AND status != 'annulee'`,
-      [restaurantId]
-    );
+    ) || {};
 
     // Dernières commandes (5)
     const recentOrders = db.query(
@@ -82,14 +59,14 @@ router.get('/stats', (req, res) => {
     res.json({
       success: true,
       stats: {
-        orders_today: todayOrders?.count || 0,
-        revenue_today: todayOrders?.revenue || 0,
-        pending_orders: pendingCount?.count || 0,
-        preparing_orders: preparingCount?.count || 0,
-        ready_orders: readyCount?.count || 0,
-        completed_orders: completedToday?.count || 0,
-        total_orders: totalStats?.total_orders || 0,
-        total_revenue: totalStats?.total_revenue || 0
+        orders_today: statsRow.orders_today || 0,
+        revenue_today: statsRow.revenue_today || 0,
+        pending_orders: statsRow.pending_orders || 0,
+        preparing_orders: statsRow.preparing_orders || 0,
+        ready_orders: statsRow.ready_orders || 0,
+        completed_orders: statsRow.completed_orders || 0,
+        total_orders: statsRow.total_orders || 0,
+        total_revenue: statsRow.total_revenue || 0
       },
       recent_orders: formattedRecent,
       analytics: { period, sales_by_day: salesByDay, top_products: topProducts }

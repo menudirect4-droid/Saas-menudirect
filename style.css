@@ -108,7 +108,7 @@ button {
     background: none;
 }
 
-/* -------- Noise Overlay -------- */
+/* -------- Noise Overlay (Ultra-light, GPU friendly) -------- */
 .noise-overlay {
     position: fixed;
     top: 0;
@@ -117,9 +117,10 @@ button {
     height: 100%;
     pointer-events: none;
     z-index: 9999;
-    opacity: 0.04;
-    filter: url(#noise);
-    mix-blend-mode: overlay;
+    opacity: 0.02;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 0);
+    background-size: 24px 24px;
+    will-change: transform;
 }
 
 /* -------- Container -------- */

@@ -26,16 +26,28 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+// Options de mise en cache HTTP pour les fichiers statiques
+const staticOptions = {
+  maxAge: '1h',
+  setHeaders: (res, filePath) => {
+    if (/\.(jpg|jpeg|png|webp|gif|svg|mp4|webm|woff2|woff|ttf|ico)$/i.test(filePath)) {
+      res.setHeader('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800');
+    } else if (/\.(css|js)$/i.test(filePath)) {
+      res.setHeader('Cache-Control', 'public, max-age=3600');
+    }
+  }
+};
+
 // Fichiers statiques
-app.use('/uploads', express.static(uploadsDir));
+app.use('/uploads', express.static(uploadsDir, staticOptions));
 if (isVercel) {
   const localUploads = path.join(__dirname, 'public', 'uploads');
   if (fs.existsSync(localUploads)) {
-    app.use('/uploads', express.static(localUploads));
+    app.use('/uploads', express.static(localUploads, staticOptions));
   }
 }
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname, 'public'), staticOptions));
+app.use(express.static(path.join(__dirname), staticOptions));
 
 // Routes API
 app.use('/api/auth', require('./server/routes/auth'));

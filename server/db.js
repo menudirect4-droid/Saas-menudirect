@@ -26,9 +26,12 @@ if (isVercel && !fs.existsSync(dbPath)) {
 
 const db = new DatabaseSync(dbPath);
 
-// Configuration pragma pour la robustesse et les clés étrangères
+// Configuration pragma pour la rapidité, la robustesse et le cache en mémoire
 db.exec(`
   PRAGMA journal_mode = ${isVercel ? 'DELETE' : 'WAL'};
+  PRAGMA synchronous = NORMAL;
+  PRAGMA cache_size = -32000;
+  PRAGMA temp_store = MEMORY;
   PRAGMA foreign_keys = ON;
 `);
 
@@ -179,8 +182,13 @@ db.exec(`
   CREATE INDEX IF NOT EXISTS idx_sessions_token ON sessions(token);
   CREATE INDEX IF NOT EXISTS idx_categories_resto ON categories(restaurant_id);
   CREATE INDEX IF NOT EXISTS idx_dishes_resto ON dishes(restaurant_id);
+  CREATE INDEX IF NOT EXISTS idx_dishes_resto_cat ON dishes(restaurant_id, category_id, is_active);
   CREATE INDEX IF NOT EXISTS idx_orders_resto ON orders(restaurant_id);
+  CREATE INDEX IF NOT EXISTS idx_orders_resto_status ON orders(restaurant_id, status);
+  CREATE INDEX IF NOT EXISTS idx_orders_resto_created ON orders(restaurant_id, created_at);
+  CREATE INDEX IF NOT EXISTS idx_order_items_order ON order_items(order_id);
   CREATE INDEX IF NOT EXISTS idx_customers_resto ON customers(restaurant_id);
+  CREATE INDEX IF NOT EXISTS idx_payments_resto ON payments(restaurant_id);
   CREATE INDEX IF NOT EXISTS idx_dish_trans_resto ON dish_translations(restaurant_id, language);
   CREATE INDEX IF NOT EXISTS idx_dish_trans_dish ON dish_translations(dish_id, language);
   CREATE INDEX IF NOT EXISTS idx_cat_trans_resto ON category_translations(restaurant_id, language);

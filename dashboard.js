@@ -97,8 +97,11 @@
                 loadPayments()
             ]);
 
-            // Démarrer polling temps réel toutes les 5 secondes
-            pollingInterval = setInterval(checkLiveUpdates, 5000);
+            // Démarrer polling temps réel intelligent (toutes les 12s, pause si onglet caché)
+            pollingInterval = setInterval(checkLiveUpdates, 12000);
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden) checkLiveUpdates();
+            });
 
         } catch (err) {
             console.error('Erreur chargement dashboard:', err);
@@ -227,8 +230,9 @@
         document.getElementById('dashSidebarOverlay')?.classList.remove('active');
     };
 
-    // Vérification en direct des nouvelles commandes (polling)
+    // Vérification en direct des nouvelles commandes (polling intelligent)
     async function checkLiveUpdates() {
+        if (document.hidden) return; // Ne pas surcharger le serveur quand l'onglet est en arrière-plan
         try {
             const res = await fetch(`/api/orders/stats?period=${analyticsPeriod}`);
             if (!res.ok) return;
