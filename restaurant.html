@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>MenuDirect — Menu & Commandes en Ligne</title>
     <meta name="description" content="Découvrez le menu, commandez vos plats préférés et faites-vous livrer en quelques clics.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -10,6 +10,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/auth.css">
     <link rel="stylesheet" href="/restaurant.css">
+    <script>
+        (function() {
+            try {
+                const saved = localStorage.getItem('md_menu_theme') || localStorage.getItem('md_theme');
+                const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const theme = saved === 'light' ? 'light' : (saved === 'dark' ? 'dark' : (prefersDark ? 'dark' : 'light'));
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (e) {}
+        })();
+    </script>
 </head>
 <body class="menu-dark-theme">
 
@@ -111,6 +121,7 @@
                 </div>
             </div>
         </aside>
+        <div class="app-sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
 
         <!-- =================================================================
              2. CONTENU PRINCIPAL CENTRAL
@@ -165,6 +176,11 @@
                             <button class="lang-pill" data-lang="fon" title="Fɔngbe (Bénin)">🇧🇯 FON</button>
                         </div>
                     </div>
+
+                    <!-- Bouton Thème Sombre / Clair Menu Public -->
+                    <button class="menu-theme-btn" id="menuThemeBtn" aria-label="Basculer Mode Clair / Sombre" title="Changer le thème">
+                        <span id="menuThemeIcon">🌙</span>
+                    </button>
 
                     <!-- Cloche de notification -->
                     <div class="notif-wrapper" id="notifWrapper">

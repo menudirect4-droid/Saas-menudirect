@@ -364,14 +364,23 @@
         // Toggle Sidebar Mobile
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');
         const sidebarLeft = document.getElementById('sidebarLeft');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
         mobileMenuToggle?.addEventListener('click', (e) => {
             e.stopPropagation();
-            sidebarLeft?.classList.toggle('open');
+            const isOpen = sidebarLeft?.classList.toggle('open');
+            sidebarOverlay?.classList.toggle('active', !!isOpen);
+        });
+
+        sidebarOverlay?.addEventListener('click', () => {
+            sidebarLeft?.classList.remove('open');
+            sidebarOverlay?.classList.remove('active');
         });
 
         document.addEventListener('click', (e) => {
             if (sidebarLeft && sidebarLeft.classList.contains('open') && !sidebarLeft.contains(e.target) && e.target !== mobileMenuToggle) {
                 sidebarLeft.classList.remove('open');
+                sidebarOverlay?.classList.remove('active');
             }
         });
     }
@@ -904,5 +913,46 @@
         checkoutModal?.classList.remove('open');
     });
 
-    document.addEventListener('DOMContentLoaded', loadPublicMenu);
+    // =========================================================================
+    // THÈME SOMBRE / CLAIR — MENU PUBLIC
+    // =========================================================================
+    function applyMenuTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        const icon = document.getElementById('menuThemeIcon');
+        if (theme === 'light') {
+            document.body.classList.remove('menu-dark-theme');
+            document.body.classList.add('menu-light-theme');
+            if (icon) icon.textContent = '☀️';
+        } else {
+            document.body.classList.remove('menu-light-theme');
+            document.body.classList.add('menu-dark-theme');
+            if (icon) icon.textContent = '🌙';
+        }
+    }
+
+    function initMenuTheme() {
+        let saved = 'dark';
+        try {
+            saved = localStorage.getItem('md_menu_theme') || localStorage.getItem('md_theme') || 'dark';
+        } catch (e) {}
+
+        applyMenuTheme(saved);
+
+        const themeBtn = document.getElementById('menuThemeBtn');
+        if (themeBtn) {
+            themeBtn.addEventListener('click', () => {
+                const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+                const next = current === 'dark' ? 'light' : 'dark';
+                applyMenuTheme(next);
+                try {
+                    localStorage.setItem('md_menu_theme', next);
+                } catch (e) {}
+            });
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        initMenuTheme();
+        loadPublicMenu();
+    });
 })();

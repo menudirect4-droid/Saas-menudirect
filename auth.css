@@ -29,6 +29,12 @@
     
     --shadow-card: 0 20px 40px -15px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06);
     --shadow-glow: 0 0 30px rgba(220, 38, 38, 0.15);
+
+    /* Safe Area Insets pour iPhone et téléphones Android */
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
 }
 
 * {
@@ -37,15 +43,22 @@
     box-sizing: border-box;
 }
 
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
 body {
     background-color: var(--color-bg);
     color: var(--color-text-primary);
     font-family: var(--font-primary);
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
     position: relative;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* Background Atmosphere */
@@ -474,32 +487,327 @@ body {
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    max-width: 440px;
+    max-width: 480px;
     width: 100%;
-    padding: 2rem;
+    padding: 2.2rem 2rem;
     position: relative;
     box-shadow: var(--shadow-card);
+    transition: all 0.3s ease;
 }
 
 .modal-close {
     position: absolute;
     top: 1.2rem;
     right: 1.2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.modal-close:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    transform: scale(1.05);
+}
+
+/* Modal Stepper Progress */
+.modal-steps-tracker {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.modal-step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    flex: 1;
+    position: relative;
+    z-index: 2;
+}
+
+.modal-step-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--color-surface-elevated);
+    border: 2px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-step-item.active .modal-step-circle {
+    background: var(--color-accent);
+    border-color: var(--color-accent-hover);
+    color: #FFFFFF;
+    box-shadow: 0 0 15px var(--color-accent-glow);
+    transform: scale(1.08);
+}
+
+.modal-step-item.completed .modal-step-circle {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: var(--color-success);
+    color: var(--color-success);
+}
+
+.modal-step-label {
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.modal-step-item.active .modal-step-label {
+    color: #FFFFFF;
+    font-weight: 600;
+}
+
+.modal-step-line {
+    position: absolute;
+    top: 15px;
+    left: 15%;
+    right: 15%;
+    height: 2px;
+    background: var(--color-border);
+    z-index: 1;
+}
+
+/* OTP Input Boxes */
+.otp-inputs-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.5rem;
+    margin: 1.25rem 0 0.8rem;
+}
+
+.otp-digit-input {
+    width: 100%;
+    height: 52px;
+    background: var(--color-surface-elevated);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: #FFFFFF;
+    font-family: var(--font-mono);
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-align: center;
+    transition: all 0.2s;
+    outline: none;
+}
+
+.otp-digit-input:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 15px var(--color-accent-glow);
+    background: rgba(220, 38, 38, 0.05);
+    transform: translateY(-2px);
+}
+
+.otp-meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.75rem;
+    font-size: 0.82rem;
+}
+
+.otp-timer-text {
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+}
+
+.btn-resend-sms {
+    background: none;
+    border: none;
+    color: #F87171;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+    transition: opacity 0.2s;
+}
+
+.btn-resend-sms:disabled {
+    color: var(--color-text-muted);
+    cursor: not-allowed;
+    text-decoration: none;
+    opacity: 0.6;
+}
+
+/* Demo / Simulation Code Badge */
+.demo-code-badge {
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px dashed rgba(245, 158, 11, 0.4);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: #FDE68A;
+}
+
+.demo-code-badge button {
+    background: rgba(245, 158, 11, 0.25);
+    border: 1px solid rgba(245, 158, 11, 0.5);
+    color: #FFF;
+    border-radius: 6px;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.demo-code-badge button:hover {
+    background: rgba(245, 158, 11, 0.4);
+}
+
+.forgot-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     background: none;
     border: none;
     color: var(--color-text-muted);
-    font-size: 1.3rem;
+    font-size: 0.82rem;
     cursor: pointer;
+    margin-top: 1rem;
+    transition: color 0.2s;
+}
+
+.forgot-back-btn:hover {
+    color: #FFFFFF;
+}
+
+.whatsapp-fallback-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: 0.8rem;
+    padding: 0.65rem;
+    background: rgba(37, 211, 102, 0.1);
+    border: 1px solid rgba(37, 211, 102, 0.25);
+    border-radius: var(--radius-sm);
+    color: #25D366;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.whatsapp-fallback-btn:hover {
+    background: rgba(37, 211, 102, 0.2);
+    border-color: #25D366;
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================================================
+   SYSTÈME RESPONSIVE UNIVERSEL AUTH (LOGIN & REGISTER)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    /* Anti-zoom iOS Safari : font-size >= 16px */
+    input, select, textarea, .form-input, .form-select {
+        font-size: 16px !important;
+    }
+
+    .auth-header {
+        padding: max(1.2rem, calc(0.8rem + var(--safe-top))) 1.25rem 1rem;
+    }
+
+    .auth-container {
+        padding: 1rem 1rem calc(2.5rem + var(--safe-bottom));
+    }
 }
 
 @media (max-width: 640px) {
-    .auth-card {
-        padding: 2rem 1.5rem;
+    .auth-header {
+        flex-direction: column;
+        gap: 0.85rem;
+        text-align: center;
     }
+
+    .auth-card {
+        padding: 1.75rem 1.25rem;
+        border-radius: 1.5rem;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .auth-title {
+        font-size: 1.75rem;
+    }
+
+    .auth-title em {
+        font-size: 2rem;
+    }
+
     .form-grid-2 {
         grid-template-columns: 1fr;
+        gap: 0.85rem;
     }
+
     .plan-cards {
         grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .plan-choice {
+        padding: 0.85rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .auth-container {
+        padding: 0.65rem 0.65rem calc(2rem + var(--safe-bottom));
+    }
+
+    .auth-card {
+        padding: 1.35rem 0.85rem;
+        border-radius: 1.25rem;
+    }
+
+    .auth-logo {
+        font-size: 1.2rem;
+    }
+
+    .auth-nav-link {
+        font-size: 0.82rem;
+    }
+
+    .auth-title {
+        font-size: 1.45rem;
+    }
+
+    .auth-title em {
+        font-size: 1.7rem;
+    }
+
+    .btn-auth-primary {
+        padding: 0.8rem 1rem;
+        font-size: 0.92rem;
     }
 }

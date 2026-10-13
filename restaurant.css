@@ -37,6 +37,12 @@
 
     --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
     --shadow-float: 0 14px 40px -10px rgba(0, 0, 0, 0.7);
+
+    /* Safe Area Insets pour iPhone (Notch & Dynamic Island) et barre tactile Android */
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
 }
 
 * {
@@ -45,14 +51,133 @@
     box-sizing: border-box;
 }
 
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body,
 body.menu-dark-theme {
     background-color: var(--bg-base);
     color: var(--text-primary);
     font-family: var(--font-main);
     min-height: 100vh;
+    min-height: 100dvh;
     overflow-x: hidden;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ==========================================================================
+   MODE CLAIR — MENU PUBLIC DU RESTAURANT
+   ========================================================================== */
+html[data-theme="light"],
+[data-theme="light"] body,
+body.menu-light-theme {
+    --bg-base: #F8FAFC;
+    --bg-surface: #FFFFFF;
+    --bg-card: #FFFFFF;
+    --bg-card-hover: #F1F5F9;
+    --bg-elevated: #F8FAFC;
+
+    --border-subtle: #E2E8F0;
+    --border-medium: #CBD5E1;
+    --border-hover: #94A3B8;
+
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #64748B;
+    --text-price: #0F172A;
+
+    --shadow-card: 0 4px 18px rgba(0, 0, 0, 0.05);
+    --shadow-float: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+    background-color: #F8FAFC !important;
+    color: #0F172A !important;
+}
+
+[data-theme="light"] .main-topbar,
+[data-theme="light"] .app-sidebar-left,
+[data-theme="light"] .app-sidebar-right,
+[data-theme="light"] .mobile-bottom-cart-bar {
+    background-color: #FFFFFF !important;
+    border-color: #E2E8F0 !important;
+}
+
+[data-theme="light"] .search-input-wrapper {
+    background-color: #F1F5F9 !important;
+    border-color: #CBD5E1 !important;
+}
+
+[data-theme="light"] .search-input-wrapper input {
+    color: #0F172A !important;
+}
+
+[data-theme="light"] .search-input-wrapper input::placeholder {
+    color: #94A3B8 !important;
+}
+
+[data-theme="light"] .location-pill {
+    background-color: #F1F5F9 !important;
+    border-color: #E2E8F0 !important;
+    color: #0F172A !important;
+}
+
+[data-theme="light"] .dish-card-compact,
+[data-theme="light"] .dish-card-featured,
+[data-theme="light"] .order-history-card {
+    background-color: #FFFFFF !important;
+    border-color: #E2E8F0 !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-theme="light"] .category-chip {
+    background-color: #F1F5F9 !important;
+    border-color: #E2E8F0 !important;
+    color: #475569 !important;
+}
+
+[data-theme="light"] .category-chip.active {
+    background: #DC2626 !important;
+    border-color: #DC2626 !important;
+    color: #FFFFFF !important;
+}
+
+[data-theme="light"] .dish-detail-modal-box {
+    background-color: #FFFFFF !important;
+    border-color: #E2E8F0 !important;
+    color: #0F172A !important;
+}
+
+.menu-theme-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-subtle);
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    color: var(--text-primary);
+}
+
+.menu-theme-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: scale(1.08);
+}
+
+[data-theme="light"] .menu-theme-btn {
+    background: #F1F5F9;
+    border-color: #E2E8F0;
+    color: #0F172A;
+}
+
+[data-theme="light"] .menu-theme-btn:hover {
+    background: #E2E8F0;
 }
 
 /* Scrollbar sobre et sombre */
@@ -2060,30 +2185,70 @@ body.menu-dark-theme {
 }
 
 /* ==========================================================================
-   RESPONSIVE DESIGN (Tablette & Mobile)
+   SYSTÈME RESPONSIVE UNIVERSEL : ANDROID, APPLE (iOS) & ORDINATEURS
    ========================================================================== */
+
+/* Overlay sombre pour la sidebar mobile */
+.app-sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 140;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.app-sidebar-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* 1. GRANDS ÉCRANS DE BUREAU & ORDINATEURS (Min 1241px) */
 @media (min-width: 1241px) {
     .cart-floating-bar {
         display: none !important;
     }
-}
-
-@media (max-width: 1240px) {
-    .app-cart-sidebar {
-        display: none !important; /* Le panier passe en barre flottante + drawer */
+    .mobile-menu-toggle {
+        display: none !important;
+    }
+    .app-main-content {
+        max-width: 1200px;
+        margin: 0 auto;
     }
 }
 
+/* 2. LAPTOPS & TABLETTES HORIZONTALES (Max 1240px) */
+@media (max-width: 1240px) {
+    .app-cart-sidebar {
+        display: none !important; /* Le panier passe en barre flottante tactile */
+    }
+    .app-main-content {
+        padding-right: 1.5rem;
+    }
+    .dishes-cards-grid {
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+        gap: 1.15rem;
+    }
+}
+
+/* 3. TABLETTES VERTICALES & SMARTPHONES LARGES (Max 990px) */
 @media (max-width: 990px) {
     .app-sidebar-left {
         position: fixed;
         left: 0;
         top: 0;
         bottom: 0;
+        width: min(300px, 85vw);
         transform: translateX(-100%);
-        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
         z-index: 150;
-        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.8);
+        box-shadow: 10px 0 40px rgba(0, 0, 0, 0.85);
+        padding-top: max(1.5rem, calc(1rem + var(--safe-top)));
+        padding-bottom: max(1.5rem, calc(1rem + var(--safe-bottom)));
+        padding-left: max(1.2rem, calc(0.8rem + var(--safe-left)));
     }
 
     .app-sidebar-left.open {
@@ -2092,16 +2257,80 @@ body.menu-dark-theme {
 
     .mobile-menu-toggle {
         display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 42px;
+        min-height: 42px;
     }
 
     .app-main-content {
-        padding: 1.25rem 1.25rem 5rem;
+        padding: max(1rem, var(--safe-top)) 1.25rem calc(6rem + var(--safe-bottom));
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .main-topbar {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            "left right"
+            "search search";
+        gap: 0.75rem 0.5rem;
+        margin-bottom: 1.25rem;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .topbar-left {
+        grid-area: left;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        min-width: 0;
+    }
+
+    .location-pill {
+        max-width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .topbar-right {
+        grid-area: right;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.4rem;
+        min-width: 0;
+    }
+
+    .user-name {
+        display: none !important;
+    }
+
+    .user-profile-pill {
+        padding: 0;
+        background: transparent;
+        border: none;
+    }
+
+    .menu-lang-pills button:nth-child(n+3) {
+        display: none;
+    }
+
+    .topbar-search {
+        grid-area: search;
+        max-width: 100%;
+        width: 100%;
+        margin-top: 0;
     }
 
     .hero-showcase-card {
-        padding: 2rem 1.8rem;
+        padding: 2rem 1.75rem;
         flex-direction: column;
         text-align: center;
+        gap: 1.5rem;
     }
 
     .hero-content-col {
@@ -2120,31 +2349,258 @@ body.menu-dark-theme {
         display: none;
     }
 
-    .main-topbar {
-        flex-wrap: wrap;
+    .restaurant-feature-card {
+        flex-direction: column;
     }
 
-    .topbar-search {
-        order: 3;
+    .resto-card-banner {
+        width: 100%;
+        height: 180px;
+    }
+}
+
+/* 4. SMARTPHONES STANDARDS — iPhone 11/12/13/14/15/16, Samsung Galaxy S & A, Google Pixel (Max 768px) */
+@media (max-width: 768px) {
+    /* Règle vitale iOS Safari : font-size >= 16px sur les champs pour empêcher tout auto-zoom */
+    input, select, textarea, .form-input, .form-select, .search-input-wrapper input {
+        font-size: 16px !important;
+    }
+
+    .app-main-content {
+        padding-left: max(0.95rem, var(--safe-left));
+        padding-right: max(0.95rem, var(--safe-right));
+        padding-bottom: calc(5.8rem + var(--safe-bottom));
+    }
+
+    /* Grille des plats en 2 colonnes ultra-fluides */
+    .dishes-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.85rem;
+    }
+
+    .public-dish-card {
+        border-radius: var(--radius-md);
+    }
+
+    .dish-media-wrap {
+        height: 125px;
+    }
+
+    .dish-card-body {
+        padding: 0.85rem 0.75rem;
+        gap: 0.35rem;
+    }
+
+    .dish-name {
+        font-size: 0.95rem;
+        line-height: 1.25;
+    }
+
+    .dish-desc {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        font-size: 0.76rem;
+        line-height: 1.35;
+        margin-bottom: 0.4rem;
+    }
+
+    .dish-footer-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.45rem;
+        margin-top: auto;
+    }
+
+    .dish-price-tag {
+        font-size: 0.92rem;
+    }
+
+    .btn-add-cart-mini {
+        width: 100%;
+        justify-content: center;
+        padding: 0.45rem 0.6rem;
+        font-size: 0.8rem;
+        border-radius: var(--radius-sm);
+        min-height: 38px;
+    }
+
+    /* Barre Panier Flottante Tactile */
+    .cart-floating-bar {
+        position: fixed;
+        bottom: max(1rem, calc(0.75rem + var(--safe-bottom)));
+        left: max(0.85rem, var(--safe-left));
+        right: max(0.85rem, var(--safe-right));
+        z-index: 120;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(229, 35, 41, 0.4);
+        border-radius: var(--radius-full);
+        min-height: 54px;
+        padding: 0.75rem 1.15rem;
+    }
+
+    /* Tiroir Panier Mobile */
+    .cart-drawer-overlay {
+        padding: 0;
+    }
+
+    .cart-drawer {
+        width: 100%;
         max-width: 100%;
+        border-radius: 1.75rem 1.75rem 0 0;
+        max-height: 85dvh;
+        max-height: 85vh;
+    }
+
+    .drawer-footer {
+        padding-bottom: max(1.25rem, calc(1rem + var(--safe-bottom)));
+    }
+
+    /* Modales de commande & détails plats */
+    .checkout-modal-overlay,
+    .dish-detail-modal-overlay {
+        padding: max(0.5rem, var(--safe-top)) max(0.5rem, var(--safe-right)) max(0.5rem, var(--safe-bottom)) max(0.5rem, var(--safe-left));
+    }
+
+    .checkout-modal-box,
+    .dish-detail-modal-box {
+        max-height: 92dvh;
+        max-height: 92vh;
+        border-radius: 1.5rem;
+        padding: 1.4rem 1.15rem;
         width: 100%;
     }
 }
 
-@media (max-width: 640px) {
-    .hero-headline {
-        font-size: 1.8rem;
+/* 5. SMARTPHONES COMPACTS & PAYSAGE — iPhone SE, Galaxy A, Xiaomi Redmi (Max 540px) */
+@media (max-width: 540px) {
+    .main-topbar {
+        gap: 0.65rem;
     }
 
-    .dishes-cards-grid {
-        grid-template-columns: 1fr;
+    .location-pill {
+        max-width: 140px;
+        font-size: 0.8rem;
+        padding: 0.45rem 0.75rem;
     }
 
-    .menu-lang-pills button:nth-child(n+4) {
+    .loc-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .menu-lang-widget {
+        max-width: 110px;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .menu-lang-widget::-webkit-scrollbar {
         display: none;
+    }
+
+    .menu-lang-pills {
+        gap: 0.25rem;
+    }
+
+    .lang-pill {
+        padding: 0.25rem 0.45rem;
+        font-size: 0.7rem;
+    }
+
+    .hero-headline {
+        font-size: clamp(1.35rem, 6.5vw, 1.75rem);
+    }
+
+    .hero-subtitle {
+        font-size: 0.85rem;
+    }
+
+    .hero-dish-circle {
+        width: 160px;
+        height: 160px;
+    }
+
+    .categories-cards-track {
+        gap: 0.65rem;
+    }
+
+    .cat-card-item {
+        min-width: 82px;
+        padding: 0.65rem 0.75rem;
+    }
+
+    .cat-icon-bubble {
+        width: 38px;
+        height: 38px;
+        font-size: 1.2rem;
+    }
+
+    .cat-title {
+        font-size: 0.75rem;
+    }
+
+    .section-title {
+        font-size: 1.15rem;
     }
 
     .user-name {
         display: none;
+    }
+}
+
+/* 6. SMARTPHONES TRÈS ÉTROITS — iPhone SE 1ère gen, Galaxy Z Fold écran externe plié (Max 360px) */
+@media (max-width: 360px) {
+    .app-main-content {
+        padding-left: 0.65rem;
+        padding-right: 0.65rem;
+    }
+
+    .location-pill {
+        max-width: 110px;
+        padding: 0.4rem 0.6rem;
+        font-size: 0.75rem;
+    }
+
+    /* En dessous de 360px : 1 colonne pour une lisibilité parfaite */
+    .dishes-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+    }
+
+    .dish-media-wrap {
+        height: 155px;
+    }
+
+    .dish-footer-row {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .btn-add-cart-mini {
+        width: auto;
+        padding: 0.5rem 1rem;
+    }
+
+    .cart-floating-bar {
+        padding: 0.65rem 0.95rem;
+    }
+
+    .cart-bar-text {
+        font-size: 0.82rem;
+    }
+
+    .cart-bar-total {
+        font-size: 0.88rem;
+    }
+
+    .checkout-modal-box {
+        padding: 1.15rem 0.85rem;
+    }
+
+    .modal-heading {
+        font-size: 1.05rem;
     }
 }

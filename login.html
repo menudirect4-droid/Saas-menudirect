@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Connexion Restaurateur — MenuDirect</title>
     <meta name="description" content="Connectez-vous à votre espace restaurant MenuDirect pour gérer vos commandes et votre menu.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -65,17 +65,119 @@
         </div>
     </main>
 
-    <!-- Modal Mot de passe oublié -->
+    <!-- Modal Mot de passe oublié (Récupération par Code SMS) -->
     <div id="forgotModal" class="modal-overlay">
         <div class="modal-box">
             <button id="closeModal" class="modal-close" aria-label="Fermer">✕</button>
-            <h3 style="font-size: 1.3rem; margin-bottom: 0.8rem; font-weight: 700;">Récupération de compte</h3>
-            <p style="color: var(--color-text-secondary); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.5rem;">
-                Pour réinitialiser votre mot de passe en toute sécurité, veuillez contacter notre équipe d'assistance par WhatsApp ou par e-mail avec votre numéro de téléphone de restaurant.
-            </p>
-            <a href="https://wa.me/22997000000?text=Bonjour%2C%20je%20souhaite%20r%C3%A9initialiser%20le%20mot%20de%20passe%20de%20mon%20restaurant%20sur%20MenuDirect." target="_blank" class="btn-submit" style="text-decoration: none; margin-top: 0;">
-                <span>Contacter l'assistance WhatsApp</span>
-            </a>
+
+            <!-- Stepper visuel -->
+            <div class="modal-steps-tracker">
+                <div class="modal-step-line"></div>
+                <div class="modal-step-item active" id="trackerStep1">
+                    <div class="modal-step-circle">1</div>
+                    <span class="modal-step-label">Numéro</span>
+                </div>
+                <div class="modal-step-item" id="trackerStep2">
+                    <div class="modal-step-circle">2</div>
+                    <span class="modal-step-label">Code SMS</span>
+                </div>
+                <div class="modal-step-item" id="trackerStep3">
+                    <div class="modal-step-circle">3</div>
+                    <span class="modal-step-label">Nouveau MDP</span>
+                </div>
+            </div>
+
+            <!-- Message d'alerte spécifique au modal -->
+            <div id="modalAlertBox" class="auth-alert"></div>
+
+            <!-- ÉTAPE 1 : Numéro de téléphone -->
+            <div id="stepPhoneSection">
+                <h3 style="font-size: 1.35rem; margin-bottom: 0.4rem; font-weight: 700;">Mot de passe oublié ?</h3>
+                <p style="color: var(--color-text-secondary); font-size: 0.88rem; line-height: 1.5; margin-bottom: 1.25rem;">
+                    Recevez instantanément un code de sécurité par SMS sur le numéro de téléphone avec lequel vous avez ouvert votre compte restaurant.
+                </p>
+
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label for="recoveryPhone" class="form-label">Numéro de téléphone du compte</label>
+                    <input type="text" id="recoveryPhone" class="form-input" placeholder="Ex: 0157070530 ou +229..." required autofocus>
+                    <span style="display: block; font-size: 0.78rem; color: var(--color-text-muted); margin-top: 0.4rem;">
+                        💡 Vous pouvez aussi entrer l'adresse e-mail de votre restaurant si vous l'avez en tête.
+                    </span>
+                </div>
+
+                <button type="button" id="btnSendCode" class="btn-submit" style="width: 100%;">
+                    <span>Envoyer le code par SMS</span>
+                    <span>📲</span>
+                </button>
+            </div>
+
+            <!-- ÉTAPE 2 : Saisie du code SMS -->
+            <div id="stepCodeSection" style="display: none;">
+                <h3 style="font-size: 1.35rem; margin-bottom: 0.4rem; font-weight: 700;">Code de vérification SMS</h3>
+                <p style="color: var(--color-text-secondary); font-size: 0.88rem; line-height: 1.5; margin-bottom: 1rem;">
+                    Un code à 6 chiffres a été envoyé par SMS au <strong id="maskedPhoneDisplay" style="color: #FFFFFF;">•• •• •• ••</strong>.
+                </p>
+
+                <!-- Badge Code Démo / Local (pratique si pas de passerelle SMS payante) -->
+                <div id="demoCodeBadge" class="demo-code-badge" style="display: none;">
+                    <div>
+                        <span>🔑 Code SMS reçu : </span>
+                        <strong id="demoCodeValue" style="font-family: var(--font-mono); font-size: 0.95rem; color: #F59E0B;"></strong>
+                    </div>
+                    <button type="button" id="btnAutoFillOtp">Insérer</button>
+                </div>
+
+                <!-- Grille des 6 chiffres OTP -->
+                <div class="otp-inputs-grid" id="otpGrid">
+                    <input type="text" inputmode="numeric" maxlength="1" class="otp-digit-input" data-index="0" autofocus>
+                    <input type="text" inputmode="numeric" maxlength="1" class="otp-digit-input" data-index="1">
+                    <input type="text" inputmode="numeric" maxlength="1" class="otp-digit-input" data-index="2">
+                    <input type="text" inputmode="numeric" maxlength="1" class="otp-digit-input" data-index="3">
+                    <input type="text" inputmode="numeric" maxlength="1" class="otp-digit-input" data-index="4">
+                    <input type="text" inputmode="numeric" maxlength="1" class="otp-digit-input" data-index="5">
+                </div>
+
+                <div class="otp-meta-row">
+                    <span class="otp-timer-text" id="otpTimerDisplay">Renvoyer dans 45s</span>
+                    <button type="button" id="btnResendCode" class="btn-resend-sms" disabled>Renvoyer le SMS</button>
+                </div>
+
+                <button type="button" id="btnVerifyCode" class="btn-submit" style="width: 100%; margin-top: 1.25rem;">
+                    <span>Valider le code</span>
+                    <span>→</span>
+                </button>
+
+                <a href="#" id="whatsappAlternativeLink" target="_blank" class="whatsapp-fallback-btn" style="display: none;">
+                    <span>💬 Ouvrir aussi sur WhatsApp</span>
+                </a>
+
+                <button type="button" id="btnBackToPhone" class="forgot-back-btn">
+                    ← Modifier le numéro de téléphone
+                </button>
+            </div>
+
+            <!-- ÉTAPE 3 : Nouveau mot de passe -->
+            <div id="stepPasswordSection" style="display: none;">
+                <h3 style="font-size: 1.35rem; margin-bottom: 0.4rem; font-weight: 700;">Nouveau mot de passe</h3>
+                <p style="color: var(--color-text-secondary); font-size: 0.88rem; line-height: 1.5; margin-bottom: 1.25rem;">
+                    Sécurisez votre compte restaurant avec votre nouveau mot de passe.
+                </p>
+
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label for="newPassword" class="form-label">Nouveau mot de passe</label>
+                    <input type="password" id="newPassword" class="form-input" placeholder="Au moins 6 caractères" required minlength="6">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label for="confirmNewPassword" class="form-label">Confirmez le nouveau mot de passe</label>
+                    <input type="password" id="confirmNewPassword" class="form-input" placeholder="Retapez le mot de passe" required>
+                </div>
+
+                <button type="button" id="btnResetPassword" class="btn-submit" style="width: 100%;">
+                    <span>Enregistrer et se connecter</span>
+                    <span>✓</span>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -97,24 +199,369 @@
         const forgotModal = document.getElementById('forgotModal');
         const closeModal = document.getElementById('closeModal');
 
+        // Modal Elements
+        const modalAlertBox = document.getElementById('modalAlertBox');
+        const trackerStep1 = document.getElementById('trackerStep1');
+        const trackerStep2 = document.getElementById('trackerStep2');
+        const trackerStep3 = document.getElementById('trackerStep3');
+
+        const stepPhoneSection = document.getElementById('stepPhoneSection');
+        const stepCodeSection = document.getElementById('stepCodeSection');
+        const stepPasswordSection = document.getElementById('stepPasswordSection');
+
+        const recoveryPhone = document.getElementById('recoveryPhone');
+        const btnSendCode = document.getElementById('btnSendCode');
+
+        const maskedPhoneDisplay = document.getElementById('maskedPhoneDisplay');
+        const demoCodeBadge = document.getElementById('demoCodeBadge');
+        const demoCodeValue = document.getElementById('demoCodeValue');
+        const btnAutoFillOtp = document.getElementById('btnAutoFillOtp');
+        const otpInputs = document.querySelectorAll('.otp-digit-input');
+        const otpTimerDisplay = document.getElementById('otpTimerDisplay');
+        const btnResendCode = document.getElementById('btnResendCode');
+        const btnVerifyCode = document.getElementById('btnVerifyCode');
+        const btnBackToPhone = document.getElementById('btnBackToPhone');
+        const whatsappAlternativeLink = document.getElementById('whatsappAlternativeLink');
+
+        const newPassword = document.getElementById('newPassword');
+        const confirmNewPassword = document.getElementById('confirmNewPassword');
+        const btnResetPassword = document.getElementById('btnResetPassword');
+
+        // State
+        let currentTargetIdentifier = '';
+        let currentResetToken = '';
+        let resendTimerInterval = null;
+        let resendSecondsRemaining = 45;
+
         function showAlert(msg, isError = true) {
             alertBox.textContent = msg;
             alertBox.className = `auth-alert show ${isError ? 'auth-alert-error' : 'auth-alert-success'}`;
         }
 
+        function showModalAlert(msg, isError = true) {
+            modalAlertBox.textContent = msg;
+            modalAlertBox.className = `auth-alert show ${isError ? 'auth-alert-error' : 'auth-alert-success'}`;
+        }
+
+        function hideModalAlert() {
+            modalAlertBox.className = 'auth-alert';
+            modalAlertBox.textContent = '';
+        }
+
+        function setTrackerStep(step) {
+            trackerStep1.className = `modal-step-item ${step === 1 ? 'active' : (step > 1 ? 'completed' : '')}`;
+            trackerStep2.className = `modal-step-item ${step === 2 ? 'active' : (step > 2 ? 'completed' : '')}`;
+            trackerStep3.className = `modal-step-item ${step === 3 ? 'active' : ''}`;
+
+            stepPhoneSection.style.display = step === 1 ? 'block' : 'none';
+            stepCodeSection.style.display = step === 2 ? 'block' : 'none';
+            stepPasswordSection.style.display = step === 3 ? 'block' : 'none';
+            hideModalAlert();
+        }
+
+        function startResendCountdown(duration = 45) {
+            clearInterval(resendTimerInterval);
+            resendSecondsRemaining = duration;
+            btnResendCode.disabled = true;
+            otpTimerDisplay.style.display = 'inline';
+            otpTimerDisplay.textContent = `Renvoyer dans ${resendSecondsRemaining}s`;
+
+            resendTimerInterval = setInterval(() => {
+                resendSecondsRemaining--;
+                if (resendSecondsRemaining <= 0) {
+                    clearInterval(resendTimerInterval);
+                    btnResendCode.disabled = false;
+                    otpTimerDisplay.style.display = 'none';
+                } else {
+                    otpTimerDisplay.textContent = `Renvoyer dans ${resendSecondsRemaining}s`;
+                }
+            }, 1000);
+        }
+
+        // Ouverture du Modal avec pré-remplissage intelligent
         forgotBtn.addEventListener('click', (e) => {
             e.preventDefault();
+            const typedIdentifier = document.getElementById('identifier').value.trim();
+            if (typedIdentifier) {
+                recoveryPhone.value = typedIdentifier;
+            }
+            setTrackerStep(1);
             forgotModal.classList.add('open');
+            setTimeout(() => recoveryPhone.focus(), 100);
         });
 
         closeModal.addEventListener('click', () => {
             forgotModal.classList.remove('open');
+            clearInterval(resendTimerInterval);
         });
 
         forgotModal.addEventListener('click', (e) => {
-            if (e.target === forgotModal) forgotModal.classList.remove('open');
+            if (e.target === forgotModal) {
+                forgotModal.classList.remove('open');
+                clearInterval(resendTimerInterval);
+            }
         });
 
+        btnBackToPhone.addEventListener('click', (e) => {
+            e.preventDefault();
+            setTrackerStep(1);
+        });
+
+        // 1. Envoyer le code SMS
+        async function handleSendCode() {
+            const identifier = recoveryPhone.value.trim();
+            if (!identifier) {
+                showModalAlert('Veuillez renseigner votre numéro de téléphone.');
+                recoveryPhone.focus();
+                return;
+            }
+
+            btnSendCode.disabled = true;
+            btnSendCode.innerHTML = '<span>Envoi du SMS en cours...</span>';
+            hideModalAlert();
+
+            try {
+                const res = await fetch('/api/auth/forgot-password/send-code', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ identifier })
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    showModalAlert(data.error || 'Impossible d\'envoyer le code par SMS.');
+                    btnSendCode.disabled = false;
+                    btnSendCode.innerHTML = '<span>Envoyer le code par SMS</span> <span>📲</span>';
+                    return;
+                }
+
+                currentTargetIdentifier = identifier;
+                maskedPhoneDisplay.textContent = data.maskedPhone || identifier;
+
+                // Affichage du code en mode simulation locale pour tester immédiatement
+                if (data.demoCode) {
+                    demoCodeValue.textContent = data.demoCode;
+                    demoCodeBadge.style.display = 'flex';
+                } else {
+                    demoCodeBadge.style.display = 'none';
+                }
+
+                if (data.whatsappUrl) {
+                    whatsappAlternativeLink.href = data.whatsappUrl;
+                    whatsappAlternativeLink.style.display = 'flex';
+                } else {
+                    whatsappAlternativeLink.style.display = 'none';
+                }
+
+                // Vider les cases OTP
+                otpInputs.forEach(input => input.value = '');
+
+                setTrackerStep(2);
+                showModalAlert(data.message || 'Code envoyé avec succès !', false);
+                startResendCountdown(45);
+
+                btnSendCode.disabled = false;
+                btnSendCode.innerHTML = '<span>Envoyer le code par SMS</span> <span>📲</span>';
+
+                setTimeout(() => {
+                    if (otpInputs[0]) otpInputs[0].focus();
+                }, 150);
+
+            } catch (err) {
+                showModalAlert('Erreur de connexion avec le serveur.');
+                btnSendCode.disabled = false;
+                btnSendCode.innerHTML = '<span>Envoyer le code par SMS</span> <span>📲</span>';
+            }
+        }
+
+        btnSendCode.addEventListener('click', handleSendCode);
+        recoveryPhone.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleSendCode();
+            }
+        });
+
+        // Renvoyer le code SMS
+        btnResendCode.addEventListener('click', () => {
+            if (btnResendCode.disabled) return;
+            handleSendCode();
+        });
+
+        // Remplissage automatique du code de test
+        btnAutoFillOtp.addEventListener('click', () => {
+            const code = demoCodeValue.textContent.trim();
+            if (code && code.length === 6) {
+                code.split('').forEach((char, idx) => {
+                    if (otpInputs[idx]) otpInputs[idx].value = char;
+                });
+                if (otpInputs[5]) otpInputs[5].focus();
+                handleVerifyCode();
+            }
+        });
+
+        // Gestion de la saisie OTP dans les 6 cases
+        otpInputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                const val = e.target.value.replace(/\D/g, '');
+                e.target.value = val ? val[val.length - 1] : '';
+
+                if (val && index < otpInputs.length - 1) {
+                    otpInputs[index + 1].focus();
+                }
+
+                // Si 6 chiffres saisis, auto-validation
+                const fullCode = Array.from(otpInputs).map(inp => inp.value).join('');
+                if (fullCode.length === 6) {
+                    handleVerifyCode();
+                }
+            });
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                    otpInputs[index - 1].focus();
+                } else if (e.key === 'ArrowLeft' && index > 0) {
+                    otpInputs[index - 1].focus();
+                } else if (e.key === 'ArrowRight' && index < otpInputs.length - 1) {
+                    otpInputs[index + 1].focus();
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleVerifyCode();
+                }
+            });
+
+            // Gestion du copier/coller d'un code entier
+            input.addEventListener('paste', (e) => {
+                e.preventDefault();
+                const pasted = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '');
+                if (pasted.length >= 6) {
+                    pasted.slice(0, 6).split('').forEach((char, idx) => {
+                        if (otpInputs[idx]) otpInputs[idx].value = char;
+                    });
+                    if (otpInputs[5]) otpInputs[5].focus();
+                    handleVerifyCode();
+                } else if (pasted.length > 0) {
+                    pasted.split('').forEach((char, idx) => {
+                        if (otpInputs[idx]) otpInputs[idx].value = char;
+                    });
+                    const next = Math.min(pasted.length, 5);
+                    if (otpInputs[next]) otpInputs[next].focus();
+                }
+            });
+        });
+
+        // 2. Vérifier le code SMS
+        async function handleVerifyCode() {
+            const code = Array.from(otpInputs).map(i => i.value).join('');
+            if (code.length !== 6) {
+                showModalAlert('Veuillez entrer les 6 chiffres du code SMS reçu.');
+                return;
+            }
+
+            btnVerifyCode.disabled = true;
+            btnVerifyCode.innerHTML = '<span>Vérification en cours...</span>';
+            hideModalAlert();
+
+            try {
+                const res = await fetch('/api/auth/forgot-password/verify-code', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        identifier: currentTargetIdentifier,
+                        code
+                    })
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    showModalAlert(data.error || 'Code incorrect.');
+                    btnVerifyCode.disabled = false;
+                    btnVerifyCode.innerHTML = '<span>Valider le code</span> <span>→</span>';
+                    return;
+                }
+
+                currentResetToken = data.resetToken;
+                setTrackerStep(3);
+                showModalAlert('Code validé avec succès ! Définissez votre nouveau mot de passe.', false);
+
+                btnVerifyCode.disabled = false;
+                btnVerifyCode.innerHTML = '<span>Valider le code</span> <span>→</span>';
+
+                setTimeout(() => newPassword.focus(), 150);
+
+            } catch (err) {
+                showModalAlert('Erreur de connexion au serveur.');
+                btnVerifyCode.disabled = false;
+                btnVerifyCode.innerHTML = '<span>Valider le code</span> <span>→</span>';
+            }
+        }
+
+        btnVerifyCode.addEventListener('click', handleVerifyCode);
+
+        // 3. Réinitialiser le mot de passe
+        async function handleResetPassword() {
+            const pwd = newPassword.value;
+            const confirmPwd = confirmNewPassword.value;
+
+            if (!pwd || pwd.length < 6) {
+                showModalAlert('Le mot de passe doit comporter au moins 6 caractères.');
+                newPassword.focus();
+                return;
+            }
+
+            if (pwd !== confirmPwd) {
+                showModalAlert('Les deux mots de passe ne correspondent pas.');
+                confirmNewPassword.focus();
+                return;
+            }
+
+            btnResetPassword.disabled = true;
+            btnResetPassword.innerHTML = '<span>Mise à jour en cours...</span>';
+            hideModalAlert();
+
+            try {
+                const res = await fetch('/api/auth/forgot-password/reset-password', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        resetToken: currentResetToken,
+                        newPassword: pwd,
+                        confirmPassword: confirmPwd
+                    })
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    showModalAlert(data.error || 'Erreur lors de la mise à jour du mot de passe.');
+                    btnResetPassword.disabled = false;
+                    btnResetPassword.innerHTML = '<span>Enregistrer et se connecter</span> <span>✓</span>';
+                    return;
+                }
+
+                showModalAlert('Succès ! Mot de passe réinitialisé. Redirection...', false);
+                setTimeout(() => {
+                    window.location.href = data.redirect || '/dashboard';
+                }, 800);
+
+            } catch (err) {
+                showModalAlert('Impossible de contacter le serveur.');
+                btnResetPassword.disabled = false;
+                btnResetPassword.innerHTML = '<span>Enregistrer et se connecter</span> <span>✓</span>';
+            }
+        }
+
+        btnResetPassword.addEventListener('click', handleResetPassword);
+        confirmNewPassword.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleResetPassword();
+            }
+        });
+
+        // Connexion standard
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             alertBox.className = 'auth-alert';
@@ -159,3 +606,4 @@
     </script>
 </body>
 </html>
+

@@ -8,10 +8,17 @@ const db = require('./server/db');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Créer le dossier uploads si nécessaire
-const uploadsDir = path.join(__dirname, 'public', 'uploads');
+const isVercel = Boolean(process.env.VERCEL);
+
+// Créer le dossier uploads si nécessaire (/tmp sur Vercel, public/uploads en local)
+const uploadsDir = isVercel
+  ? path.join('/tmp', 'uploads')
+  : path.join(__dirname, 'public', 'uploads');
+
 if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
+  try {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+  } catch (e) {}
 }
 
 // Middlewares
@@ -21,6 +28,13 @@ app.use(cookieParser());
 
 // Fichiers statiques
 app.use('/uploads', express.static(uploadsDir));
+if (isVercel) {
+  const localUploads = path.join(__dirname, 'public', 'uploads');
+  if (fs.existsSync(localUploads)) {
+    app.use('/uploads', express.static(localUploads));
+  }
+}
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname)));
 
 // Routes API
@@ -128,15 +142,20 @@ function ensureDemoRestaurant() {
 
 ensureDemoRestaurant();
 
-// Démarrer le serveur
-const server = app.listen(PORT, '0.0.0.0', () => {
-  console.log(`================================================`);
-  console.log(` Plateforme SaaS MenuDirect démarrée avec succès !`);
-  console.log(` Port : ${PORT}`);
-  console.log(` URL Landing : http://localhost:${PORT}`);
-  console.log(` Dashboard   : http://localhost:${PORT}/dashboard`);
-  console.log(` Démo Menu   : http://localhost:${PORT}/restaurant/le-jardin-des-saveurs`);
-  console.log(`================================================`);
-});
+// Démarrer le serveur uniquement hors environnement serverless Vercel
+let server = null;
+if (!isVercel) {
+  server = app.listen(PORT, '0.0.0.0', () => {
+    console.log(`================================================`);
+    console.log(` Plateforme SaaS MenuDirect démarrée avec succès !`);
+    console.log(` Port : ${PORT}`);
+    console.log(` URL Landing : http://localhost:${PORT}`);
+    console.log(` Dashboard   : http://localhost:${PORT}/dashboard`);
+    console.log(` Démo Menu   : http://localhost:${PORT}/restaurant/le-jardin-des-saveurs`);
+    console.log(`================================================`);
+  });
+  app.server = server;
+}
 
-module.exports = { app, server };
+app.app = app;
+module.exports = app;

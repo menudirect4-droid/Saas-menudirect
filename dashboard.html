@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Tableau de bord Restaurant — MenuDirect</title>
     <meta name="description" content="Gérez vos commandes, votre menu et vos clients en temps réel.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -10,6 +10,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="auth.css">
     <link rel="stylesheet" href="dashboard.css">
+    <script>
+        (function() {
+            try {
+                const saved = localStorage.getItem('md_theme');
+                const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const theme = saved === 'light' ? 'light' : (saved === 'dark' ? 'dark' : (prefersDark ? 'dark' : 'light'));
+                document.documentElement.setAttribute('data-theme', theme);
+                if (theme === 'light') document.documentElement.classList.add('theme-light');
+            } catch (e) {}
+        })();
+    </script>
 </head>
 <body>
     <!-- Sidebar matching reference design -->
@@ -127,13 +138,14 @@
             <button id="logoutBtn"></button>
         </div>
     </aside>
+    <div class="dash-sidebar-overlay" id="dashSidebarOverlay" aria-hidden="true"></div>
 
     <!-- Main Content -->
     <div class="dash-main">
         <!-- Topbar matching reference image -->
         <header class="dash-topbar">
             <div class="topbar-welcome-section">
-                <button class="btn-toggle-sidebar" id="toggleSidebarBtn" aria-label="Menu" style="display: none;">
+                <button class="btn-toggle-sidebar" id="toggleSidebarBtn" aria-label="Menu">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
                 </button>
                 <div class="topbar-greeting-wrap">
@@ -152,6 +164,12 @@
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
                     <span class="notification-red-dot" id="notificationCount">0</span>
                     <span id="notificationDot" class="notification-dot" hidden></span>
+                </button>
+
+                <!-- Bouton Bascule Thème Sombre / Clair -->
+                <button id="themeToggleBtn" class="topbar-theme-toggle-btn" aria-label="Basculer le thème Sombre / Clair" title="Basculer entre Mode Sombre et Mode Clair">
+                    <span class="theme-icon-indicator" id="themeIconIndicator">🌙</span>
+                    <span class="theme-toggle-label" id="themeToggleLabel">Sombre</span>
                 </button>
 
                 <div class="topbar-user-profile" id="profileMenuBtn">
@@ -797,6 +815,72 @@
 
             <!-- 8. SECTION PARAMÈTRES & ABONNEMENTS -->
             <section id="view-settings" class="view-section">
+
+                <!-- Carte Thème d'affichage SaaS (Mode Sombre / Mode Clair) -->
+                <div class="panel panel-3d" style="margin-bottom: 1.5rem;">
+                    <div class="panel-header">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.25rem;">
+                                <h3 class="panel-title">🌓 Apparence & Thème du SaaS</h3>
+                                <span class="badge-status status-prete" style="font-size: 0.72rem;">● Actif</span>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--dash-text-muted); margin-top: 2px;">
+                                Choisissez le mode d'affichage adapté à votre environnement de travail (cuisine, caisse, bureau).
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="theme-settings-selector">
+                        <label class="theme-preset-card active" id="themePresetDark">
+                            <input type="radio" name="saasThemeSetting" value="dark" checked>
+                            <div class="theme-preset-preview preview-dark-style">
+                                <div class="theme-mini-sidebar"></div>
+                                <div class="theme-mini-body">
+                                    <div class="theme-mini-header"></div>
+                                    <div class="theme-mini-cards">
+                                        <div class="theme-mini-card"></div>
+                                        <div class="theme-mini-card"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="theme-preset-meta">
+                                <span class="theme-preset-title">🌙 Mode Sombre (Dark)</span>
+                                <span class="theme-preset-desc">Thème signature royal noir & rouge, confort visuel optimal.</span>
+                            </div>
+                        </label>
+
+                        <label class="theme-preset-card" id="themePresetLight">
+                            <input type="radio" name="saasThemeSetting" value="light">
+                            <div class="theme-preset-preview preview-light-style">
+                                <div class="theme-mini-sidebar"></div>
+                                <div class="theme-mini-body">
+                                    <div class="theme-mini-header"></div>
+                                    <div class="theme-mini-cards">
+                                        <div class="theme-mini-card"></div>
+                                        <div class="theme-mini-card"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="theme-preset-meta">
+                                <span class="theme-preset-title">☀️ Mode Clair (Light)</span>
+                                <span class="theme-preset-desc">Interface lumineuse, blanche et nette, idéale en plein jour.</span>
+                            </div>
+                        </label>
+
+                        <label class="theme-preset-card" id="themePresetAuto">
+                            <input type="radio" name="saasThemeSetting" value="auto">
+                            <div class="theme-preset-preview preview-auto-style">
+                                <div class="theme-half-dark"></div>
+                                <div class="theme-half-light"></div>
+                            </div>
+                            <div class="theme-preset-meta">
+                                <span class="theme-preset-title">💻 Automatique (Système)</span>
+                                <span class="theme-preset-desc">Synchronisé automatiquement avec le thème de votre appareil.</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
                 <div class="panel panel-3d">
                     <div class="panel-header">
                         <h3 class="panel-title">Profil de l'établissement</h3>

@@ -7,7 +7,17 @@ const QRCode = require('qrcode');
 const db = require('../db');
 const { requireAuth } = require('../middleware/auth');
 
-const uploadDir = path.join(__dirname, '..', '..', 'public', 'uploads');
+const isVercel = Boolean(process.env.VERCEL);
+const uploadDir = isVercel
+  ? path.join('/tmp', 'uploads')
+  : path.join(__dirname, '..', '..', 'public', 'uploads');
+
+if (!fs.existsSync(uploadDir)) {
+  try {
+    fs.mkdirSync(uploadDir, { recursive: true });
+  } catch (e) {}
+}
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, uploadDir),
   filename: (req, file, cb) => {

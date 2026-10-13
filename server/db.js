@@ -2,17 +2,33 @@ const path = require('path');
 const fs = require('fs');
 const { DatabaseSync } = require('node:sqlite');
 
-const dbDir = path.join(__dirname, '..', 'data');
+const isVercel = Boolean(process.env.VERCEL);
+const dbDir = isVercel ? '/tmp' : path.join(__dirname, '..', 'data');
 if (!fs.existsSync(dbDir)) {
-  fs.mkdirSync(dbDir, { recursive: true });
+  try {
+    fs.mkdirSync(dbDir, { recursive: true });
+  } catch (e) {}
 }
 
 const dbPath = path.join(dbDir, 'menudirect.db');
+
+// Sur Vercel, copier la base préexistante data/menudirect.db vers /tmp si elle existe
+if (isVercel && !fs.existsSync(dbPath)) {
+  const seedPath = path.join(__dirname, '..', 'data', 'menudirect.db');
+  if (fs.existsSync(seedPath)) {
+    try {
+      fs.copyFileSync(seedPath, dbPath);
+    } catch (err) {
+      console.warn('Note Vercel: initialisation d\'une nouvelle base dans /tmp');
+    }
+  }
+}
+
 const db = new DatabaseSync(dbPath);
 
 // Configuration pragma pour la robustesse et les clés étrangères
 db.exec(`
-  PRAGMA journal_mode = WAL;
+  PRAGMA journal_mode = ${isVercel ? 'DELETE' : 'WAL'};
   PRAGMA foreign_keys = ON;
 `);
 
@@ -40,6 +56,18 @@ db.exec(`
   CREATE TABLE IF NOT EXISTS sessions (
     token TEXT PRIMARY KEY,
     restaurant_id INTEGER NOT NULL REFERENCES restaurants(id) ON DELETE CASCADE,
+    expires_at INTEGER NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE TABLE IF NOT EXISTS password_reset_codes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    restaurant_id INTEGER NOT NULL REFERENCES restaurants(id) ON DELETE CASCADE,
+    phone TEXT NOT NULL,
+    code TEXT NOT NULL,
+    reset_token TEXT,
+    attempts INTEGER DEFAULT 0,
+    is_used INTEGER DEFAULT 0,
     expires_at INTEGER NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
@@ -157,6 +185,8 @@ db.exec(`
   CREATE INDEX IF NOT EXISTS idx_dish_trans_dish ON dish_translations(dish_id, language);
   CREATE INDEX IF NOT EXISTS idx_cat_trans_resto ON category_translations(restaurant_id, language);
   CREATE INDEX IF NOT EXISTS idx_trans_cache_hash ON translation_cache(source_hash);
+  CREATE INDEX IF NOT EXISTS idx_reset_codes_resto ON password_reset_codes(restaurant_id);
+  CREATE INDEX IF NOT EXISTS idx_reset_codes_token ON password_reset_codes(reset_token);
 `);
 
 // Migrations dynamiques pour assurer la présence des nouveaux champs

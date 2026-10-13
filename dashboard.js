@@ -223,7 +223,8 @@
         }
 
         // Fermer la sidebar sur mobile
-        document.getElementById('dashSidebar').classList.remove('open');
+        document.getElementById('dashSidebar')?.classList.remove('open');
+        document.getElementById('dashSidebarOverlay')?.classList.remove('active');
     };
 
     // Vérification en direct des nouvelles commandes (polling)
@@ -1061,8 +1062,19 @@
     });
 
     // Toggle sidebar mobile
-    document.getElementById('toggleSidebarBtn')?.addEventListener('click', () => {
-        document.getElementById('dashSidebar').classList.toggle('open');
+    const toggleSidebarBtn = document.getElementById('toggleSidebarBtn');
+    const dashSidebar = document.getElementById('dashSidebar');
+    const dashSidebarOverlay = document.getElementById('dashSidebarOverlay');
+
+    toggleSidebarBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = dashSidebar?.classList.toggle('open');
+        dashSidebarOverlay?.classList.toggle('active', !!isOpen);
+    });
+
+    dashSidebarOverlay?.addEventListener('click', () => {
+        dashSidebar?.classList.remove('open');
+        dashSidebarOverlay?.classList.remove('active');
     });
 
     async function handleLogout() {
@@ -2073,8 +2085,113 @@
         showOrderToast('🔄 Aperçu actualisé', 'Le mini-site a été rechargé.');
     });
 
+    // =========================================================================
+    // GESTION DU THÈME SOMBRE ET CLAIR DU SAAS (DARK / LIGHT MODE)
+    // =========================================================================
+    function getStoredTheme() {
+        try {
+            return localStorage.getItem('md_theme') || 'dark';
+        } catch (e) {
+            return 'dark';
+        }
+    }
+
+    function applyTheme(themeValue) {
+        let effective = themeValue;
+        if (themeValue === 'auto') {
+            effective = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        document.documentElement.setAttribute('data-theme', effective);
+        if (document.body) {
+            document.body.setAttribute('data-theme', effective);
+            if (effective === 'light') {
+                document.documentElement.classList.add('theme-light');
+                document.body.classList.add('theme-light');
+            } else {
+                document.documentElement.classList.remove('theme-light');
+                document.body.classList.remove('theme-light');
+            }
+        }
+
+        // Mettre à jour le bouton topbar
+        const themeIcon = document.getElementById('themeIconIndicator');
+        const themeLabel = document.getElementById('themeToggleLabel');
+        if (themeIcon) {
+            themeIcon.textContent = effective === 'dark' ? '🌙' : '☀️';
+        }
+        if (themeLabel) {
+            themeLabel.textContent = effective === 'dark' ? 'Sombre' : 'Clair';
+        }
+
+        // Mettre à jour les radios et cartes dans les Paramètres
+        document.querySelectorAll('input[name="saasThemeSetting"]').forEach(radio => {
+            radio.checked = radio.value === themeValue;
+        });
+
+        document.querySelectorAll('.theme-preset-card').forEach(card => {
+            const val = card.querySelector('input')?.value;
+            card.classList.toggle('active', val === themeValue);
+        });
+    }
+
+    function setTheme(newTheme) {
+        try {
+            localStorage.setItem('md_theme', newTheme);
+        } catch (e) {}
+        applyTheme(newTheme);
+    }
+
+    function initThemeManager() {
+        const current = getStoredTheme();
+        applyTheme(current);
+
+        // Bouton Topbar 1-clic
+        const toggleBtn = document.getElementById('themeToggleBtn');
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                const now = getStoredTheme();
+                let next;
+                if (now === 'dark') next = 'light';
+                else if (now === 'light') next = 'dark';
+                else {
+                    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                    next = isDark ? 'light' : 'dark';
+                }
+                setTheme(next);
+                showOrderToast(
+                    next === 'light' ? '☀️ Mode Clair activé' : '🌙 Mode Sombre activé',
+                    'Votre confort d\'affichage a été appliqué.'
+                );
+            });
+        }
+
+        // Sélecteurs dans la vue Paramètres
+        document.querySelectorAll('input[name="saasThemeSetting"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const choice = e.target.value;
+                setTheme(choice);
+                showOrderToast(
+                    '🎨 Thème d\'affichage mis à jour',
+                    choice === 'auto' ? 'Le thème s\'adaptera automatiquement à votre appareil.' : `Mode ${choice === 'light' ? 'Clair' : 'Sombre'} sélectionné.`
+                );
+            });
+        });
+
+        // Écouter les changements système OS si 'auto'
+        if (window.matchMedia) {
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                if (getStoredTheme() === 'auto') {
+                    applyTheme('auto');
+                }
+            });
+        }
+    }
+
     // Gestion des onglets de période pour le graphique d'évolution des commandes
     document.addEventListener('DOMContentLoaded', () => {
+        initThemeManager();
+
         document.querySelectorAll('.chart-tab-pill').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.chart-tab-pill').forEach(b => b.classList.remove('active'));
@@ -2083,6 +2200,7 @@
         });
     });
 
-    // Lancer
+    // Lancer le tableau de bord
     document.addEventListener('DOMContentLoaded', initDashboard);
 })();
+
